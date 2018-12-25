@@ -1,0 +1,18 @@
+.navigation {
+  background-color: #4267b2;
+  border-bottom: 1px solid #29487d;
+  
+  .navbar-dark .navbar-nav .nav-link,
+  .nav-link:hover,
+  .navbar-toggler-icon,
+  .navbar a a.navbar-brand {
+    color: #fff;
+  }
+
+  .navbar-nav a:hover {
+    color: #fff;
+    border-radius: 5px;
+    background-color: #29487d;
+    text-decoration: none;
+  }
+}
