@@ -1,4 +1,4 @@
-import { observable, computed, action, runInAction, autorun } from 'mobx';
+import { observable, computed, action, autorun } from 'mobx';
 import { addDays } from 'date-fns';
 
 import { getSchedule } from '../services';

@@ -7,7 +7,6 @@ import './teamItem.component.scss';
 class TeamItem extends Component<any> {
     render() {
         const img: any = images;
-        debugger;
         const team = this.props.team;
         return (
             <Row className="teamItem">
