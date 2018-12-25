@@ -2,16 +2,20 @@ import { observable, computed, action, runInAction, autorun } from 'mobx';
 import { addDays } from 'date-fns';
 
 import { getSchedule } from '../services';
+import { GeneralStore } from './general.store';
 
-export default class ScheduleStore {
+export class ScheduleStore {
   @observable date = new Date();
   @observable games:any[] = [];
+  @observable loading = true;
 
-  constructor() {
+  constructor(generalStore: GeneralStore) {
     autorun(() => {
+      generalStore.setLoading(true);
       getSchedule(this.date)
         .then(({ games }) => {
           this.updateGames(games);
+          generalStore.setLoading(false);
         })
     });
   }

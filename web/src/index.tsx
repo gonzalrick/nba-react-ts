@@ -7,11 +7,15 @@ import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import ScheduleStore from './store/schedule.store';
-const scheduleStore = new ScheduleStore();
+import { GeneralStore, ScheduleStore } from './store/';
+const generalStore = new GeneralStore();
+const scheduleStore = new ScheduleStore(generalStore);
 
 ReactDOM.render(
-  <Provider scheduleStore={scheduleStore}>
+  <Provider
+    generalStore={generalStore}
+    scheduleStore={scheduleStore}
+  >
     <App />
   </Provider>,
   document.getElementById('root')

@@ -1,17 +1,26 @@
 import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 import { Router } from '@reach/router';
 
 import './App.scss';
-import { Navigation, Schedule } from './components';
+import { Loading, Navigation, Schedule } from './components';
+import { GeneralStore } from './store';
 
-class App extends Component {
+@inject('generalStore')
+@observer
+class App extends Component<any> {
   render() {
+    const { isLoading }: GeneralStore = this.props.generalStore;
     return (
       <div className="App">
         <Navigation />
-        <Router>
-          <Schedule path="/" default/>
-        </Router>
+        {
+          isLoading
+          ? <Loading />
+          : <Router>
+              <Schedule path="/" default/>
+            </Router>
+        }
       </div>
     );
   }
