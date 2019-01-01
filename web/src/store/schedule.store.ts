@@ -7,7 +7,6 @@ import { GeneralStore } from './general.store';
 export class ScheduleStore {
   @observable date = new Date();
   @observable games:any[] = [];
-  @observable loading = true;
 
   constructor(generalStore: GeneralStore) {
     autorun(() => {
@@ -29,6 +28,12 @@ export class ScheduleStore {
   get numberOfGames(): number {
     return this.games.length;
   }
+
+  @computed
+  get scheduleDate(): Date {
+    return this.date;
+  }
+
   @action.bound
   updateGames(games: any) {
     this.games = games;

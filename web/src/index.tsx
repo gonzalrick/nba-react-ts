@@ -7,14 +7,16 @@ import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import { GeneralStore, ScheduleStore } from './store/';
+import { GeneralStore, ScheduleStore, GameStore } from './store/';
 const generalStore = new GeneralStore();
 const scheduleStore = new ScheduleStore(generalStore);
+const gameStore = new GameStore(generalStore, scheduleStore);
 
 ReactDOM.render(
   <Provider
     generalStore={generalStore}
     scheduleStore={scheduleStore}
+    gameStore={gameStore}
   >
     <App />
   </Provider>,
