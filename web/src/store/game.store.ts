@@ -2,41 +2,44 @@ import { observable, computed, action, autorun } from 'mobx';
 
 import { getGame } from '../services';
 import { GeneralStore } from './general.store';
-import { ScheduleStore } from './schedule.store';
 
 export class GameStore {
-  @observable date = new Date();
-  @observable gameId: number = 0;
+  @observable date: string = '';
   @observable game: any = {};
-
-  constructor(generalStore: GeneralStore, scheduleStore: ScheduleStore) {
-    autorun(() => {
-      generalStore.setLoading(true);
-
-      if (! this.gameId) return;
-
-      getGame(scheduleStore.scheduleDate, this.gameId)
-        .then(({ basicGameData }) => {
-          debugger;
-          this.updateGame(basicGameData);
-          generalStore.setLoading(false);
-        })
-        .catch(err => console.log(err));
+  @observable gameId: any = 0;
+  constructor(generalStore: GeneralStore) {
+    autorun(async () => {
+      if (this.gameId > 0) {
+        generalStore.setLoading(true);
+        this.game = await getGame(this.date, this.gameId);
+        generalStore.setLoading(false);
+      }
     });
   }
 
   @computed
-  get currentGame(): any {
-    return this.game;
+  get gameData(): any {
+    return this.game.basicGameData;
+  }
+
+  @computed
+  get hasData(): boolean {
+    return this.game.basicGameData !== undefined;
+  }
+
+  @computed
+  get gameStats(): any {
+    return this.game.stats;
+  }
+
+  @computed
+  get hasStats(): boolean {
+    return this.game.stats !== undefined;
   }
 
   @action.bound
-  updateGame(game: any) {
-    this.game = game;
-  }
-
-  @action.bound
-  setGameId(gameId: number = 0) {
+  setGameArgs(date: string, gameId: number) {
+    this.date = date;
     this.gameId = gameId;
   }
 }

@@ -19,7 +19,7 @@ class App extends Component<any> {
           ? <Loading />
           : <Router>
               <Schedule path="/" default/>
-              <Game path="game/:gameId" />
+              <Game path="game/:date/:gameId" />
             </Router>
         }
       </div>

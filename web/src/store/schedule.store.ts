@@ -13,7 +13,7 @@ export class ScheduleStore {
       generalStore.setLoading(true);
       getSchedule(this.date)
         .then(({ games }) => {
-          this.updateGames(games);
+          this.games = games;
           generalStore.setLoading(false);
         })
     });
@@ -32,11 +32,6 @@ export class ScheduleStore {
   @computed
   get scheduleDate(): Date {
     return this.date;
-  }
-
-  @action.bound
-  updateGames(games: any) {
-    this.games = games;
   }
 
   @action.bound

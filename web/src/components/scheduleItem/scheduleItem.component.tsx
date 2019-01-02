@@ -20,7 +20,7 @@ export class ScheduleItem extends Component<any> {
       const game: any = this.props.game;
       return (
         <Col xs="12" sm="12" md="6" lg="4" className="scheduleItem" key={game.gameId}>
-          <Link to={`/game/${game.gameId}`} onClick={() => this.store.setGameId(game.gameId)}>
+          <Link to={`/game/${game.startDateEastern}/${game.gameId}`}>
             <Card className="gameCard">
               <CardBody>
                 <Row>
@@ -38,6 +38,11 @@ export class ScheduleItem extends Component<any> {
                     <span>
                       {getPeriod(game)}
                     </span>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs="12">
+                    <span><em>{game.nugget ? game.nugget.text : ''}</em></span>
                   </Col>
                 </Row>
               </CardBody>

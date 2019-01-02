@@ -10,7 +10,7 @@ import * as serviceWorker from './serviceWorker';
 import { GeneralStore, ScheduleStore, GameStore } from './store/';
 const generalStore = new GeneralStore();
 const scheduleStore = new ScheduleStore(generalStore);
-const gameStore = new GameStore(generalStore, scheduleStore);
+const gameStore = new GameStore(generalStore);
 
 ReactDOM.render(
   <Provider
