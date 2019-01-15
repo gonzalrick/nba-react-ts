@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from '@reach/router';
 import { inject, observer } from 'mobx-react';
 import { IoIosArrowBack } from 'react-icons/io';
 import {
@@ -13,7 +12,7 @@ import {
 import './game.component.scss';
 import { GameStore } from '../../store';
 import { getPeriod } from '../../utils';
-import * as images from '../../assets';
+import { Boxscore } from '../boxscore/boxscore.component';
 
 @inject('gameStore')
 @observer
@@ -32,8 +31,6 @@ export class Game extends Component<any> {
     if (! this.store.hasData) {
       return <div>Fetching game...</div>
     }
-    const game = this.store.gameData;
-    const img: any = images;
     return (
       <div className="game">
         <Container>
@@ -43,40 +40,7 @@ export class Game extends Component<any> {
           </Button>
           <Row>
             <Col xs="12" sm="12" md="12" lg="12" className="gameItem">
-              <Table>
-                <thead>
-                  <tr>
-                    <th></th>
-                  <th>1Q</th>
-                  <th>2Q</th>
-                  <th>3Q</th>
-                  <th>4Q</th>
-                  <th>Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">
-                      <img className="teamIcon" src={img[game.hTeam.triCode.toLowerCase()]}/>
-                    </th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th>{game.hTeam.score}</th>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <img className="teamIcon" src={img[game.vTeam.triCode.toLowerCase()]}/>
-                    </th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th>{game.vTeam.score}</th>
-                  </tr>
-                </tbody>
-              </Table>
+              <Boxscore/>
             </Col>
           </Row>
         </Container>
