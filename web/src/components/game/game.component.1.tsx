@@ -4,8 +4,10 @@ import { inject, observer } from 'mobx-react';
 import { IoIosArrowBack } from 'react-icons/io';
 import {
   Button,
-  Col,
+  Card,
   Container,
+  CardBody,
+  Col,
   Row,
   Table,
 } from 'reactstrap';
@@ -13,7 +15,6 @@ import {
 import './game.component.scss';
 import { GameStore } from '../../store';
 import { getPeriod } from '../../utils';
-import * as images from '../../assets';
 
 @inject('gameStore')
 @observer
@@ -33,7 +34,6 @@ export class Game extends Component<any> {
       return <div>Fetching game...</div>
     }
     const game = this.store.gameData;
-    const img: any = images;
     return (
       <div className="game">
         <Container>
@@ -43,37 +43,41 @@ export class Game extends Component<any> {
           </Button>
           <Row>
             <Col xs="12" sm="12" md="12" lg="12" className="gameItem">
-              <Table>
+              {/* <Card>
+                <CardBody>
+                  <Row>
+                    <Col xs="8" sm="" md="8">
+                      <Row>
+                        <Col xs="12">
+                          <span>{game.hTeam.triCode}</span>
+                        </Col>
+                        <Col xs="12">
+                          <span>{game.vTeam.triCode}</span>
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col xs="4" sm="6" md="4" className="period">
+                      <span>
+                        {getPeriod(game)}
+                      </span>
+                    </Col>
+                  </Row>
+                </CardBody>
+              </Card> */}
+              <Table striped>
                 <thead>
-                  <tr>
-                    <th></th>
+                  <th></th>
                   <th>1Q</th>
                   <th>2Q</th>
                   <th>3Q</th>
                   <th>4Q</th>
-                  <th>Total</th>
-                  </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <th scope="row">
-                      <img className="teamIcon" src={img[game.hTeam.triCode.toLowerCase()]}/>
-                    </th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th>{game.hTeam.score}</th>
+                    {game.hTeam.triCode}
                   </tr>
                   <tr>
-                    <th scope="row">
-                      <img className="teamIcon" src={img[game.vTeam.triCode.toLowerCase()]}/>
-                    </th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th>{game.vTeam.score}</th>
+                    {game.vTeam.triCode}
                   </tr>
                 </tbody>
               </Table>
