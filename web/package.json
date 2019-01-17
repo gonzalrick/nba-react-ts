@@ -31,7 +31,7 @@
     "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:3001",
-  "homepage": "https://nba-react-ts.herokuapp.com/",
+  "homepage": "https://nba-react-ts-branch.herokuapp.com/",
   "eslintConfig": {
     "extends": "react-app"
   },
