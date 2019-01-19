@@ -25,12 +25,20 @@
 .icon {
   height: 55px;
   margin: 0 10px;
+
+  @media screen and (max-width:420px) {
+    font-size: 45px;
+  }
 }
 
 .period {
   text-align: center;
   font-size: 0.9em;
   padding-bottom: 10px;
+
+  @media screen and (max-width:420px) {
+    font-size: 3.5vw;
+  }
 }
 
 .teamScore div {
@@ -43,5 +51,9 @@
 
 .nugget {
   border-top: 1px solid #dedede;
-  padding-top: 10px
+  padding-top: 10px;
+
+  @media screen and (max-width:420px) {
+    font-size: 3.5vw;
+  }
 }

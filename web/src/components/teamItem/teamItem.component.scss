@@ -7,5 +7,18 @@
     line-height: 5;
     display: inline-block;
     vertical-align: middle;
+
+    @media screen and (max-width:420px) {
+      font-size: 3vw;
+    }
   }
+
+  @media screen and (max-width:420px) {
+    font-size: 3vw;
+  }
+}
+
+.nopadding {
+  padding: 0;
+  margin: 0;
 }

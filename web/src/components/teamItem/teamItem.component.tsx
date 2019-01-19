@@ -22,14 +22,14 @@ class TeamItem extends Component<any> {
         const team = this.props.team;
         return (
             <Row className={`teamItem d-flex flex-row${this.props.home ? '' : '-reverse'}`}>
-                <Col xs="9">
+                <Col xs="9" className="nopadding">
                     <img className="icon" alt="team-logo" src={img[team.triCode.toLowerCase()]} />
                     <br/>
                     <span>{this.getTeamName(team.triCode)}</span>
                     <br/>
                     <span>({team.win} - {team.loss})</span>
                 </Col>
-                <Col xs="3" className="score">
+                <Col xs="3" className="score nopadding">
                     {team.score}
                 </Col>
             </Row>
