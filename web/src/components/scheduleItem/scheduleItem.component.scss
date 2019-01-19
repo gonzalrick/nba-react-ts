@@ -29,12 +29,19 @@
 
 .period {
   text-align: center;
-  line-height: 3em;
-  border-left: 1px solid #d6d6d6;
   font-size: 0.9em;
-  margin: auto;
+  padding-bottom: 10px;
 }
 
 .teamScore div {
   margin: auto;
+}
+
+.teamContainer {
+  padding-bottom: 10px;
+}
+
+.nugget {
+  border-top: 1px solid #dedede;
+  padding-top: 10px
 }

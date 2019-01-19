@@ -1,3 +1,11 @@
-.teamItem div {
-  margin: auto
+.teamItem {
+  div {
+    text-align: center;
+  }
+
+  .score {
+    line-height: 5;
+    display: inline-block;
+    vertical-align: middle;
+  }
 }
