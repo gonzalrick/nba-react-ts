@@ -21,5 +21,13 @@
 Table {
   th {
     text-align: center;
+
+    @media screen and (max-width:420px) {
+      font-size: 2vw;
+    }
+  }
+  
+  .value {
+    font-weight: normal;
   }
 }

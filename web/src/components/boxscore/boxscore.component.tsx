@@ -48,14 +48,14 @@ export class Boxscore extends Component<any> {
                 <th scope="row">
                   <img className="teamIcon" src={img[game.hTeam.triCode.toLowerCase()]}/>
                 </th>
-                {game.hTeam.linescore.map((score: any) => <th>{score.score}</th>)}
+                {game.hTeam.linescore.map((score: any) => <th className="value">{score.score}</th>)}
                 <th>{game.hTeam.score}</th>
               </tr>
               <tr>
                 <th scope="row">
                   <img className="teamIcon" src={img[game.vTeam.triCode.toLowerCase()]}/>
                 </th>
-                {game.vTeam.linescore.map((score: any) => <th>{score.score}</th>)}
+                {game.vTeam.linescore.map((score: any) => <th className="value">{score.score}</th>)}
                 <th>{game.vTeam.score}</th>
               </tr>
             </tbody>

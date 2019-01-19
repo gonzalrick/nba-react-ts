@@ -1,5 +1,9 @@
 .teamIcon {
   height: 75px;
+
+  @media screen and (max-width:420px) {
+    height: 35px;
+  }
 }
 
 .table {
@@ -8,5 +12,9 @@
   .th {
     vertical-align: middle;
     border-top: none;
+  }
+  
+  .value {
+    font-weight: normal;
   }
 }

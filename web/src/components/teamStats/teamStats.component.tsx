@@ -65,13 +65,17 @@ export class TeamStats extends React.Component<any> {
                         </tr>
                       </thead>
                       <tbody>
-                        {Object.keys(stats.hTeam.totals).map((key) => {
-                          return <tr>
-                            <th>{stats.hTeam.totals[key]}</th>
-                            <th>{key}</th>
-                            <th>{stats.vTeam.totals[key]}</th>
-                          </tr>
-                        })}
+                        {
+                          stats
+                            ? Object.keys(stats.hTeam.totals).map((key) => {
+                              return <tr>
+                                <th className="value">{stats.hTeam.totals[key]}</th>
+                                <th className="key">{key}</th>
+                                <th className="value">{stats.vTeam.totals[key]}</th>
+                              </tr>
+                            })
+                            : <tr></tr>
+                        }
                       </tbody>
                     </Table>
                   </Col>
