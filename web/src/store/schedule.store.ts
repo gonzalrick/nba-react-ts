@@ -7,14 +7,16 @@ import { GeneralStore } from './general.store';
 export class ScheduleStore {
   @observable date = new Date();
   @observable games:any[] = [];
-  @observable loading = true;
 
   constructor(generalStore: GeneralStore) {
     autorun(() => {
       generalStore.setLoading(true);
       getSchedule(this.date)
         .then(({ games }) => {
-          this.updateGames(games);
+          this.games = games;
+          if (this.games.length > 0) {
+            generalStore.setSeasonYear(this.games[0].seasonYear);
+          }
           generalStore.setLoading(false);
         })
     });
@@ -29,9 +31,10 @@ export class ScheduleStore {
   get numberOfGames(): number {
     return this.games.length;
   }
-  @action.bound
-  updateGames(games: any) {
-    this.games = games;
+
+  @computed
+  get scheduleDate(): Date {
+    return this.date;
   }
 
   @action.bound

@@ -7,7 +7,5 @@ export const getSchedule = async (date :Date) => {
   const est = addMinutes(date, date.getTimezoneOffset() - 300);
   const dateStr = format(est, 'YYYYMMDD');
   return await fetch(`${API_URL}/schedule/${dateStr}`)
-    .then((res) => {
-      return res.json();
-    });
+    .then(res => res.json());
 }

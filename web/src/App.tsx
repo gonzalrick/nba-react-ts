@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { Router } from '@reach/router';
 
 import './App.scss';
-import { Loading, Navigation, Schedule } from './components';
+import { Loading, Navigation, Schedule, Game } from './components';
 import { GeneralStore } from './store';
 
 @inject('generalStore')
@@ -19,6 +19,7 @@ class App extends Component<any> {
           ? <Loading />
           : <Router>
               <Schedule path="/" default/>
+              <Game path="game/:date/:gameId" />
             </Router>
         }
       </div>

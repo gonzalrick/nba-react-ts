@@ -1,0 +1,20 @@
+.teamIcon {
+  height: 75px;
+
+  @media screen and (max-width:420px) {
+    height: 45px;
+  }
+}
+
+.table {
+  margin-bottom: 0px;
+
+  .th {
+    vertical-align: middle;
+    border-top: none;
+  }
+  
+  .value {
+    font-weight: normal;
+  }
+}
