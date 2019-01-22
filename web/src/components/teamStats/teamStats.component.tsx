@@ -3,17 +3,20 @@ import { inject, observer } from 'mobx-react';
 import { Table, TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardBody, CardTitle, CardText, Row, Col } from 'reactstrap';
 
 import './teamStats.component.scss';
-import { GameStore } from '../../store';
+import { GameStore,ArticleStore } from '../../store';
 
 @inject('gameStore')
+@inject('articleStore')
 @observer
 export class TeamStats extends React.Component<any> {
   public store: GameStore = this.props.gameStore;
+  public articleStore: ArticleStore = this.props.articleStore;
+
   state: any;
 
   constructor(props: any) {
     super(props);
-
+    console.log(this.store);
     this.toggle = this.toggle.bind(this);
     this.state = {
       activeTab: '1'
@@ -80,6 +83,8 @@ export class TeamStats extends React.Component<any> {
                     </Table>
                   </Col>
                 </Row>
+              </TabPane>
+              <TabPane tabId="3">
               </TabPane>
             </TabContent>
           </CardBody>

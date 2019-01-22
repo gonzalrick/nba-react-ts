@@ -5,6 +5,7 @@ import { Router } from '@reach/router';
 import './App.scss';
 import { Loading, Navigation, Schedule, Game } from './components';
 import { GeneralStore } from './store';
+import { TeamStats } from './components/teamStats/teamStats.component';
 
 @inject('generalStore')
 @observer
@@ -20,6 +21,7 @@ class App extends Component<any> {
           : <Router>
               <Schedule path="/" default/>
               <Game path="game/:date/:gameId" />
+              <TeamStats path="article/:date/:gameId" />
             </Router>
         }
       </div>
