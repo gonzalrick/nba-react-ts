@@ -12,15 +12,36 @@ export class ArticleStore {
     autorun(async () => {
       if (this.gameId > 0) {
         generalStore.setLoading(true);
-        console.log(this.date,this.gameId);
-        this.article = await getArticle(this.date,this.gameId);
+        this.article = await getArticle(this.date,this.gameId).then((res) => {
+          console.log(this.article);
+        })
         generalStore.setLoading(false);
       }
     });
   }
 
+  @computed
+  get author(): any {
+    return this.article.author;
+  }
+
+  @computed
+  get authorTitle(): any {
+    return this.article.authorTitle;
+  }
+
+  @computed
+  get publishDate(): any {
+    return this.article.pubDateUTC;
+  }
+
+  @computed
+  get paragraphs(): any {
+    return this.article.paragraphs !== undefined
+  }
+
   @action.bound
-  setGameArgs(date: string, gameId: number) {
+  setArticleArgs(date: string, gameId: number) {
     this.date = date;
     this.gameId = gameId;
   }

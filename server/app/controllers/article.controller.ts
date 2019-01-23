@@ -29,11 +29,13 @@ export const ArticleController: RequestHandler = (req: Request, res: Response, n
     .then(res => {
       if(res.ok) {
         return res.json();
-      } else if(res.status == 404) {
-        let badRes = {status: res.status, message: "No news or article available for this game"}
+      } else { // Bad or no response
+        let badRes = {status: res.status, message: "No article available for this game"}
         return badRes;
       }
     })
-    .then(json => res.json(json))
+    .then(json => {
+      res.json(json);
+    })
     .catch(err => next(err));
 };
