@@ -9,18 +9,8 @@ export class GeneralStore {
     return this.loading;
   }
 
-  @computed
-  get seasonYear(): string {
-    return this.year;
-  }
-
   @action.bound
   setLoading(loading: boolean) {
     this.loading = loading;
-  }
-
-  @action.bound
-  setSeasonYear(year: string) {
-    this.year = year;
   }
 }
