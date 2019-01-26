@@ -14,9 +14,6 @@ export class ScheduleStore {
       getSchedule(this.date)
         .then(({ games }) => {
           this.games = games;
-          if (this.games.length > 0) {
-            generalStore.setSeasonYear(this.games[0].seasonYear);
-          }
           generalStore.setLoading(false);
         })
     });
