@@ -1,29 +1,28 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { Card, CardBody, Table } from 'reactstrap';
 
 import './boxscore.component.scss';
-import { GameStore } from '../../store';
-import * as images from '../../assets';
+import { GameStore, TeamsStore } from '../../store';
+import { getOvertime, getTeamIconUrl } from '../../utils';
 
 @inject('gameStore')
+@inject('teamStore')
 @observer
 export class Boxscore extends Component<any> {
   public store: GameStore = this.props.gameStore;
+  public teams: TeamsStore = this.props.teamStore;
 
-  getOvertime(currentPeriod: number) {
-    let index = 5;
-    const overtimes = [];
-    while (index <= currentPeriod) {
-      overtimes.push(`${index > 5 ? index - 4 : ''}OT`);
-      index++;
-    }
-    return overtimes;
+  getTeamName(code: string): string {
+    const team = this.teams.teamList.find(team => team.tricode === code);
+    return team ? team.fullName : '';
   }
 
   render() {
     const game = this.store.gameData;
-    const img: any = images;
+    const hTeamName = this.getTeamName(game.hTeam.triCode);
+    const vTeamName = this.getTeamName(game.vTeam.triCode);
+
     return (
       <Card>
         <CardBody>
@@ -36,7 +35,7 @@ export class Boxscore extends Component<any> {
               <th>3Q</th>
               <th>4Q</th>
               {game.period.current > 4
-                ? this.getOvertime(game.period.current)
+                ? getOvertime(game.period.current)
                     .map(ot => <th>{ot}</th>)
                 : null
               }
@@ -46,7 +45,7 @@ export class Boxscore extends Component<any> {
             <tbody>
               <tr>
                 <th scope="row">
-                  <img className="teamIcon" src={img[game.hTeam.triCode.toLowerCase()]}/>
+                  <img className="teamIcon" src={getTeamIconUrl(hTeamName)}/>
                 </th>
                 { game.hTeam.linescore.length > 0
                   ? game.hTeam.linescore.map((score: any) => <th className="value">{score.score}</th>)
@@ -61,7 +60,7 @@ export class Boxscore extends Component<any> {
               </tr>
               <tr>
                 <th scope="row">
-                  <img className="teamIcon" src={img[game.vTeam.triCode.toLowerCase()]}/>
+                  <img className="teamIcon" src={getTeamIconUrl(vTeamName)}/>
                 </th>
                 { game.vTeam.linescore.length > 0
                   ? game.vTeam.linescore.map((score: any) => <th className="value">{score.score}</th>)

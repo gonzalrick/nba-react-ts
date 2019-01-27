@@ -2,6 +2,7 @@ import { observable, computed, autorun, action } from 'mobx';
 
 import { getTeams } from '../services';
 import { GeneralStore } from './general.store';
+import { getCurrentSeason } from '../utils';
 
 export class TeamsStore {
   @observable teams:any[] = [];
@@ -10,16 +11,11 @@ export class TeamsStore {
     autorun(() => {
       generalStore.setLoading(true);
 
-      if (! Number(generalStore.seasonYear)) {
-        generalStore.setLoading(false);
-        return;
-      }
-
-      getTeams(generalStore.seasonYear)
+      const currentSeason = getCurrentSeason();
+      getTeams(currentSeason)
         .then(teams => {
           const nbaTeams = teams.league.standard.filter((team: any) => team.isNBAFranchise);
           this.teams = nbaTeams;
-          console.log(nbaTeams);
           generalStore.setLoading(false);
         })
     });
