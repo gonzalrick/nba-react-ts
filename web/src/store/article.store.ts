@@ -29,6 +29,11 @@ export class ArticleStore {
   }
 
   @computed
+  get title(): any {
+    return this.article.title;
+  }
+
+  @computed
   get publishDate(): any {
     return this.article.pubDateUTC;
   }

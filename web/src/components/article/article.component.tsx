@@ -19,8 +19,13 @@ export class Article extends React.Component<any> {
     return (
       <div id="article-paragraphs"> 
       {
-        this.store.paragraphs !== undefined ? 
-        this.store.paragraphs.map((p: any,key: number) =><p key={key.toString()}>{p.paragraph}</p>) : <p>No Article Available</p>
+        this.store.title ? <h2>{this.store.title}</h2> : <h2></h2>
+      }
+        <p>Written by: <b>{this.store.author ? this.store.author : "Anonymous"}</b></p>       
+      {
+
+        this.store.paragraphs ? 
+        this.store.paragraphs.map((p: any,key: number) =><p key={key.toString()}>{p.paragraph}</p>) : <p>No article available yet.</p>
       }
       </div>
     );

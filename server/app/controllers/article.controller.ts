@@ -15,17 +15,18 @@ interface ArticleArgs {
 export const ArticleController: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
   const args: ArticleArgs = req.params;
   const today: Date = new Date();
+  today.setHours(0,0,0,0); //start date at midnight.
 
   let year = args.date.substring(0,4);
   let month = args.date.substring(4,6);
   let day = args.date.substring(6,8);
   
   const argDate: Date= new Date(year, month-1, day);
+  argDate.setHours(0,0,0,0); //start date at midnight.
   let articleType: string;
   // Change article Type based on dates
-  (argDate > today) ? articleType = 'preview': articleType =  'recap';
+  (argDate >= today) ? articleType = 'preview': articleType =  'recap';
   const url = `http://data.nba.net/data/10s/prod/v1/${args.date}/${args.gameId}_${articleType}_article.json`;
-  console.log(url);
   fetch(url)
     .then(res => {
       if(res.ok) {
