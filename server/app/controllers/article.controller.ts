@@ -25,12 +25,16 @@ export const ArticleController: RequestHandler = (req: Request, res: Response, n
   // Change article Type based on dates
   (argDate > today) ? articleType = 'preview': articleType =  'recap';
   const url = `http://data.nba.net/data/10s/prod/v1/${args.date}/${args.gameId}_${articleType}_article.json`;
+  console.log(url);
   fetch(url)
     .then(res => {
       if(res.ok) {
         return res.json();
       } else { // Bad or no response
-        let badRes = {status: res.status, message: "No article available for this game"}
+        let badRes = {
+          status: res.status, 
+          message: "No article available for this game"
+        }
         return badRes;
       }
     })

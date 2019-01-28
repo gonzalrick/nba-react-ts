@@ -1,6 +1,7 @@
 import React from 'react';
 import { inject } from 'mobx-react';
 
+import './article.component.scss';
 import { ArticleStore, GameStore } from '../../store';
 
 
@@ -15,16 +16,13 @@ export class Article extends React.Component<any> {
   }
 
   render() {
-    const paragraphs = this.store.paragraphs.map((paragraph: any) => { //Use interface for p later
-      return (
-        <p>{paragraph.paragraph}</p>
-      )
-    });
-
     return (
-      <div>
-        wah
+      <div id="article-paragraphs"> 
+      {
+        this.store.paragraphs !== undefined ? 
+        this.store.paragraphs.map((p: any,key: number) =><p key={key.toString()}>{p.paragraph}</p>) : <p>No Article Available</p>
+      }
       </div>
-    )
+    );
   }
 }

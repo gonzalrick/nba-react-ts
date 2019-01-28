@@ -48,7 +48,7 @@ export class Boxscore extends Component<any> {
                   <img className="teamIcon" src={getTeamIconUrl(hTeamName)}/>
                 </th>
                 { game.hTeam.linescore.length > 0
-                  ? game.hTeam.linescore.map((score: any) => <th className="value">{score.score}</th>)
+                  ? game.hTeam.linescore.map((score: any,key: number) => <th key={key.toString()} className="value">{score.score}</th>)
                   : <>
                     <th>0</th>
                     <th>0</th>
@@ -63,7 +63,7 @@ export class Boxscore extends Component<any> {
                   <img className="teamIcon" src={getTeamIconUrl(vTeamName)}/>
                 </th>
                 { game.vTeam.linescore.length > 0
-                  ? game.vTeam.linescore.map((score: any) => <th className="value">{score.score}</th>)
+                  ? game.vTeam.linescore.map((score: any, key: number) => <th key={key.toString()} className="value">{score.score}</th>)
                   : <>
                     <th>0</th>
                     <th>0</th>

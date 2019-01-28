@@ -71,7 +71,7 @@ export class TeamStats extends React.Component<any> {
                         {
                           stats
                             ? Object.keys(stats.hTeam.totals).map((key) => {
-                              return <tr>
+                              return <tr key={key.toString()}>
                                 <th className="value">{stats.hTeam.totals[key]}</th>
                                 <th className="key">{key}</th>
                                 <th className="value">{stats.vTeam.totals[key]}</th>

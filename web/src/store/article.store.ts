@@ -12,9 +12,7 @@ export class ArticleStore {
     autorun(async () => {
       if (this.gameId > 0) {
         generalStore.setLoading(true);
-        this.article = await getArticle(this.date,this.gameId).then((res) => {
-          console.log(this.article);
-        })
+        this.article = await getArticle(this.date,this.gameId);
         generalStore.setLoading(false);
       }
     });
@@ -37,7 +35,7 @@ export class ArticleStore {
 
   @computed
   get paragraphs(): any {
-    return this.article.paragraphs !== undefined
+    return this.article.paragraphs;
   }
 
   @action.bound
