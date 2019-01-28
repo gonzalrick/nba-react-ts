@@ -34,6 +34,12 @@ export class ArticleStore {
   }
 
   @computed
+  get status(): any {
+    return this.article.status;
+  }
+
+
+  @computed
   get publishDate(): any {
     return this.article.pubDateUTC;
   }
