@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import { startOfDay } from 'date-fns';
 import {
   NextFunction,
   Request,
@@ -14,15 +15,13 @@ interface ArticleArgs {
 
 export const ArticleController: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
   const args: ArticleArgs = req.params;
-  const today: Date = new Date();
-  today.setHours(0,0,0,0); //start date at midnight.
+  const today: Date = startOfDay(new Date());
 
   let year = args.date.substring(0,4);
   let month = args.date.substring(4,6);
   let day = args.date.substring(6,8);
   
-  const argDate: Date= new Date(year, month-1, day);
-  argDate.setHours(0,0,0,0); //start date at midnight.
+  const argDate: Date= startOfDay(new Date(year, month-1, day));
   let articleType: string;
   // Change article Type based on dates
   (argDate >= today) ? articleType = 'preview': articleType =  'recap';
