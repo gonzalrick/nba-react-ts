@@ -1,6 +1,20 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Table, TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardBody, CardTitle, CardText, Row, Col } from 'reactstrap';
+import {
+  Table,
+  TabContent,
+  TabPane,
+  Nav,
+  NavItem,
+  NavLink,
+  Card,
+  Button,
+  CardBody,
+  CardTitle,
+  CardText,
+  Row,
+  Col,
+} from 'reactstrap';
 
 import './teamStats.component.scss';
 import { GameStore } from '../../store';
@@ -16,14 +30,14 @@ export class TeamStats extends React.Component<any> {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      activeTab: '1'
+      activeTab: '1',
     };
   }
 
   toggle(tab: any) {
     if (this.state.activeTab !== tab) {
       this.setState({
-        activeTab: tab
+        activeTab: tab,
       });
     }
   }
@@ -36,7 +50,9 @@ export class TeamStats extends React.Component<any> {
           <NavItem className="item">
             <NavLink
               className={this.state.activeTab === '1' ? 'active' : ''}
-              onClick={() => { this.toggle('1'); }}
+              onClick={() => {
+                this.toggle('1');
+              }}
             >
               Stats
             </NavLink>
@@ -44,7 +60,9 @@ export class TeamStats extends React.Component<any> {
           <NavItem className="item">
             <NavLink
               className={this.state.activeTab === '3' ? 'active' : ''}
-              onClick={() => { this.toggle('3'); }}
+              onClick={() => {
+                this.toggle('3');
+              }}
             >
               News
             </NavLink>
@@ -60,22 +78,28 @@ export class TeamStats extends React.Component<any> {
                       <thead>
                         <tr>
                           <th>{game.hTeam.triCode}</th>
-                          <th></th>
+                          <th />
                           <th>{game.vTeam.triCode}</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {
-                          stats
-                            ? Object.keys(stats.hTeam.totals).map((key) => {
-                              return <tr>
-                                <th className="value">{stats.hTeam.totals[key]}</th>
+                        {stats ? (
+                          Object.keys(stats.hTeam.totals).map(key => {
+                            return (
+                              <tr>
+                                <th className="value">
+                                  {stats.hTeam.totals[key]}
+                                </th>
                                 <th className="key">{key}</th>
-                                <th className="value">{stats.vTeam.totals[key]}</th>
+                                <th className="value">
+                                  {stats.vTeam.totals[key]}
+                                </th>
                               </tr>
-                            })
-                            : <tr></tr>
-                        }
+                            );
+                          })
+                        ) : (
+                          <tr />
+                        )}
                       </tbody>
                     </Table>
                   </Col>

@@ -29,48 +29,52 @@ export class Boxscore extends Component<any> {
           <Table>
             <thead>
               <tr>
-                <th></th>
-              <th>1Q</th>
-              <th>2Q</th>
-              <th>3Q</th>
-              <th>4Q</th>
-              {game.period.current > 4
-                ? getOvertime(game.period.current)
-                    .map(ot => <th>{ot}</th>)
-                : null
-              }
-              <th>Total</th>
+                <th />
+                <th>1Q</th>
+                <th>2Q</th>
+                <th>3Q</th>
+                <th>4Q</th>
+                {game.period.current > 4
+                  ? getOvertime(game.period.current).map(ot => <th>{ot}</th>)
+                  : null}
+                <th>Total</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <th scope="row">
-                  <img className="teamIcon" src={getTeamIconUrl(hTeamName)}/>
+                  <img className="teamIcon" src={getTeamIconUrl(hTeamName)} />
                 </th>
-                { game.hTeam.linescore.length > 0
-                  ? game.hTeam.linescore.map((score: any) => <th className="value">{score.score}</th>)
-                  : <>
+                {game.hTeam.linescore.length > 0 ? (
+                  game.hTeam.linescore.map((score: any) => (
+                    <th className="value">{score.score}</th>
+                  ))
+                ) : (
+                  <>
                     <th>0</th>
                     <th>0</th>
                     <th>0</th>
                     <th>0</th>
-                    </>
-                }
+                  </>
+                )}
                 <th>{game.hTeam.score | 0}</th>
               </tr>
               <tr>
                 <th scope="row">
-                  <img className="teamIcon" src={getTeamIconUrl(vTeamName)}/>
+                  <img className="teamIcon" src={getTeamIconUrl(vTeamName)} />
                 </th>
-                { game.vTeam.linescore.length > 0
-                  ? game.vTeam.linescore.map((score: any) => <th className="value">{score.score}</th>)
-                  : <>
+                {game.vTeam.linescore.length > 0 ? (
+                  game.vTeam.linescore.map((score: any) => (
+                    <th className="value">{score.score}</th>
+                  ))
+                ) : (
+                  <>
                     <th>0</th>
                     <th>0</th>
                     <th>0</th>
                     <th>0</th>
-                    </>
-                }
+                  </>
+                )}
                 <th>{game.vTeam.score | 0}</th>
               </tr>
             </tbody>
