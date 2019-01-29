@@ -3,11 +3,11 @@ import { format } from 'date-fns';
 export function getPeriod(game: any) {
   const period = game.period;
   let periodStr = '';
-  
+
   if (game.isGameActivated || period.current > 0) {
     if (period.isHalftime) {
       periodStr = 'Halftime';
-    } else if (period.current === period.maxRegular && ! game.clock) {
+    } else if (period.current === period.maxRegular && !game.clock) {
       periodStr = 'Final';
     } else if (period.isEndOfPeriod) {
       periodStr = `End of ${period.current}Q`;
