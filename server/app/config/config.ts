@@ -13,7 +13,7 @@ let envConfig = {};
 
 try {
   envConfig = require(`./env.${config.env}`) || {};
-} catch(e) {
+} catch (e) {
   envConfig = {};
 }
 
@@ -21,4 +21,3 @@ export default {
   ...config,
   ...envConfig,
 };
-

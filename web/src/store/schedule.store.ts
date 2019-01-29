@@ -6,16 +6,15 @@ import { GeneralStore } from './general.store';
 
 export class ScheduleStore {
   @observable date = new Date();
-  @observable games:any[] = [];
+  @observable games: any[] = [];
 
   constructor(generalStore: GeneralStore) {
     autorun(() => {
       generalStore.setLoading(true);
-      getSchedule(this.date)
-        .then(({ games }) => {
-          this.games = games;
-          generalStore.setLoading(false);
-        })
+      getSchedule(this.date).then(({ games }) => {
+        this.games = games;
+        generalStore.setLoading(false);
+      });
     });
   }
 
@@ -41,6 +40,6 @@ export class ScheduleStore {
 
   @action.bound
   prevDay() {
-    this.date = addDays(this.date, - 1);
+    this.date = addDays(this.date, -1);
   }
 }

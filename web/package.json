@@ -7,8 +7,6 @@
     "@types/jest": "23.3.10",
     "@types/node": "10.12.15",
     "@types/reach__router": "^1.2.2",
-    "@types/react": "16.7.17",
-    "@types/react-dom": "16.0.11",
     "@types/react-icons": "^2.2.6",
     "@types/reactstrap": "^6.4.3",
     "bootstrap": "^4.2.1",
@@ -24,7 +22,6 @@
     "typescript": "3.2.2"
   },
   "scripts": {
-    "postinstall": "yarn build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -40,5 +37,9 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "@types/react": "^16.7.22",
+    "@types/react-dom": "^16.0.11"
+  }
 }

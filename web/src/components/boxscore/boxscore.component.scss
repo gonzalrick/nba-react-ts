@@ -1,7 +1,7 @@
 .teamIcon {
   height: 75px;
 
-  @media screen and (max-width:420px) {
+  @media screen and (max-width: 420px) {
     height: 45px;
   }
 }
@@ -13,7 +13,7 @@
     vertical-align: middle;
     border-top: none;
   }
-  
+
   .value {
     font-weight: normal;
   }

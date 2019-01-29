@@ -15,14 +15,14 @@ class App extends Component<any> {
     return (
       <div className="App">
         <Navigation />
-        {
-          isLoading
-          ? <Loading />
-          : <Router>
-              <Schedule path="/" default/>
-              <Game path="game/:date/:gameId" />
-            </Router>
-        }
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <Router>
+            <Schedule path="/" default />
+            <Game path="game/:date/:gameId" />
+          </Router>
+        )}
       </div>
     );
   }
