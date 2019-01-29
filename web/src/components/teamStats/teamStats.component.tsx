@@ -3,13 +3,22 @@ import { inject, observer } from 'mobx-react';
 import { Table, TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardBody, CardTitle, CardText, Row, Col } from 'reactstrap';
 
 import './teamStats.component.scss';
-import { GameStore } from '../../store';
+import { GameStore, PlayerStore, TeamsStore } from '../../store';
+
+interface IState {
+  activeTab: string;
+}
 
 @inject('gameStore')
+@inject('playerStore')
+@inject('teamStore')
 @observer
 export class TeamStats extends React.Component<any> {
-  public store: GameStore = this.props.gameStore;
-  state: any;
+  public gameStore: GameStore = this.props.gameStore;
+  public playerStore: PlayerStore = this.props.playerStore;
+  public teamStore: TeamsStore = this.props.teamStore;
+  
+  state: IState;
 
   constructor(props: any) {
     super(props);
@@ -28,8 +37,10 @@ export class TeamStats extends React.Component<any> {
     }
   }
   render() {
-    const stats = this.store.gameStats;
-    const game = this.store.gameData;
+    const stats = this.gameStore.gameStats;
+    const game = this.gameStore.gameData;
+    const hTeam = this.teamStore.getTeam(game.hTeam.triCode);
+    const vTeam = this.teamStore.getTeam(game.vTeam.triCode);
     return (
       <div className="teamStats">
         <Nav tabs>
@@ -38,7 +49,15 @@ export class TeamStats extends React.Component<any> {
               className={this.state.activeTab === '1' ? 'active' : ''}
               onClick={() => { this.toggle('1'); }}
             >
-              Stats
+              Team Stats
+            </NavLink>
+          </NavItem>
+          <NavItem className="item">
+            <NavLink
+              className={this.state.activeTab === '2' ? 'active' : ''}
+              onClick={() => { this.toggle('2'); }}
+            >
+              {hTeam.fullName}
             </NavLink>
           </NavItem>
           <NavItem className="item">
@@ -46,11 +65,19 @@ export class TeamStats extends React.Component<any> {
               className={this.state.activeTab === '3' ? 'active' : ''}
               onClick={() => { this.toggle('3'); }}
             >
+              {vTeam.fullName}
+            </NavLink>
+          </NavItem>
+          <NavItem className="item">
+            <NavLink
+              className={this.state.activeTab === '4' ? 'active' : ''}
+              onClick={() => { this.toggle('4'); }}
+            >
               News
             </NavLink>
           </NavItem>
         </Nav>
-        <Card>
+        <Card className="statsCard">
           <CardBody>
             <TabContent activeTab={this.state.activeTab}>
               <TabPane tabId="1">
@@ -68,13 +95,58 @@ export class TeamStats extends React.Component<any> {
                         {
                           stats
                             ? Object.keys(stats.hTeam.totals).map((key) => {
-                              return <tr>
+                              return <tr key={key}>
                                 <th className="value">{stats.hTeam.totals[key]}</th>
-                                <th className="key">{key}</th>
+                                <th className="key">{key.toUpperCase()}</th>
                                 <th className="value">{stats.vTeam.totals[key]}</th>
                               </tr>
                             })
                             : <tr></tr>
+                        }
+                      </tbody>
+                    </Table>
+                  </Col>
+                </Row>
+              </TabPane>
+              <TabPane tabId="2">
+                <Row>
+                  <Col sm="12">
+                    <Table>
+                      <thead>
+                        <tr>
+                          <th key="number">#</th>
+                          <th key="name">Name</th>
+                          <th>MIN</th>
+                          <th>PTS</th>
+                          <th>REB</th>
+                          <th>AST</th>
+                          <th>STL</th>
+                          <th>TO</th>
+                          <th>FG</th>
+                          <th>3PT</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {
+                          stats.activePlayers
+                            .filter((player: any) => player.teamId === hTeam.teamId)
+                            .map((playerStats: any) => {
+                              const player = this.playerStore.getPlayer(playerStats.personId);
+                              return (
+                                <tr>
+                                  <th>{player.jersey}</th>
+                                  <th>{`${player.firstName} ${player.lastName}`}</th>
+                                  <th>{playerStats.min}</th>
+                                  <th>{playerStats.points}</th>
+                                  <th>{playerStats.totReb}</th>
+                                  <th>{playerStats.assists}</th>
+                                  <th>{playerStats.steals}</th>
+                                  <th>{playerStats.turnovers}</th>
+                                  <th>{`${playerStats.fgm} / ${playerStats.fga}`}</th>
+                                  <th>{`${playerStats.tpm} / ${playerStats.tpa}`}</th>
+                                </tr>
+                              );
+                            })
                         }
                       </tbody>
                     </Table>

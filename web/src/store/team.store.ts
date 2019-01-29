@@ -3,7 +3,6 @@ import { observable, computed, autorun, action } from 'mobx';
 import { getTeams } from '../services';
 import { GeneralStore } from './general.store';
 import { getCurrentSeason } from '../utils';
-
 export class TeamsStore {
   @observable teams:any[] = [];
 
@@ -24,5 +23,16 @@ export class TeamsStore {
   @computed
   get teamList(): any[] {
     return this.teams;
+  }
+
+  @action.bound
+  getTeamName(code: string) {
+    const team = this.teams.find(team => team.tricode === code);
+    return team ? team.fullName : '';
+  }
+
+  @action.bound
+  getTeam(code: string) {
+    return this.teams.find(team => team.tricode === code);
   }
 }

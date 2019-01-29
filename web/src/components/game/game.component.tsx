@@ -11,7 +11,6 @@ import {
 
 import './game.component.scss';
 import { GameStore } from '../../store';
-import { getPeriod } from '../../utils';
 import { Boxscore } from '../boxscore/boxscore.component';
 import { TeamStats } from '../teamStats/teamStats.component';
 

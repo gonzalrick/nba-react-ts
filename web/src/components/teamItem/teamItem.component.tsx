@@ -11,14 +11,9 @@ import { getTeamIconUrl } from '../../utils';
 class TeamItem extends Component<any> {
     public teams: TeamsStore = this.props.teamStore;
 
-    getTeamName(code: string): string {
-        const team = this.teams.teamList.find(team => team.tricode === code);
-        return team ? team.fullName : '';
-    }
-
     render() {
         const team = this.props.team;
-        const teamName = this.getTeamName(team.triCode);
+        const teamName = this.teams.getTeamName(team.triCode);
         return (
             <Row className={`teamItem d-flex flex-row${this.props.home ? '' : '-reverse'}`}>
                 <Col xs="9" className="nopadding">
