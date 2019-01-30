@@ -15,8 +15,8 @@ interface ArticleArgs {
 
 export const ArticleController: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
   const args: ArticleArgs = req.params;
-  const today: Date = startOfDay(format(new Date()));
-  const argDate: Date = startOfDay(format(parse(args.date)));
+  const today: Date = startOfDay(new Date());
+  const argDate: Date = startOfDay(parse(args.date));
 
   // Change article Type based on dates
   const articleType = argDate >= today ? 'preview' : 'recap';
