@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import { startOfDay } from 'date-fns';
+import { startOfDay, parse, format } from 'date-fns';
 import {
   NextFunction,
   Request,
@@ -15,24 +15,19 @@ interface ArticleArgs {
 
 export const ArticleController: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
   const args: ArticleArgs = req.params;
-  const today: Date = startOfDay(new Date());
+  const today: Date = startOfDay(format(new Date()));
+  const argDate: Date = startOfDay(format(parse(args.date)));
 
-  let year = args.date.substring(0,4);
-  let month = args.date.substring(4,6);
-  let day = args.date.substring(6,8);
-  
-  const argDate: Date= startOfDay(new Date(year, month-1, day));
-  let articleType: string;
   // Change article Type based on dates
-  (argDate >= today) ? articleType = 'preview': articleType =  'recap';
+  const articleType = argDate >= today ? 'preview' : 'recap';
   const url = `http://data.nba.net/data/10s/prod/v1/${args.date}/${args.gameId}_${articleType}_article.json`;
   fetch(url)
     .then(res => {
-      if(res.ok) {
+      if (res.ok) {
         return res.json();
       } else { // Bad or no response
         let badRes = {
-          status: res.status, 
+          status: res.status,
           message: "No article available for this game"
         }
         return badRes;
