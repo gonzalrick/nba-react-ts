@@ -17,17 +17,20 @@ import {
 } from 'reactstrap';
 
 import './teamStats.component.scss';
+import { Article } from '../article/article.component';
 import { GameStore } from '../../store';
 
+
 @inject('gameStore')
+
 @observer
 export class TeamStats extends React.Component<any> {
   public store: GameStore = this.props.gameStore;
+
   state: any;
 
   constructor(props: any) {
     super(props);
-
     this.toggle = this.toggle.bind(this);
     this.state = {
       activeTab: '1',
@@ -86,7 +89,7 @@ export class TeamStats extends React.Component<any> {
                         {stats ? (
                           Object.keys(stats.hTeam.totals).map(key => {
                             return (
-                              <tr>
+                              <tr key={key.toString()}>
                                 <th className="value">
                                   {stats.hTeam.totals[key]}
                                 </th>
@@ -98,12 +101,15 @@ export class TeamStats extends React.Component<any> {
                             );
                           })
                         ) : (
-                          <tr />
-                        )}
+                            <tr />
+                          )}
                       </tbody>
                     </Table>
                   </Col>
                 </Row>
+              </TabPane>
+              <TabPane tabId="3">
+                <Article />
               </TabPane>
             </TabContent>
           </CardBody>
