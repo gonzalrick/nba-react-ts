@@ -1,0 +1,9 @@
+#article-paragraphs {
+  -webkit-columns: 3 150px; /* Chrome, Safari, Opera */
+  -moz-columns: 3 150px; /* Firefox */
+  columns: 3 150px;
+  padding: 15px;
+    p {
+    text-align: justify;
+  }
+}

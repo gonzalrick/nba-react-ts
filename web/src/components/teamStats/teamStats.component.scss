@@ -14,7 +14,6 @@
   cursor: pointer;
 
   :hover {
-
   }
 
   .active {
@@ -22,15 +21,15 @@
   }
 }
 
-Table {
+table {
   th {
     text-align: center;
 
-    @media screen and (max-width:420px) {
+    @media screen and (max-width: 420px) {
       font-size: 3vw;
     }
   }
-  
+
   .value {
     font-weight: normal;
   }

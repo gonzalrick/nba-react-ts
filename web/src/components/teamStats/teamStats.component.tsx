@@ -1,13 +1,29 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Table, TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardBody, CardTitle, CardText, Row, Col } from 'reactstrap';
+import {
+  Table,
+  TabContent,
+  TabPane,
+  Nav,
+  NavItem,
+  NavLink,
+  Card,
+  Button,
+  CardBody,
+  CardTitle,
+  CardText,
+  Row,
+  Col,
+} from 'reactstrap';
 
 import './teamStats.component.scss';
+import { Article } from '../article/article.component';
 import { GameStore, PlayerStore, TeamsStore } from '../../store';
 
 interface IState {
   activeTab: string;
 }
+
 
 @inject('gameStore')
 @inject('playerStore')
@@ -17,22 +33,21 @@ export class TeamStats extends React.Component<any> {
   public gameStore: GameStore = this.props.gameStore;
   public playerStore: PlayerStore = this.props.playerStore;
   public teamStore: TeamsStore = this.props.teamStore;
-  
+
   state: IState;
 
   constructor(props: any) {
     super(props);
-
     this.toggle = this.toggle.bind(this);
     this.state = {
-      activeTab: '1'
+      activeTab: '1',
     };
   }
 
   toggle(tab: any) {
     if (this.state.activeTab !== tab) {
       this.setState({
-        activeTab: tab
+        activeTab: tab,
       });
     }
   }
@@ -47,7 +62,9 @@ export class TeamStats extends React.Component<any> {
           <NavItem className="item">
             <NavLink
               className={this.state.activeTab === '1' ? 'active' : ''}
-              onClick={() => { this.toggle('1'); }}
+              onClick={() => {
+                this.toggle('1');
+              }}
             >
               Team Stats
             </NavLink>
@@ -63,7 +80,9 @@ export class TeamStats extends React.Component<any> {
           <NavItem className="item">
             <NavLink
               className={this.state.activeTab === '3' ? 'active' : ''}
-              onClick={() => { this.toggle('3'); }}
+              onClick={() => {
+                this.toggle('3');
+              }}
             >
               {vTeam.fullName}
             </NavLink>
@@ -87,7 +106,7 @@ export class TeamStats extends React.Component<any> {
                       <thead>
                         <tr>
                           <th>{game.hTeam.triCode}</th>
-                          <th></th>
+                          <th />
                           <th>{game.vTeam.triCode}</th>
                         </tr>
                       </thead>
@@ -152,6 +171,9 @@ export class TeamStats extends React.Component<any> {
                     </Table>
                   </Col>
                 </Row>
+              </TabPane>
+              <TabPane tabId="3">
+                <Article />
               </TabPane>
             </TabContent>
           </CardBody>

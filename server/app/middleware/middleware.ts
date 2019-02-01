@@ -3,10 +3,7 @@ import bodyParser from 'body-parser';
 import cors, { CorsOptions } from 'cors';
 import express from 'express';
 
-const whiteList = [
-  'http://localhost:3000',
-  'http://localhost:3002',
-];
+const whiteList = ['http://localhost:3000', 'http://localhost:3002'];
 
 const corsOptions: CorsOptions = {
   origin: (origin, callback) => {

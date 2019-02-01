@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { IoIosArrowBack } from 'react-icons/io';
-import {
-  Button,
-  Col,
-  Container,
-  Row,
-  Table,
-} from 'reactstrap';
+import { Button, Col, Container, Row, Table } from 'reactstrap';
 
 import './game.component.scss';
 import { GameStore } from '../../store';
@@ -28,8 +22,8 @@ export class Game extends Component<any> {
   }
 
   public render() {
-    if (! this.store.hasData) {
-      return <div>Fetching game...</div>
+    if (!this.store.hasData) {
+      return <div>Fetching game...</div>;
     }
     return (
       <div className="game">
@@ -40,7 +34,7 @@ export class Game extends Component<any> {
           </Button>
           <Row>
             <Col xs="12" sm="12" md="12" lg="12" className="gameItem">
-              <Boxscore/>
+              <Boxscore />
               <TeamStats />
             </Col>
           </Row>

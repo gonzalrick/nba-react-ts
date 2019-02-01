@@ -7,12 +7,13 @@ import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import { GeneralStore, ScheduleStore, GameStore, TeamsStore, PlayerStore } from './store/';
+import { GeneralStore, ScheduleStore, GameStore, TeamsStore, PlayerStore, ArticleStore } from './store/';
 const generalStore = new GeneralStore();
 const scheduleStore = new ScheduleStore(generalStore);
 const gameStore = new GameStore(generalStore);
 const teamStore = new TeamsStore(generalStore);
 const playerStore = new PlayerStore(generalStore);
+const articleStore = new ArticleStore(generalStore);
 
 ReactDOM.render(
   <Provider
@@ -21,10 +22,11 @@ ReactDOM.render(
     gameStore={gameStore}
     teamStore={teamStore}
     playerStore={playerStore}
+    articleStore={articleStore}
   >
     <App />
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want your app to work offline and load faster, you can change
