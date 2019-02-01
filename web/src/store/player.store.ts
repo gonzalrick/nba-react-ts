@@ -5,7 +5,7 @@ import { GeneralStore } from './general.store';
 import { getCurrentSeason } from '../utils';
 
 export class PlayerStore {
-  @observable players:any[] = [];
+  @observable players: any[] = [];
 
   constructor(generalStore: GeneralStore) {
     autorun(() => {
@@ -26,7 +26,13 @@ export class PlayerStore {
   }
 
   @action.bound
-  getPlayer(id: string) {
+  getById(id: string) {
     return this.players.find(player => player.personId === id);
   }
+
+  @action.bound
+  getByTeam(teamId: string) {
+    return this.players.filter(player => player.teamId === teamId)
+  }
+
 }

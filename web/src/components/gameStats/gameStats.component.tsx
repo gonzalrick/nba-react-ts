@@ -32,6 +32,26 @@ export class GameStats extends React.Component<any> {
   public teamStore: TeamsStore = this.props.teamStore;
 
   state: IState;
+  statKeys: string[] = [
+    'points',
+    'fgm',
+    'fga',
+    'fgp',
+    'ftm',
+    'fta',
+    'ftp',
+    'tpm',
+    'tpa',
+    'tpp',
+    'offReb',
+    'defReb',
+    'totReb',
+    'assists',
+    'pFouls',
+    'steals',
+    'turnovers',
+    'blocks',
+  ];
 
   constructor(props: any) {
     super(props);
@@ -109,15 +129,13 @@ export class GameStats extends React.Component<any> {
                       </thead>
                       <tbody>
                         {
-                          stats
-                            ? Object.keys(stats.hTeam.totals).map((key) => {
-                              return <tr key={key}>
-                                <th className="value">{stats.hTeam.totals[key]}</th>
-                                <th className="key">{key.toUpperCase()}</th>
-                                <th className="value">{stats.vTeam.totals[key]}</th>
-                              </tr>
-                            })
-                            : <tr></tr>
+                          this.statKeys.map((key) => {
+                            return <tr key={key}>
+                              <th className="value">{stats ? stats.hTeam.totals[key] : '-'}</th>
+                              <th className="key">{key.toUpperCase()}</th>
+                              <th className="value">{stats ? stats.vTeam.totals[key] : '-'}</th>
+                            </tr>
+                          })
                         }
                       </tbody>
                     </Table>
