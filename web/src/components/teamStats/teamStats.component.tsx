@@ -2,119 +2,81 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import {
   Table,
-  TabContent,
-  TabPane,
-  Nav,
-  NavItem,
-  NavLink,
-  Card,
-  Button,
-  CardBody,
-  CardTitle,
-  CardText,
   Row,
   Col,
 } from 'reactstrap';
 
 import './teamStats.component.scss';
-import { Article } from '../article/article.component';
-import { GameStore } from '../../store';
+import { PlayerStore } from '../../store';
 
-
-@inject('gameStore')
-
+@inject('playerStore')
 @observer
 export class TeamStats extends React.Component<any> {
-  public store: GameStore = this.props.gameStore;
+  public playerStore: PlayerStore = this.props.playerStore;
+  statKeys: string[] = ['#', 'name', 'min', 'pts', 'reb', 'ast', 'stl', 'to', 'fg', '3pt']
 
-  state: any;
-
-  constructor(props: any) {
-    super(props);
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      activeTab: '1',
-    };
-  }
-
-  toggle(tab: any) {
-    if (this.state.activeTab !== tab) {
-      this.setState({
-        activeTab: tab,
-      });
-    }
-  }
   render() {
-    const stats = this.store.gameStats;
-    const game = this.store.gameData;
+    const stats = this.props.stats;
+    const team = this.props.team;
     return (
-      <div className="teamStats">
-        <Nav tabs>
-          <NavItem className="item">
-            <NavLink
-              className={this.state.activeTab === '1' ? 'active' : ''}
-              onClick={() => {
-                this.toggle('1');
-              }}
-            >
-              Stats
-            </NavLink>
-          </NavItem>
-          <NavItem className="item">
-            <NavLink
-              className={this.state.activeTab === '3' ? 'active' : ''}
-              onClick={() => {
-                this.toggle('3');
-              }}
-            >
-              News
-            </NavLink>
-          </NavItem>
-        </Nav>
-        <Card>
-          <CardBody>
-            <TabContent activeTab={this.state.activeTab}>
-              <TabPane tabId="1">
-                <Row>
-                  <Col sm="12">
-                    <Table>
-                      <thead>
+      <Row>
+        <Col sm='12'>
+          <Table>
+            <thead>
+              <tr>
+                {this.statKeys.map(key => <th key={key}>{key.toUpperCase()}</th>)}
+              </tr>
+            </thead>
+            <tbody>
+              {
+                stats ?
+                  stats.activePlayers
+                    .filter((player: any) => player.teamId === team.teamId)
+                    .map((playerStats: any) => {
+                      const player = this.playerStore.getById(playerStats.personId);
+                      return (
                         <tr>
-                          <th>{game.hTeam.triCode}</th>
-                          <th />
-                          <th>{game.vTeam.triCode}</th>
+                          <th key='#'>{player.jersey}</th>
+                          <th key='name'>{`${player.firstName} ${player.lastName}`}</th>
+                          <th key='min'>{playerStats.min}</th>
+                          {
+                            playerStats.dnp ?
+                              <th key='dnp'>{playerStats.dnp}</th> :
+                              <>
+                                <th key='pts'>{playerStats.points}</th>
+                                <th key='reb'>{playerStats.totReb}</th>
+                                <th key='ast'>{playerStats.assists}</th>
+                                <th key='stl'>{playerStats.steals}</th>
+                                <th key='to'>{playerStats.turnovers}</th>
+                                <th key='fg'>{`${playerStats.fgm} / ${playerStats.fga}`}</th>
+                                <th key='3pt'>{`${playerStats.tpm} / ${playerStats.tpa}`}</th>
+                              </>
+                          }
                         </tr>
-                      </thead>
-                      <tbody>
-                        {stats ? (
-                          Object.keys(stats.hTeam.totals).map(key => {
-                            return (
-                              <tr key={key.toString()}>
-                                <th className="value">
-                                  {stats.hTeam.totals[key]}
-                                </th>
-                                <th className="key">{key}</th>
-                                <th className="value">
-                                  {stats.vTeam.totals[key]}
-                                </th>
-                              </tr>
-                            );
-                          })
-                        ) : (
-                            <tr />
-                          )}
-                      </tbody>
-                    </Table>
-                  </Col>
-                </Row>
-              </TabPane>
-              <TabPane tabId="3">
-                <Article />
-              </TabPane>
-            </TabContent>
-          </CardBody>
-        </Card>
-      </div>
+                      );
+                    }) :
+                  this.playerStore.getByTeam(team.teamId)
+                    .map(player => {
+                      return (
+                        <tr>
+                          <th key='#'>{player.jersey}</th>
+                          <th key='name'>{`${player.firstName} ${player.lastName}`}</th>
+                          <th key='min'>-</th>
+                          <th key='pts'>-</th>
+                          <th key='reb'>-</th>
+                          <th key='ast'>-</th>
+                          <th key='stl'>-</th>
+                          <th key='to'>-</th>
+                          <th key='fg'>-</th>
+                          <th key='3pt'>-</th>
+                        </tr>
+                      )
+                    })
+              }
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
     );
   }
 }

@@ -13,15 +13,10 @@ export class Boxscore extends Component<any> {
   public store: GameStore = this.props.gameStore;
   public teams: TeamsStore = this.props.teamStore;
 
-  getTeamName(code: string): string {
-    const team = this.teams.teamList.find(team => team.tricode === code);
-    return team ? team.fullName : '';
-  }
-
   render() {
     const game = this.store.gameData;
-    const hTeamName = this.getTeamName(game.hTeam.triCode);
-    const vTeamName = this.getTeamName(game.vTeam.triCode);
+    const hTeamName = this.teams.getTeamName(game.hTeam.triCode);
+    const vTeamName = this.teams.getTeamName(game.vTeam.triCode);
 
     return (
       <Card>
@@ -45,36 +40,31 @@ export class Boxscore extends Component<any> {
                 <th scope="row">
                   <img className="teamIcon" src={getTeamIconUrl(hTeamName)} />
                 </th>
-                {game.hTeam.linescore.length > 0 ? (
-                  game.hTeam.linescore.map((score: any, key: number) => (
-                    <th key={key} className="value">{score.score}</th>
-                  ))
-                ) : (
-                    <>
-                      <th>0</th>
-                      <th>0</th>
-                      <th>0</th>
-                      <th>0</th>
+                {
+                  game.hTeam.linescore.length > 0
+                    ? game.hTeam.linescore.map((score: any) => <th className="value">{score.score}</th>)
+                    : <>
+                      <th key="h1">0</th>
+                      <th key="h2">0</th>
+                      <th key="h3">0</th>
+                      <th key="h4">0</th>
                     </>
-                  )}
+                }
                 <th>{game.hTeam.score | 0}</th>
               </tr>
               <tr>
                 <th scope="row">
                   <img className="teamIcon" src={getTeamIconUrl(vTeamName)} />
                 </th>
-                {game.vTeam.linescore.length > 0 ? (
-                  game.vTeam.linescore.map((score: any, key: number) => (
-                    <th key={key} className="value">{score.score}</th>
-                  ))
-                ) : (
-                    <>
-                      <th>0</th>
-                      <th>0</th>
-                      <th>0</th>
-                      <th>0</th>
-                    </>
-                  )}
+                {game.vTeam.linescore.length > 0
+                  ? game.vTeam.linescore.map((score: any) => <th className="value">{score.score}</th>)
+                  : <>
+                    <th key="v1">0</th>
+                    <th key="v2">0</th>
+                    <th key="v3">0</th>
+                    <th key="v4">0</th>
+                  </>
+                }
                 <th>{game.vTeam.score | 0}</th>
               </tr>
             </tbody>

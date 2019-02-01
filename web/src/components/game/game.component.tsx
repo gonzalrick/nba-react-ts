@@ -5,9 +5,8 @@ import { Button, Col, Container, Row, Table } from 'reactstrap';
 
 import './game.component.scss';
 import { GameStore } from '../../store';
-import { getPeriod } from '../../utils';
 import { Boxscore } from '../boxscore/boxscore.component';
-import { TeamStats } from '../teamStats/teamStats.component';
+import { GameStats } from '../gameStats/gameStats.component';
 
 @inject('gameStore')
 @observer
@@ -36,7 +35,7 @@ export class Game extends Component<any> {
           <Row>
             <Col xs="12" sm="12" md="12" lg="12" className="gameItem">
               <Boxscore />
-              <TeamStats />
+              <GameStats />
             </Col>
           </Row>
         </Container>
