@@ -4,17 +4,19 @@ import { IoIosArrowBack } from 'react-icons/io';
 import { Button, Col, Container, Row, Table } from 'reactstrap';
 
 import './game.component.scss';
-import { GameStore } from '../../store';
+import { GameStore, TeamsStore } from '../../store';
 import { Boxscore } from '../boxscore/boxscore.component';
 import { GameStats } from '../gameStats/gameStats.component';
 
 @inject('gameStore')
+@inject('teamStore')
 @observer
 export class Game extends Component<any> {
-  public store: GameStore = this.props.gameStore;
+  public gameStore: GameStore = this.props.gameStore;
+  public teamStore: TeamsStore = this.props.teamStore;
 
   componentDidMount() {
-    this.store.setGameArgs(this.props.date, this.props.gameId);
+    this.gameStore.setGameArgs(this.props.date, this.props.gameId);
   }
 
   back() {
@@ -22,9 +24,18 @@ export class Game extends Component<any> {
   }
 
   public render() {
-    if (!this.store.hasData) {
+    if (!this.gameStore.hasData) {
       return <div>Fetching game...</div>;
     }
+    const game = this.gameStore.gameData;
+    const hTeam = {
+      ...game.hTeam,
+      name: this.teamStore.getTeamName(game.hTeam.triCode),
+    };
+    const vTeam = {
+      ...game.vTeam,
+      name: this.teamStore.getTeamName(game.vTeam.triCode),
+    };
     return (
       <div className="game">
         <Container>
@@ -34,7 +45,7 @@ export class Game extends Component<any> {
           </Button>
           <Row>
             <Col xs="12" sm="12" md="12" lg="12" className="gameItem">
-              <Boxscore />
+              <Boxscore period={game.period} hTeam={hTeam} vTeam={vTeam} />
               <GameStats />
             </Col>
           </Row>
