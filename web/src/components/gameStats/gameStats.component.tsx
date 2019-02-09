@@ -1,63 +1,31 @@
 import React from 'react';
-import { inject, observer } from 'mobx-react';
 import {
-  Table,
   TabContent,
   TabPane,
   Nav,
-  NavItem,
-  NavLink,
   Card,
   CardBody,
-  Row,
-  Col,
 } from 'reactstrap';
 
 import './gameStats.component.scss';
 import { Article } from '../article/article.component';
-import { GameStore, PlayerStore, TeamsStore } from '../../store';
 import { TeamStats } from '../teamStats/teamStats.component';
+import Tab from './tab.component';
+import GameStateTable from './gameStatsTable.component';
 
 interface IState {
-  activeTab: string;
+  activeTab: number;
 }
 
-@inject('gameStore')
-@inject('playerStore')
-@inject('teamStore')
-@observer
 export class GameStats extends React.Component<any> {
-  public gameStore: GameStore = this.props.gameStore;
-  public playerStore: PlayerStore = this.props.playerStore;
-  public teamStore: TeamsStore = this.props.teamStore;
 
   state: IState;
-  statKeys: string[] = [
-    'points',
-    'fgm',
-    'fga',
-    'fgp',
-    'ftm',
-    'fta',
-    'ftp',
-    'tpm',
-    'tpa',
-    'tpp',
-    'offReb',
-    'defReb',
-    'totReb',
-    'assists',
-    'pFouls',
-    'steals',
-    'turnovers',
-    'blocks',
-  ];
 
   constructor(props: any) {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.state = {
-      activeTab: '1',
+      activeTab: 1,
     };
   }
 
@@ -69,86 +37,30 @@ export class GameStats extends React.Component<any> {
     }
   }
   render() {
-    const stats = this.gameStore.gameStats;
-    const game = this.gameStore.gameData;
-    const hTeam = this.teamStore.getTeam(game.hTeam.triCode);
-    const vTeam = this.teamStore.getTeam(game.vTeam.triCode);
+    const stats = this.props.stats;
+    const hTeam = this.props.hTeam;
+    const vTeam = this.props.vTeam;
     return (
       <div className="gameStats">
         <Nav tabs>
-          <NavItem className="item">
-            <NavLink
-              className={this.state.activeTab === '1' ? 'active' : ''}
-              onClick={() => {
-                this.toggle('1');
-              }}
-            >
-              Game Stats
-            </NavLink>
-          </NavItem>
-          <NavItem className="item">
-            <NavLink
-              className={this.state.activeTab === '2' ? 'active' : ''}
-              onClick={() => { this.toggle('2'); }}
-            >
-              {hTeam.fullName}
-            </NavLink>
-          </NavItem>
-          <NavItem className="item">
-            <NavLink
-              className={this.state.activeTab === '3' ? 'active' : ''}
-              onClick={() => {
-                this.toggle('3');
-              }}
-            >
-              {vTeam.fullName}
-            </NavLink>
-          </NavItem>
-          <NavItem className="item">
-            <NavLink
-              className={this.state.activeTab === '4' ? 'active' : ''}
-              onClick={() => { this.toggle('4'); }}
-            >
-              Article
-            </NavLink>
-          </NavItem>
+          <Tab title={'Game Stats'} toggle={this.toggle} isActive={this.state.activeTab === 1} index={1} />
+          <Tab title={hTeam.name} toggle={this.toggle} isActive={this.state.activeTab === 2} index={2} />
+          <Tab title={vTeam.name} toggle={this.toggle} isActive={this.state.activeTab === 3} index={3} />
+          <Tab title={'Article'} toggle={this.toggle} isActive={this.state.activeTab === 4} index={4} />
         </Nav>
         <Card className="statsCard">
           <CardBody>
             <TabContent activeTab={this.state.activeTab}>
-              <TabPane tabId="1">
-                <Row>
-                  <Col sm="12">
-                    <Table>
-                      <thead>
-                        <tr>
-                          <th>{game.hTeam.triCode}</th>
-                          <th />
-                          <th>{game.vTeam.triCode}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {
-                          this.statKeys.map((key) => {
-                            return <tr key={key}>
-                              <th className="value">{stats ? stats.hTeam.totals[key] : '-'}</th>
-                              <th className="key">{key.toUpperCase()}</th>
-                              <th className="value">{stats ? stats.vTeam.totals[key] : '-'}</th>
-                            </tr>
-                          })
-                        }
-                      </tbody>
-                    </Table>
-                  </Col>
-                </Row>
+              <TabPane tabId={1}>
+                <GameStateTable stats={stats} hTeam={hTeam} vTeam={vTeam} />
               </TabPane>
-              <TabPane tabId="2">
+              <TabPane tabId={2}>
                 <TeamStats stats={stats} team={hTeam} />
               </TabPane>
-              <TabPane tabId="3">
+              <TabPane tabId={3}>
                 <TeamStats stats={stats} team={vTeam} />
               </TabPane>
-              <TabPane tabId="4">
+              <TabPane tabId={4}>
                 <Article />
               </TabPane>
             </TabContent>

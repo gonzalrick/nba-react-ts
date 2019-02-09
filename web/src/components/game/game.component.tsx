@@ -46,7 +46,7 @@ export class Game extends Component<any> {
           <Row>
             <Col xs="12" sm="12" md="12" lg="12" className="gameItem">
               <Boxscore period={game.period} hTeam={hTeam} vTeam={vTeam} />
-              <GameStats />
+              <GameStats stats={this.gameStore.gameStats} hTeam={hTeam} vTeam={vTeam} />
             </Col>
           </Row>
         </Container>

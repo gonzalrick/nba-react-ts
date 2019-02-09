@@ -35,7 +35,7 @@ export class TeamStats extends React.Component<any> {
                     .map((playerStats: any) => {
                       const player = this.playerStore.getById(playerStats.personId);
                       return (
-                        <tr>
+                        <tr key={player.personId}>
                           <th key='#'>{player.jersey}</th>
                           <th key='name'>{`${player.firstName} ${player.lastName}`}</th>
                           <th key='min'>{playerStats.min}</th>
@@ -58,7 +58,7 @@ export class TeamStats extends React.Component<any> {
                   this.playerStore.getByTeam(team.teamId)
                     .map(player => {
                       return (
-                        <tr>
+                        <tr key={player.personId}>
                           <th key='#'>{player.jersey}</th>
                           <th key='name'>{`${player.firstName} ${player.lastName}`}</th>
                           <th key='min'>-</th>

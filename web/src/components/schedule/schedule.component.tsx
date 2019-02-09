@@ -4,7 +4,7 @@ import { Container, Row } from 'reactstrap';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 import { ScheduleStore } from '../../store';
-import { ScheduleItem } from '../scheduleItem/scheduleItem.component';
+import ScheduleItem from '../scheduleItem/scheduleItem.component';
 import { humaniseDate } from '../../utils';
 import './schedule.component.scss';
 
