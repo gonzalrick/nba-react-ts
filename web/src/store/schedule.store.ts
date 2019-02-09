@@ -3,14 +3,20 @@ import { addDays } from 'date-fns';
 
 import { getSchedule } from '../services';
 import { GeneralStore } from './general.store';
+import { TeamsStore } from './team.store';
 
 export class ScheduleStore {
   @observable date = new Date();
   @observable games: any[] = [];
 
-  constructor(generalStore: GeneralStore) {
-    autorun(() => {
+  constructor(generalStore: GeneralStore, teamStore: TeamsStore) {
+    autorun(async () => {
       generalStore.setLoading(true);
+
+      if (!teamStore.hasTeams) {
+        await teamStore.loadTeams();
+      }
+
       getSchedule(this.date).then(({ games }) => {
         this.games = games;
         generalStore.setLoading(false);

@@ -7,23 +7,29 @@ export class TeamsStore {
   @observable teams: any[] = [];
 
   constructor(generalStore: GeneralStore) {
-    autorun(() => {
+    autorun(async () => {
       generalStore.setLoading(true);
-
-      const currentSeason = getCurrentSeason();
-      getTeams(currentSeason).then(teams => {
-        const nbaTeams = teams.league.standard.filter(
-          (team: any) => team.isNBAFranchise,
-        );
-        this.teams = nbaTeams;
-        generalStore.setLoading(false);
-      });
+      await this.loadTeams();
+      generalStore.setLoading(false);
     });
+  }
+
+  async loadTeams() {
+    const season = getCurrentSeason();
+    const allTeams = await getTeams(season);
+    this.teams = allTeams.league.standard.filter(
+      (team: any) => team.isNBAFranchise,
+    );
   }
 
   @computed
   get teamList(): any[] {
     return this.teams;
+  }
+
+  @computed
+  get hasTeams(): boolean {
+    return this.teams.length > 0;
   }
 
   @action.bound

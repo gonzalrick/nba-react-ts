@@ -7,7 +7,7 @@ import { getPeriod } from '../../utils';
 
 import './scheduleItem.component.scss';
 
-export default ({ game }: any) => (
+export default ({ game, hTeam, vTeam }: any) => (
   <Col md="12" lg="6" className="scheduleItem" key={game.gameId}>
     <Link to={`/game/${game.startDateEastern}/${game.gameId}`}>
       <Card className="gameCard">
@@ -21,10 +21,10 @@ export default ({ game }: any) => (
             <Col>
               <Row>
                 <Col xs="6">
-                  <TeamItem team={game.hTeam} home={true} />
+                  <TeamItem team={hTeam} isHome={true} />
                 </Col>
                 <Col xs="6">
-                  <TeamItem team={game.vTeam} home={false} />
+                  <TeamItem team={vTeam} isHome={false} />
                 </Col>
               </Row>
             </Col>
