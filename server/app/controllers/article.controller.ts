@@ -1,12 +1,11 @@
 import fetch from 'node-fetch';
-import { startOfDay, parse, format } from 'date-fns';
+import { startOfDay, parse } from 'date-fns';
 import {
   NextFunction,
   Request,
   RequestHandler,
   Response
 } from 'express';
-import { json } from 'body-parser';
 
 interface ArticleArgs {
   date: any,
@@ -27,6 +26,12 @@ export const ArticleController: RequestHandler = (req: Request, res: Response, n
         return res.json();
       } else { // Bad or no response
         let badRes = {
+          author: '',
+          authorTitle: '',
+          copyright: '',
+          paragraphs: [],
+          pubDateUTC: '',
+          title: '',
           status: res.status,
           message: "No article available for this game"
         }

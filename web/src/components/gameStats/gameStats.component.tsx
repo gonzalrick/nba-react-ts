@@ -17,7 +17,13 @@ interface IState {
   activeTab: number;
 }
 
-export class GameStats extends React.Component<any> {
+interface IProps {
+  stats: any,
+  hTeam: any,
+  vTeam: any,
+}
+
+export class GameStats extends React.Component<IProps, IState> {
 
   state: IState;
 
