@@ -1,4 +1,5 @@
-export const schedule = async (root: any, { date }: any, { dataSources }: any) => {
-  const results = await dataSources.nbaAPI.getSchedule(date);
-  return [results, results];
+import { Schedule, QueryResolvers } from '../../generated';
+
+export const schedule: QueryResolvers.ScheduleResolver<Schedule[]> = async (root, { date }, context) => {
+  return await context.dataSources.nbaAPI.getSchedule(date);
 }

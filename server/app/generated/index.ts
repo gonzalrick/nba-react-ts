@@ -22,6 +22,8 @@ export interface ScheduleQueryArgs {
 
 import { GraphQLResolveInfo } from 'graphql';
 
+import { IContext } from '../context';
+
 export type Resolver<Result, Parent = {}, Context = {}, Args = {}> = (
   parent: Parent,
   args: Args,
@@ -72,14 +74,14 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
 ) => TResult | Promise<TResult>;
 
 export namespace QueryResolvers {
-  export interface Resolvers<Context = {}, TypeParent = {}> {
+  export interface Resolvers<Context = IContext, TypeParent = {}> {
     schedule?: ScheduleResolver<(Maybe<Schedule>)[], TypeParent, Context>;
   }
 
   export type ScheduleResolver<
     R = (Maybe<Schedule>)[],
     Parent = {},
-    Context = {}
+    Context = IContext
   > = Resolver<R, Parent, Context, ScheduleArgs>;
   export interface ScheduleArgs {
     date: string;
@@ -87,14 +89,14 @@ export namespace QueryResolvers {
 }
 
 export namespace ScheduleResolvers {
-  export interface Resolvers<Context = {}, TypeParent = Schedule> {
+  export interface Resolvers<Context = IContext, TypeParent = Schedule> {
     gameId?: GameIdResolver<string, TypeParent, Context>;
   }
 
   export type GameIdResolver<
     R = string,
     Parent = Schedule,
-    Context = {}
+    Context = IContext
   > = Resolver<R, Parent, Context>;
 }
 
@@ -102,7 +104,7 @@ export namespace ScheduleResolvers {
 export type SkipDirectiveResolver<Result> = DirectiveResolverFn<
   Result,
   SkipDirectiveArgs,
-  {}
+  IContext
 >;
 export interface SkipDirectiveArgs {
   /** Skipped when true. */
@@ -113,7 +115,7 @@ export interface SkipDirectiveArgs {
 export type IncludeDirectiveResolver<Result> = DirectiveResolverFn<
   Result,
   IncludeDirectiveArgs,
-  {}
+  IContext
 >;
 export interface IncludeDirectiveArgs {
   /** Included when true. */
@@ -124,14 +126,14 @@ export interface IncludeDirectiveArgs {
 export type DeprecatedDirectiveResolver<Result> = DirectiveResolverFn<
   Result,
   DeprecatedDirectiveArgs,
-  {}
+  IContext
 >;
 export interface DeprecatedDirectiveArgs {
   /** Explains why this element was deprecated, usually also including a suggestion for how to access supported similar data. Formatted using the Markdown syntax (as specified by [CommonMark](https://commonmark.org/). */
   reason?: string;
 }
 
-export interface IResolvers<Context = {}> {
+export interface IResolvers<Context = IContext> {
   Query?: QueryResolvers.Resolvers<Context>;
   Schedule?: ScheduleResolvers.Resolvers<Context>;
 }

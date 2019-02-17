@@ -1,4 +1,5 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
+import { Schedule } from '../generated';
 
 export class NbaAPI extends RESTDataSource {
   constructor() {
@@ -7,13 +8,15 @@ export class NbaAPI extends RESTDataSource {
   }
 
   async getSchedule(date: string) {
-    const response = await this.get(`v1/20190102/0021800554_boxscore.json`);
-    return this.reduceSchedule(response);
+    const results = await this.get(`v2/${date}/scoreboard.json`);
+    return results.map((result: any) => this.reduceSchedule(result));
   }
 
   reduceSchedule(data: any) {
-    return {
+    const schedule: Schedule = {
       gameId: data.basicGameData.gameId,
-    };
+    }
+
+    return schedule;
   }
 }
