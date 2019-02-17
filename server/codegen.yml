@@ -1,0 +1,8 @@
+overwrite: true
+schema: http://localhost:4000
+generates:
+  ./generated/index.ts:
+    plugins:
+      - "typescript-common"
+      - "typescript-server"
+      - "typescript-resolvers"
