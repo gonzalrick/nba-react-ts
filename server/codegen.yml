@@ -7,5 +7,5 @@ generates:
       - "typescript-server"
       - "typescript-resolvers"
     config:
-      contextType: ../context#IContext
+      contextType: ../interface#IContext
 

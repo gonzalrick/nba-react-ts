@@ -8,13 +8,23 @@ export class NbaAPI extends RESTDataSource {
   }
 
   async getSchedule(date: string) {
-    const results = await this.get(`v2/${date}/scoreboard.json`);
-    return results.map((result: any) => this.reduceSchedule(result));
+    const { games } = await this.get(`v2/${date}/scoreboard.json`);
+    return games.map((game: any) => this.reduceSchedule(game));
   }
 
   reduceSchedule(data: any) {
     const schedule: Schedule = {
-      gameId: data.basicGameData.gameId,
+      gameId: data.gameId,
+      isGameActivated: data.isGameActivated,
+      startTimeUTC: data.startTimeUTC,
+      endTimeUTC: data.endTimeUTC,
+      startDateEastern: data.startDateEastern,
+      nugget: data.nugget.text,
+      period: data.period,
+      vTeam: data.vTeam,
+      hTeam: data.hTeam,
+      seasonYear: data.seasonYear,
+      statusNum: data.statusNum,
     }
 
     return schedule;
