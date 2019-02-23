@@ -5,14 +5,10 @@ const definitions = gql`
   type Team {
     teamId: ID
     triCode: String
-    linescore: [Linescore]!
+    linescore: [Int]!
     loss: Int
     score: Int
     win: Int
-  }
-
-  type Linescore {
-    score: String
   }
 `;
 

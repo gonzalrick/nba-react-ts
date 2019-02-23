@@ -2,7 +2,7 @@ import { makeExecutableSchema } from 'graphql-tools';
 import { gql } from 'apollo-server';
 
 import { typeDefs as scheduleTypeDefs, resolvers as scheduleResolvers } from './schedule';
-import { typeDefs as teamTypeDefs } from './team';
+import { typeDefs as teamTypeDefs, resolvers as teamResolvers } from './team';
 
 const typeDef = gql`
   type Query
@@ -16,5 +16,6 @@ export const schema = makeExecutableSchema({
   ],
   resolvers: [
     scheduleResolvers,
+    teamResolvers,
   ],
 });
