@@ -4,7 +4,7 @@ import { Card, CardBody, Table } from 'reactstrap';
 import './boxscore.component.scss';
 import TeamBoxScore from './teamBoxscore/teamBoxscore.component';
 import { getOvertime, } from '../../utils';
-import { GetScheduleComponent } from '../../generated';
+import { GetScheduleComponent } from '../../generated/graphqlComponents';
 
 export const Boxscore = ({ period, hTeam, vTeam }: any) => (
   <GetScheduleComponent variables={{ date: '20190222' }}>

@@ -6,15 +6,26 @@
     "start": "concurrently \"npm run api\" \"npm run web\"",
     "api": "cd server && yarn start",
     "web": "cd web && yarn start",
+    "generate": "gql-gen --config codegen.yml",
     "test": "echo \"Error: no test specified\" && exit 1",
     "heroku-postbuild": "cd web && yarn && yarn build"
   },
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^4.1.0"
+    "concurrently": "^4.1.0",
+    "graphql-tag": "^2.10.1",
+    "react": "^16.8.3",
+    "react-apollo": "^2.4.1"
   },
   "devDependencies": {
-    "prettier": "^1.16.1"
+    "graphql-code-generator": "^0.17.0",
+    "graphql-codegen-typescript-client": "^0.17.0",
+    "graphql-codegen-typescript-common": "^0.17.0",
+    "graphql-codegen-typescript-react-apollo-template": "^0.17.0",
+    "graphql-codegen-typescript-resolvers": "^0.17.0",
+    "graphql-codegen-typescript-server": "^0.17.0",
+    "prettier": "^1.16.1",
+    "typescript": "^3.3.3333"
   },
   "workspaces": [
     "server",
