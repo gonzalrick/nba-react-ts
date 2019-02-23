@@ -1,0 +1,13 @@
+query getSchedule($date: String!) {
+  schedule(date: $date) {
+    hTeam {
+      triCode
+      score
+    }
+    vTeam {
+      triCode
+      score
+    }
+    nugget
+  }
+}
