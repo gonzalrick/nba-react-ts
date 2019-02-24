@@ -5,7 +5,7 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 import { ScheduleStore } from '../../store';
 import { ScheduleItem } from '../scheduleItem/scheduleItem.component';
-import { humaniseDate, convertDateTime } from '../../utils';
+import { humaniseDate, convertDateToUTC } from '../../utils';
 import './schedule.component.scss';
 import { GetScheduleComponent } from '../../generated/graphqlComponents';
 import { Loading } from '..';
@@ -16,7 +16,7 @@ export class Schedule extends Component<any> {
   store: ScheduleStore = this.props.scheduleStore;
   public render() {
     return (
-      <GetScheduleComponent variables={{ date: convertDateTime(this.store.date) }}>
+      <GetScheduleComponent variables={{ date: convertDateToUTC(this.store.date) }}>
         {({ data, error, loading }) => {
           if (loading) return <Loading />;
           console.log(data);

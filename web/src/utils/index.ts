@@ -1,4 +1,4 @@
-export * from './convertDateTime';
+export * from './convertDateToUTC';
 export * from './humaniseDate';
 export * from './getPeriod';
 export * from './getOvertime';
