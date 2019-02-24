@@ -24,7 +24,7 @@ class TeamItem extends Component<any> {
           <span>({team.win} - {team.loss})</span>
         </Col>
         <Col xs="3" className="score nopadding">
-          {team.score}
+          {team.score || ''}
         </Col>
       </Row>
     );

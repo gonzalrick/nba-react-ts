@@ -17,11 +17,35 @@ export type GetScheduleQuery = {
 export type GetScheduleSchedule = {
   __typename?: 'Schedule';
 
+  gameId: string;
+
+  clock: Maybe<string>;
+
+  isGameActivated: Maybe<boolean>;
+
+  startDateEastern: Maybe<string>;
+
+  startTimeUTC: Maybe<string>;
+
+  nugget: Maybe<string>;
+
+  period: Maybe<GetSchedulePeriod>;
+
   hTeam: Maybe<GetScheduleHTeam>;
 
   vTeam: Maybe<GetScheduleVTeam>;
+};
 
-  nugget: Maybe<string>;
+export type GetSchedulePeriod = {
+  __typename?: 'Period';
+
+  current: Maybe<number>;
+
+  isEndOfPeriod: Maybe<boolean>;
+
+  isHalftime: Maybe<boolean>;
+
+  maxRegular: Maybe<number>;
 };
 
 export type GetScheduleHTeam = {
@@ -30,6 +54,10 @@ export type GetScheduleHTeam = {
   triCode: Maybe<string>;
 
   score: Maybe<number>;
+
+  win: Maybe<number>;
+
+  loss: Maybe<number>;
 };
 
 export type GetScheduleVTeam = {
@@ -38,6 +66,10 @@ export type GetScheduleVTeam = {
   triCode: Maybe<string>;
 
   score: Maybe<number>;
+
+  win: Maybe<number>;
+
+  loss: Maybe<number>;
 };
 
 import * as ReactApollo from 'react-apollo';
@@ -51,15 +83,30 @@ import gql from 'graphql-tag';
 export const GetScheduleDocument = gql`
   query getSchedule($date: String!) {
     schedule(date: $date) {
+      gameId
+      clock
+      isGameActivated
+      startDateEastern
+      startTimeUTC
+      nugget
+      period {
+        current
+        isEndOfPeriod
+        isHalftime
+        maxRegular
+      }
       hTeam {
         triCode
         score
+        win
+        loss
       }
       vTeam {
         triCode
         score
+        win
+        loss
       }
-      nugget
     }
   }
 `;

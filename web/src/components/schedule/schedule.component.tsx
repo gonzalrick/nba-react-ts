@@ -5,35 +5,45 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 import { ScheduleStore } from '../../store';
 import { ScheduleItem } from '../scheduleItem/scheduleItem.component';
-import { humaniseDate } from '../../utils';
+import { humaniseDate, convertDateTime } from '../../utils';
 import './schedule.component.scss';
+import { GetScheduleComponent } from '../../generated/graphqlComponents';
+import { Loading } from '..';
 
 @inject('scheduleStore')
 @observer
 export class Schedule extends Component<any> {
-  public store: ScheduleStore = this.props.scheduleStore;
+  store: ScheduleStore = this.props.scheduleStore;
   public render() {
     return (
-      <div className="schedule">
-        <Container>
-          <IoIosArrowBack
-            className="pageDate"
-            onClick={() => this.store.prevDay()}
-          />
-          <span className="gameDate">
-            {this.store.numberOfGames} Games for {humaniseDate(this.store.date)}
-          </span>
-          <IoIosArrowForward
-            className="pageDate"
-            onClick={() => this.store.nextDay()}
-          />
-          <Row className="scheduleContainer">
-            {this.store.scheduledGames.map(game => (
-              <ScheduleItem game={game} key={game.gameId} />
-            ))}
-          </Row>
-        </Container>
-      </div>
+      <GetScheduleComponent variables={{ date: convertDateTime(this.store.date) }}>
+        {({ data, error, loading }) => {
+          if (loading) return <Loading />;
+          console.log(data);
+          return (
+            <div className="schedule">
+              <Container>
+                <IoIosArrowBack
+                  className="pageDate"
+                  onClick={() => this.store.prevDay()}
+                />
+                <span className="gameDate">
+                  {this.store.numberOfGames} Games for {humaniseDate(this.store.date)}
+                </span>
+                <IoIosArrowForward
+                  className="pageDate"
+                  onClick={() => this.store.nextDay()}
+                />
+                <Row className="scheduleContainer">
+                  {data!.schedule.map(game => (
+                    <ScheduleItem game={game} key={game.gameId} />
+                  ))}
+                </Row>
+              </Container>
+            </div>
+          );
+        }}
+      </GetScheduleComponent>
     );
   }
 }

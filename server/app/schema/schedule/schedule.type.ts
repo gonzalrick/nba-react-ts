@@ -3,7 +3,7 @@ import { Schedule as ScheduleType } from '../../generated';
 
 export const Schedule: TypeResolver<ScheduleType> = {
   gameId: root => root.gameId,
-  endTimeUTC: root => root.endTimeUTC,
+  clock: root => root.clock,
   hTeam: root => root.hTeam,
   isGameActivated: root => root.isGameActivated,
   nugget: root => root.nugget,

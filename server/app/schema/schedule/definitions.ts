@@ -8,7 +8,7 @@ const definitions = gql`
 
   type Schedule {
     gameId: ID!
-    endTimeUTC: String
+    clock: String
     hTeam: Team
     isGameActivated: Boolean
     nugget: String

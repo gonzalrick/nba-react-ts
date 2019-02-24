@@ -41,7 +41,7 @@ export class ScheduleItem extends Component<any> {
               <Row className="nugget">
                 <Col xs="12">
                   <span>
-                    <em>{game.nugget ? game.nugget.text : ''}</em>
+                    <em>{game.nugget || ''}</em>
                   </span>
                 </Col>
               </Row>

@@ -5,7 +5,6 @@ interface Schedule {
 
 interface Games {
   gameId: string;
-  endTimeUTC: string;
   hTeam: ScheduleTeam;
   isGameActivated: boolean;
   nugget?: string;

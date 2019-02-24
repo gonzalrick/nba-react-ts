@@ -1,13 +1,28 @@
 query getSchedule($date: String!) {
   schedule(date: $date) {
+    gameId
+    clock
+    isGameActivated
+    startDateEastern
+    startTimeUTC
+    nugget
+    period {
+      current
+      isEndOfPeriod
+      isHalftime
+      maxRegular
+    }
     hTeam {
       triCode
       score
+      win
+      loss
     }
     vTeam {
       triCode
       score
+      win
+      loss
     }
-    nugget
   }
 }

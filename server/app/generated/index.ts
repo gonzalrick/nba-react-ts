@@ -11,7 +11,7 @@ export interface Query {
 export interface Schedule {
   gameId: string;
 
-  endTimeUTC?: Maybe<string>;
+  clock?: Maybe<string>;
 
   hTeam?: Maybe<Team>;
 
@@ -138,7 +138,7 @@ export namespace ScheduleResolvers {
   export interface Resolvers<TContext = IContext, TypeParent = Schedule> {
     gameId?: GameIdResolver<string, TypeParent, TContext>;
 
-    endTimeUTC?: EndTimeUtcResolver<Maybe<string>, TypeParent, TContext>;
+    clock?: ClockResolver<Maybe<string>, TypeParent, TContext>;
 
     hTeam?: HTeamResolver<Maybe<Team>, TypeParent, TContext>;
 
@@ -172,7 +172,7 @@ export namespace ScheduleResolvers {
     Parent = Schedule,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
-  export type EndTimeUtcResolver<
+  export type ClockResolver<
     R = Maybe<string>,
     Parent = Schedule,
     TContext = IContext
