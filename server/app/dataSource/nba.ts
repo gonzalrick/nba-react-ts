@@ -1,6 +1,10 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
 import { Schedule, Team } from '../generated';
 
+interface Linescore {
+  score: string,
+}
+
 export class NbaAPI extends RESTDataSource {
   constructor() {
     super();
@@ -33,7 +37,7 @@ export class NbaAPI extends RESTDataSource {
   reduceTeam(data: any): Team {
     return {
       teamId: data.teamId,
-      linescore: data.linescore.map((score: string) => Number(score)),
+      linescore: data.linescore.map(({ score }: Linescore) => Number(score)),
       score: Number(data.score),
       loss: Number(data.loss),
       win: Number(data.win),
