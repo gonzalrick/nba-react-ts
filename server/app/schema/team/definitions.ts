@@ -1,14 +1,17 @@
 import { gql } from 'apollo-server';
 
 const definitions = gql`
+  extend type Query {
+    teams(date: String!): [Team!]!
+  }
 
   type Team {
-    teamId: ID
-    triCode: String
-    linescore: [Int]!
-    loss: Int
-    score: Int
-    win: Int
+    city: String!,
+    fullName: String!,
+    triCode: String!,
+    teamId: String!,
+    confName: String!,
+    divName: String!,
   }
 `;
 

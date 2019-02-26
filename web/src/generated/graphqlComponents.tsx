@@ -49,7 +49,7 @@ export type GetSchedulePeriod = {
 };
 
 export type GetScheduleHTeam = {
-  __typename?: 'Team';
+  __typename?: 'ScheduleTeam';
 
   triCode: Maybe<string>;
 
@@ -61,7 +61,7 @@ export type GetScheduleHTeam = {
 };
 
 export type GetScheduleVTeam = {
-  __typename?: 'Team';
+  __typename?: 'ScheduleTeam';
 
   triCode: Maybe<string>;
 
@@ -70,6 +70,32 @@ export type GetScheduleVTeam = {
   win: Maybe<number>;
 
   loss: Maybe<number>;
+};
+
+export type GetTeamsVariables = {
+  date: string;
+};
+
+export type GetTeamsQuery = {
+  __typename?: 'Query';
+
+  teams: GetTeamsTeams[];
+};
+
+export type GetTeamsTeams = {
+  __typename?: 'Team';
+
+  teamId: string;
+
+  city: string;
+
+  fullName: string;
+
+  triCode: string;
+
+  confName: string;
+
+  divName: string;
 };
 
 import * as ReactApollo from 'react-apollo';
@@ -142,4 +168,49 @@ export function GetScheduleHOC<TProps, TChildProps = any>(
     GetScheduleVariables,
     GetScheduleProps<TChildProps>
   >(GetScheduleDocument, operationOptions);
+}
+export const GetTeamsDocument = gql`
+  query getTeams($date: String!) {
+    teams(date: $date) {
+      teamId
+      city
+      fullName
+      triCode
+      confName
+      divName
+    }
+  }
+`;
+export class GetTeamsComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<GetTeamsQuery, GetTeamsVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<GetTeamsQuery, GetTeamsVariables>
+        query={GetTeamsDocument}
+        {...(this as any)['props'] as any}
+      />
+    );
+  }
+}
+export type GetTeamsProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<GetTeamsQuery, GetTeamsVariables>
+> &
+  TChildProps;
+export function GetTeamsHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        GetTeamsQuery,
+        GetTeamsVariables,
+        GetTeamsProps<TChildProps>
+      >
+    | undefined,
+) {
+  return ReactApollo.graphql<
+    TProps,
+    GetTeamsQuery,
+    GetTeamsVariables,
+    GetTeamsProps<TChildProps>
+  >(GetTeamsDocument, operationOptions);
 }

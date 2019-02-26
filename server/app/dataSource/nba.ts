@@ -1,5 +1,5 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
-import { Schedule, Team } from '../generated';
+import { Schedule, ScheduleTeam, Team } from '../generated';
 
 interface Linescore {
   score: string,
@@ -16,6 +16,22 @@ export class NbaAPI extends RESTDataSource {
     return games.map((game: any) => this.reduceSchedule(game));
   }
 
+  async getTeams(date: string) {
+    const { league } = await this.get(`v1/${date}/teams.json`);
+    return league.standard.map((team: any) => this.reduceTeam(team));
+  }
+
+  reduceTeam(data: any): Team {
+    return {
+      city: data.city,
+      fullName: data.fullName,
+      triCode: data.tricode,
+      teamId: data.teamId,
+      confName: data.confName,
+      divName: data.divName,
+    }
+  }
+
   reduceSchedule(data: any) {
     const schedule: Schedule = {
       gameId: data.gameId,
@@ -25,8 +41,8 @@ export class NbaAPI extends RESTDataSource {
       startDateEastern: data.startDateEastern,
       nugget: data.nugget.text,
       period: data.period,
-      vTeam: this.reduceTeam(data.vTeam),
-      hTeam: this.reduceTeam(data.hTeam),
+      vTeam: this.reduceScheduleTeam(data.vTeam),
+      hTeam: this.reduceScheduleTeam(data.hTeam),
       seasonYear: data.seasonYear,
       statusNum: data.statusNum,
     }
@@ -34,7 +50,7 @@ export class NbaAPI extends RESTDataSource {
     return schedule;
   }
 
-  reduceTeam(data: any): Team {
+  reduceScheduleTeam(data: any): ScheduleTeam {
     return {
       teamId: data.teamId,
       linescore: data.linescore.map(({ score }: Linescore) => Number(score)),

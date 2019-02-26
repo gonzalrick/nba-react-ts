@@ -1,5 +1,4 @@
 import { gql } from 'apollo-server';
-import { typeDefs as Team } from '../team'
 
 const definitions = gql`
   extend type Query {
@@ -9,7 +8,7 @@ const definitions = gql`
   type Schedule {
     gameId: ID!
     clock: String
-    hTeam: Team
+    hTeam: ScheduleTeam
     isGameActivated: Boolean
     nugget: String
     period: Period
@@ -17,7 +16,16 @@ const definitions = gql`
     startTimeUTC: String
     startDateEastern: String
     statusNum: Int
-    vTeam: Team
+    vTeam: ScheduleTeam
+  }
+
+  type ScheduleTeam {
+    teamId: ID
+    triCode: String
+    linescore: [Int]!
+    loss: Int
+    score: Int
+    win: Int
   }
 
   type Period {
@@ -29,4 +37,4 @@ const definitions = gql`
   }
 `;
 
-export default () => [definitions, Team];
+export default () => [definitions];
