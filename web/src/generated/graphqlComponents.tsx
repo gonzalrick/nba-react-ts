@@ -19,57 +19,77 @@ export type GetScheduleSchedule = {
 
   gameId: string;
 
-  clock: Maybe<string>;
+  clock: string;
 
-  isGameActivated: Maybe<boolean>;
+  isGameActivated: boolean;
 
-  startDateEastern: Maybe<string>;
+  startDateEastern: string;
 
-  startTimeUTC: Maybe<string>;
+  startTimeUTC: string;
 
-  nugget: Maybe<string>;
+  nugget: string;
 
-  period: Maybe<GetSchedulePeriod>;
+  period: GetSchedulePeriod;
 
-  hTeam: Maybe<GetScheduleHTeam>;
+  hTeam: GetScheduleHTeam;
 
-  vTeam: Maybe<GetScheduleVTeam>;
+  vTeam: GetScheduleVTeam;
 };
 
 export type GetSchedulePeriod = {
   __typename?: 'Period';
 
-  current: Maybe<number>;
+  current: number;
 
-  isEndOfPeriod: Maybe<boolean>;
+  isEndOfPeriod: boolean;
 
-  isHalftime: Maybe<boolean>;
+  isHalftime: boolean;
 
-  maxRegular: Maybe<number>;
+  maxRegular: number;
 };
 
 export type GetScheduleHTeam = {
   __typename?: 'ScheduleTeam';
 
-  triCode: Maybe<string>;
+  triCode: string;
 
-  score: Maybe<number>;
+  score: number;
 
-  win: Maybe<number>;
+  win: number;
 
-  loss: Maybe<number>;
+  loss: number;
+
+  city: Maybe<string>;
+
+  fullName: Maybe<string>;
+
+  confName: Maybe<string>;
+
+  divName: Maybe<string>;
+
+  logo: Maybe<string>;
 };
 
 export type GetScheduleVTeam = {
   __typename?: 'ScheduleTeam';
 
-  triCode: Maybe<string>;
+  triCode: string;
 
-  score: Maybe<number>;
+  score: number;
 
-  win: Maybe<number>;
+  win: number;
 
-  loss: Maybe<number>;
+  loss: number;
+
+  city: Maybe<string>;
+
+  fullName: Maybe<string>;
+
+  confName: Maybe<string>;
+
+  divName: Maybe<string>;
+
+  logo: Maybe<string>;
 };
 
 export type GetTeamsVariables = {
@@ -126,12 +146,22 @@ export const GetScheduleDocument = gql`
         score
         win
         loss
+        city
+        fullName
+        confName
+        divName
+        logo
       }
       vTeam {
         triCode
         score
         win
         loss
+        city
+        fullName
+        confName
+        divName
+        logo
       }
     }
   }

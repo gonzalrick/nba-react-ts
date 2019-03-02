@@ -4,9 +4,11 @@ import { GraphQLResolveInfo } from 'graphql';
 import { NextResolverFn } from 'graphql-tools';
 
 import { NbaAPI } from "./dataSource/nba";
+import { createLoaders } from "./dataLoaders";
 
 export interface IContext {
   dataSources: IDataSource,
+  loaders: ReturnType<typeof createLoaders>,
 }
 
 interface IDataSource extends DataSource {

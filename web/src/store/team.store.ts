@@ -26,6 +26,11 @@ export class TeamsStore {
     return this.teams;
   }
 
+  @computed
+  get hasTeams(): boolean {
+    return this.teams.length > 0;
+  }
+
   @action.bound
   getTeamName(code: string) {
     const team = this.teams.find(team => team.tricode === code);

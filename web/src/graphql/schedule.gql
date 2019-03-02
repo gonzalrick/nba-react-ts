@@ -17,12 +17,22 @@ query getSchedule($date: String!) {
       score
       win
       loss
+      city
+      fullName
+      confName
+      divName
+      logo
     }
     vTeam {
       triCode
       score
       win
       loss
+      city
+      fullName
+      confName
+      divName
+      logo
     }
   }
 }

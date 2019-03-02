@@ -7,57 +7,95 @@ export type Maybe<T> = T | null;
 export interface Query {
   schedule: Schedule[];
 
+  players: Player[];
+
   teams: Team[];
 }
 
 export interface Schedule {
   gameId: string;
 
-  clock?: Maybe<string>;
+  clock: string;
 
-  hTeam?: Maybe<ScheduleTeam>;
+  hTeam: ScheduleTeam;
 
-  isGameActivated?: Maybe<boolean>;
+  isGameActivated: boolean;
 
-  nugget?: Maybe<string>;
+  nugget: string;
 
-  period?: Maybe<Period>;
+  period: Period;
 
-  seasonYear?: Maybe<string>;
+  seasonYear: string;
 
-  startTimeUTC?: Maybe<string>;
+  startTimeUTC: string;
 
-  startDateEastern?: Maybe<string>;
+  startDateEastern: string;
 
-  statusNum?: Maybe<number>;
+  statusNum: number;
 
-  vTeam?: Maybe<ScheduleTeam>;
+  vTeam: ScheduleTeam;
 }
 
 export interface ScheduleTeam {
-  teamId?: Maybe<string>;
+  teamId: string;
 
-  triCode?: Maybe<string>;
+  triCode: string;
 
   linescore: (Maybe<number>)[];
 
-  loss?: Maybe<number>;
+  loss: number;
 
-  score?: Maybe<number>;
+  score: number;
 
-  win?: Maybe<number>;
+  win: number;
+
+  city?: Maybe<string>;
+
+  fullName?: Maybe<string>;
+
+  confName?: Maybe<string>;
+
+  divName?: Maybe<string>;
+
+  logo?: Maybe<string>;
 }
 
 export interface Period {
-  current?: Maybe<number>;
+  current: number;
 
-  isEndOfPeriod?: Maybe<boolean>;
+  isEndOfPeriod: boolean;
 
-  isHalftime?: Maybe<boolean>;
+  isHalftime: boolean;
 
-  maxRegular?: Maybe<number>;
+  maxRegular: number;
 
-  type?: Maybe<number>;
+  type: number;
+}
+
+export interface Player {
+  firstName: string;
+
+  lastName: string;
+
+  personId: string;
+
+  jersey: number;
+
+  pos: string;
+
+  heightFeet: number;
+
+  heightInches: number;
+
+  heightMeters: number;
+
+  weightPounds: number;
+
+  weightKilograms: number;
+
+  dateOfBirthUTC: string;
+
+  teams: Team[];
 }
 
 export interface Team {
@@ -72,6 +110,8 @@ export interface Team {
   confName: string;
 
   divName: string;
+
+  logo?: Maybe<string>;
 }
 
 // ====================================================
@@ -79,6 +119,9 @@ export interface Team {
 // ====================================================
 
 export interface ScheduleQueryArgs {
+  date: string;
+}
+export interface PlayersQueryArgs {
   date: string;
 }
 export interface TeamsQueryArgs {
@@ -142,6 +185,8 @@ export namespace QueryResolvers {
   export interface Resolvers<TContext = IContext, TypeParent = {}> {
     schedule?: ScheduleResolver<Schedule[], TypeParent, TContext>;
 
+    players?: PlayersResolver<Player[], TypeParent, TContext>;
+
     teams?: TeamsResolver<Team[], TypeParent, TContext>;
   }
 
@@ -151,6 +196,15 @@ export namespace QueryResolvers {
     TContext = IContext
   > = Resolver<R, Parent, TContext, ScheduleArgs>;
   export interface ScheduleArgs {
+    date: string;
+  }
+
+  export type PlayersResolver<
+    R = Player[],
+    Parent = {},
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, PlayersArgs>;
+  export interface PlayersArgs {
     date: string;
   }
 
@@ -168,33 +222,25 @@ export namespace ScheduleResolvers {
   export interface Resolvers<TContext = IContext, TypeParent = Schedule> {
     gameId?: GameIdResolver<string, TypeParent, TContext>;
 
-    clock?: ClockResolver<Maybe<string>, TypeParent, TContext>;
+    clock?: ClockResolver<string, TypeParent, TContext>;
 
-    hTeam?: HTeamResolver<Maybe<ScheduleTeam>, TypeParent, TContext>;
+    hTeam?: HTeamResolver<ScheduleTeam, TypeParent, TContext>;
 
-    isGameActivated?: IsGameActivatedResolver<
-      Maybe<boolean>,
-      TypeParent,
-      TContext
-    >;
+    isGameActivated?: IsGameActivatedResolver<boolean, TypeParent, TContext>;
 
-    nugget?: NuggetResolver<Maybe<string>, TypeParent, TContext>;
+    nugget?: NuggetResolver<string, TypeParent, TContext>;
 
-    period?: PeriodResolver<Maybe<Period>, TypeParent, TContext>;
+    period?: PeriodResolver<Period, TypeParent, TContext>;
 
-    seasonYear?: SeasonYearResolver<Maybe<string>, TypeParent, TContext>;
+    seasonYear?: SeasonYearResolver<string, TypeParent, TContext>;
 
-    startTimeUTC?: StartTimeUtcResolver<Maybe<string>, TypeParent, TContext>;
+    startTimeUTC?: StartTimeUtcResolver<string, TypeParent, TContext>;
 
-    startDateEastern?: StartDateEasternResolver<
-      Maybe<string>,
-      TypeParent,
-      TContext
-    >;
+    startDateEastern?: StartDateEasternResolver<string, TypeParent, TContext>;
 
-    statusNum?: StatusNumResolver<Maybe<number>, TypeParent, TContext>;
+    statusNum?: StatusNumResolver<number, TypeParent, TContext>;
 
-    vTeam?: VTeamResolver<Maybe<ScheduleTeam>, TypeParent, TContext>;
+    vTeam?: VTeamResolver<ScheduleTeam, TypeParent, TContext>;
   }
 
   export type GameIdResolver<
@@ -203,52 +249,52 @@ export namespace ScheduleResolvers {
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type ClockResolver<
-    R = Maybe<string>,
+    R = string,
     Parent = Schedule,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type HTeamResolver<
-    R = Maybe<ScheduleTeam>,
+    R = ScheduleTeam,
     Parent = Schedule,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type IsGameActivatedResolver<
-    R = Maybe<boolean>,
+    R = boolean,
     Parent = Schedule,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type NuggetResolver<
-    R = Maybe<string>,
+    R = string,
     Parent = Schedule,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type PeriodResolver<
-    R = Maybe<Period>,
+    R = Period,
     Parent = Schedule,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type SeasonYearResolver<
-    R = Maybe<string>,
+    R = string,
     Parent = Schedule,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type StartTimeUtcResolver<
-    R = Maybe<string>,
+    R = string,
     Parent = Schedule,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type StartDateEasternResolver<
-    R = Maybe<string>,
+    R = string,
     Parent = Schedule,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type StatusNumResolver<
-    R = Maybe<number>,
+    R = number,
     Parent = Schedule,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type VTeamResolver<
-    R = Maybe<ScheduleTeam>,
+    R = ScheduleTeam,
     Parent = Schedule,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
@@ -256,26 +302,36 @@ export namespace ScheduleResolvers {
 
 export namespace ScheduleTeamResolvers {
   export interface Resolvers<TContext = IContext, TypeParent = ScheduleTeam> {
-    teamId?: TeamIdResolver<Maybe<string>, TypeParent, TContext>;
+    teamId?: TeamIdResolver<string, TypeParent, TContext>;
 
-    triCode?: TriCodeResolver<Maybe<string>, TypeParent, TContext>;
+    triCode?: TriCodeResolver<string, TypeParent, TContext>;
 
     linescore?: LinescoreResolver<(Maybe<number>)[], TypeParent, TContext>;
 
-    loss?: LossResolver<Maybe<number>, TypeParent, TContext>;
+    loss?: LossResolver<number, TypeParent, TContext>;
 
-    score?: ScoreResolver<Maybe<number>, TypeParent, TContext>;
+    score?: ScoreResolver<number, TypeParent, TContext>;
 
-    win?: WinResolver<Maybe<number>, TypeParent, TContext>;
+    win?: WinResolver<number, TypeParent, TContext>;
+
+    city?: CityResolver<Maybe<string>, TypeParent, TContext>;
+
+    fullName?: FullNameResolver<Maybe<string>, TypeParent, TContext>;
+
+    confName?: ConfNameResolver<Maybe<string>, TypeParent, TContext>;
+
+    divName?: DivNameResolver<Maybe<string>, TypeParent, TContext>;
+
+    logo?: LogoResolver<Maybe<string>, TypeParent, TContext>;
   }
 
   export type TeamIdResolver<
-    R = Maybe<string>,
+    R = string,
     Parent = ScheduleTeam,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type TriCodeResolver<
-    R = Maybe<string>,
+    R = string,
     Parent = ScheduleTeam,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
@@ -285,17 +341,42 @@ export namespace ScheduleTeamResolvers {
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type LossResolver<
-    R = Maybe<number>,
+    R = number,
     Parent = ScheduleTeam,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type ScoreResolver<
-    R = Maybe<number>,
+    R = number,
     Parent = ScheduleTeam,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type WinResolver<
-    R = Maybe<number>,
+    R = number,
+    Parent = ScheduleTeam,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type CityResolver<
+    R = Maybe<string>,
+    Parent = ScheduleTeam,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type FullNameResolver<
+    R = Maybe<string>,
+    Parent = ScheduleTeam,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type ConfNameResolver<
+    R = Maybe<string>,
+    Parent = ScheduleTeam,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type DivNameResolver<
+    R = Maybe<string>,
+    Parent = ScheduleTeam,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type LogoResolver<
+    R = Maybe<string>,
     Parent = ScheduleTeam,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
@@ -303,40 +384,129 @@ export namespace ScheduleTeamResolvers {
 
 export namespace PeriodResolvers {
   export interface Resolvers<TContext = IContext, TypeParent = Period> {
-    current?: CurrentResolver<Maybe<number>, TypeParent, TContext>;
+    current?: CurrentResolver<number, TypeParent, TContext>;
 
-    isEndOfPeriod?: IsEndOfPeriodResolver<Maybe<boolean>, TypeParent, TContext>;
+    isEndOfPeriod?: IsEndOfPeriodResolver<boolean, TypeParent, TContext>;
 
-    isHalftime?: IsHalftimeResolver<Maybe<boolean>, TypeParent, TContext>;
+    isHalftime?: IsHalftimeResolver<boolean, TypeParent, TContext>;
 
-    maxRegular?: MaxRegularResolver<Maybe<number>, TypeParent, TContext>;
+    maxRegular?: MaxRegularResolver<number, TypeParent, TContext>;
 
-    type?: TypeResolver<Maybe<number>, TypeParent, TContext>;
+    type?: TypeResolver<number, TypeParent, TContext>;
   }
 
   export type CurrentResolver<
-    R = Maybe<number>,
+    R = number,
     Parent = Period,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type IsEndOfPeriodResolver<
-    R = Maybe<boolean>,
+    R = boolean,
     Parent = Period,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type IsHalftimeResolver<
-    R = Maybe<boolean>,
+    R = boolean,
     Parent = Period,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type MaxRegularResolver<
-    R = Maybe<number>,
+    R = number,
     Parent = Period,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type TypeResolver<
-    R = Maybe<number>,
+    R = number,
     Parent = Period,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+}
+
+export namespace PlayerResolvers {
+  export interface Resolvers<TContext = IContext, TypeParent = Player> {
+    firstName?: FirstNameResolver<string, TypeParent, TContext>;
+
+    lastName?: LastNameResolver<string, TypeParent, TContext>;
+
+    personId?: PersonIdResolver<string, TypeParent, TContext>;
+
+    jersey?: JerseyResolver<number, TypeParent, TContext>;
+
+    pos?: PosResolver<string, TypeParent, TContext>;
+
+    heightFeet?: HeightFeetResolver<number, TypeParent, TContext>;
+
+    heightInches?: HeightInchesResolver<number, TypeParent, TContext>;
+
+    heightMeters?: HeightMetersResolver<number, TypeParent, TContext>;
+
+    weightPounds?: WeightPoundsResolver<number, TypeParent, TContext>;
+
+    weightKilograms?: WeightKilogramsResolver<number, TypeParent, TContext>;
+
+    dateOfBirthUTC?: DateOfBirthUtcResolver<string, TypeParent, TContext>;
+
+    teams?: TeamsResolver<Team[], TypeParent, TContext>;
+  }
+
+  export type FirstNameResolver<
+    R = string,
+    Parent = Player,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type LastNameResolver<
+    R = string,
+    Parent = Player,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type PersonIdResolver<
+    R = string,
+    Parent = Player,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type JerseyResolver<
+    R = number,
+    Parent = Player,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type PosResolver<
+    R = string,
+    Parent = Player,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type HeightFeetResolver<
+    R = number,
+    Parent = Player,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type HeightInchesResolver<
+    R = number,
+    Parent = Player,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type HeightMetersResolver<
+    R = number,
+    Parent = Player,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type WeightPoundsResolver<
+    R = number,
+    Parent = Player,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type WeightKilogramsResolver<
+    R = number,
+    Parent = Player,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type DateOfBirthUtcResolver<
+    R = string,
+    Parent = Player,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type TeamsResolver<
+    R = Team[],
+    Parent = Player,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
 }
@@ -354,6 +524,8 @@ export namespace TeamResolvers {
     confName?: ConfNameResolver<string, TypeParent, TContext>;
 
     divName?: DivNameResolver<string, TypeParent, TContext>;
+
+    logo?: LogoResolver<Maybe<string>, TypeParent, TContext>;
   }
 
   export type CityResolver<
@@ -383,6 +555,11 @@ export namespace TeamResolvers {
   > = Resolver<R, Parent, TContext>;
   export type DivNameResolver<
     R = string,
+    Parent = Team,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type LogoResolver<
+    R = Maybe<string>,
     Parent = Team,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
@@ -426,6 +603,7 @@ export interface IResolvers<TContext = IContext> {
   Schedule?: ScheduleResolvers.Resolvers<TContext>;
   ScheduleTeam?: ScheduleTeamResolvers.Resolvers<TContext>;
   Period?: PeriodResolvers.Resolvers<TContext>;
+  Player?: PlayerResolvers.Resolvers<TContext>;
   Team?: TeamResolvers.Resolvers<TContext>;
 }
 

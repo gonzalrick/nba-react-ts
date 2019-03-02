@@ -4,7 +4,13 @@ import { Schedule as ScheduleType } from '../../generated';
 export const Schedule: TypeResolver<ScheduleType> = {
   gameId: root => root.gameId,
   clock: root => root.clock,
-  hTeam: root => root.hTeam,
+  hTeam: async (root, args, { loaders }) => {
+    const team = await loaders.getTeamByIds.load(root.hTeam.teamId);
+    return {
+      ...root.hTeam,
+      ...team,
+    };
+  },
   isGameActivated: root => root.isGameActivated,
   nugget: root => root.nugget,
   period: root => root.period,
@@ -12,5 +18,11 @@ export const Schedule: TypeResolver<ScheduleType> = {
   startTimeUTC: root => root.startTimeUTC,
   startDateEastern: root => root.startDateEastern,
   statusNum: root => root.statusNum,
-  vTeam: root => root.vTeam,
+  vTeam: async (root, args, { loaders }) => {
+    const team = await loaders.getTeamByIds.load(root.vTeam.teamId);
+    return {
+      ...root.vTeam,
+      ...team,
+    };
+  },
 }

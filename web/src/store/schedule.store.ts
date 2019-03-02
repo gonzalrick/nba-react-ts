@@ -9,13 +9,13 @@ export class ScheduleStore {
   @observable games: any[] = [];
 
   constructor(generalStore: GeneralStore) {
-    autorun(() => {
-      generalStore.setLoading(true);
-      getSchedule(this.date).then(({ games }) => {
-        this.games = games;
-        generalStore.setLoading(false);
-      });
-    });
+    // autorun(() => {
+    //   generalStore.setLoading(true);
+    //   getSchedule(this.date).then(({ games }) => {
+    //     this.games = games;
+    //     generalStore.setLoading(false);
+    //   });
+    // });
   }
 
   @computed

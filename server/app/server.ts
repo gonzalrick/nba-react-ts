@@ -5,7 +5,8 @@ import { ApolloServer, ServerInfo } from 'apollo-server';
 import config from './config/config';
 import middleware from './middleware/middleware';
 import router from './routes/routes';
-import DataSource from './dataSource'
+import { createLoaders } from './dataLoaders';
+import DataSource from './dataSource';
 import { schema } from './schema/index';
 
 const app: express.Application = express();
@@ -23,6 +24,9 @@ app.listen(config.port, () => {
 const server = new ApolloServer({
   schema,
   dataSources: () => (DataSource),
+  context: {
+    loaders: createLoaders(),
+  },
 });
 
 server.listen().then(({ url }: ServerInfo) => {

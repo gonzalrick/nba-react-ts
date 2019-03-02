@@ -12,6 +12,7 @@ const definitions = gql`
     teamId: String!,
     confName: String!,
     divName: String!,
+    logo: String,
   }
 `;
 
