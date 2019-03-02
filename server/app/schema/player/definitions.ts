@@ -6,18 +6,18 @@ const definitions = gql`
   }
 
   type Player {
-    firstName: String!,
-    lastName: String!,
-    personId: String!,
-    jersey: Int!,
-    pos: String!,
-    heightFeet: Int!,
+    firstName: String!
+    lastName: String!
+    personId: String!
+    jersey: Int!
+    pos: String!
+    heightFeet: Int!
     heightInches: Int!
-    heightMeters: Float!,
-    weightPounds: Float!,
-    weightKilograms: Float!,
-    dateOfBirthUTC: String!,
-    teams: [Team!]!,
+    heightMeters: Float!
+    weightPounds: Float!
+    weightKilograms: Float!
+    dateOfBirthUTC: String!
+    teams: [Team!]!
   }
 `;
 

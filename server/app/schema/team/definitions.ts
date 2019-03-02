@@ -6,13 +6,13 @@ const definitions = gql`
   }
 
   type Team {
-    city: String!,
-    fullName: String!,
-    triCode: String!,
-    teamId: String!,
-    confName: String!,
-    divName: String!,
-    logo: String,
+    city: String!
+    fullName: String!
+    triCode: String!
+    teamId: String!
+    confName: String!
+    divName: String!
+    logo: String
   }
 `;
 

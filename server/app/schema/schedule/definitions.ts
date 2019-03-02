@@ -26,11 +26,11 @@ const definitions = gql`
     loss: Int!
     score: Int!
     win: Int!
-    city: String,
-    fullName: String,
-    confName: String,
-    divName: String,
-    logo: String,
+    city: String
+    fullName: String
+    confName: String
+    divName: String
+    logo: String
   }
 
   type Period {

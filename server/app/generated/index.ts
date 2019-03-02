@@ -5,6 +5,8 @@ export type Maybe<T> = T | null;
 // ====================================================
 
 export interface Query {
+  game: Game;
+
   schedule: Schedule[];
 
   players: Player[];
@@ -12,28 +14,44 @@ export interface Query {
   teams: Team[];
 }
 
-export interface Schedule {
+export interface Game {
   gameId: string;
 
-  clock: string;
-
-  hTeam: ScheduleTeam;
+  arena: string;
 
   isGameActivated: boolean;
 
-  nugget: string;
+  statusNum: number;
 
-  period: Period;
-
-  seasonYear: string;
+  startTimeEastern: string;
 
   startTimeUTC: string;
 
   startDateEastern: string;
 
-  statusNum: number;
+  clock: string;
+
+  nugget: string;
+
+  period?: Maybe<Period>;
 
   vTeam: ScheduleTeam;
+
+  hTeam: ScheduleTeam;
+
+  stats: GameStats;
+}
+
+export interface Period {
+  current: number;
+
+  isEndOfPeriod: boolean;
+
+  isHalftime: boolean;
+
+  maxRegular: number;
+
+  type: number;
 }
 
 export interface ScheduleTeam {
@@ -60,16 +78,156 @@ export interface ScheduleTeam {
   logo?: Maybe<string>;
 }
 
-export interface Period {
-  current: number;
+export interface GameStats {
+  timesTied: number;
 
-  isEndOfPeriod: boolean;
+  leadChanges: number;
 
-  isHalftime: boolean;
+  vTeam: GameTeamStats;
 
-  maxRegular: number;
+  hTeam: GameTeamStats;
 
-  type: number;
+  activePlayers: GamePlayerStats[];
+}
+
+export interface GameTeamStats {
+  fastBreakPoints: number;
+
+  pointsInPaint: number;
+
+  biggestLead: number;
+
+  secondChancePoints: number;
+
+  pointsOffTurnovers: number;
+
+  longestRun: number;
+
+  totals: GameTotals;
+}
+
+export interface GameTotals {
+  points: number;
+
+  fgm: number;
+
+  fga: number;
+
+  fgp: number;
+
+  ftm: number;
+
+  fta: number;
+
+  ftp: number;
+
+  tpm: number;
+
+  tpa: number;
+
+  tpp: number;
+
+  offReb: number;
+
+  defReb: number;
+
+  totReb: number;
+
+  assists: number;
+
+  pFouls: number;
+
+  steals: number;
+
+  turnovers: number;
+
+  blocks: number;
+
+  plusMinus: number;
+
+  min: string;
+}
+
+export interface GamePlayerStats {
+  personId: string;
+
+  firstName: string;
+
+  lastName: string;
+
+  teamId: string;
+
+  jersey: number;
+
+  isOnCourt: boolean;
+
+  points: number;
+
+  pos: string;
+
+  min: string;
+
+  fgm: number;
+
+  fga: number;
+
+  fgp: number;
+
+  ftm: number;
+
+  fta: number;
+
+  ftp: number;
+
+  tpm: number;
+
+  tpa: number;
+
+  tpp: number;
+
+  offReb: number;
+
+  defReb: number;
+
+  totReb: number;
+
+  assists: number;
+
+  pFouls: number;
+
+  steals: number;
+
+  turnovers: number;
+
+  blocks: number;
+
+  plusMinus: number;
+
+  dnp: string;
+}
+
+export interface Schedule {
+  gameId: string;
+
+  clock: string;
+
+  hTeam: ScheduleTeam;
+
+  isGameActivated: boolean;
+
+  nugget: string;
+
+  period: Period;
+
+  seasonYear: string;
+
+  startTimeUTC: string;
+
+  startDateEastern: string;
+
+  statusNum: number;
+
+  vTeam: ScheduleTeam;
 }
 
 export interface Player {
@@ -114,10 +272,33 @@ export interface Team {
   logo?: Maybe<string>;
 }
 
+export interface GameStatLeaders {
+  points?: Maybe<GameStatLeaderValues>;
+
+  rebounds?: Maybe<GameStatLeaderValues>;
+
+  assists?: Maybe<GameStatLeaderValues>;
+}
+
+export interface GameStatLeaderValues {
+  value: number;
+
+  players: PlayerPersonId[];
+}
+
+export interface PlayerPersonId {
+  personId: string;
+}
+
 // ====================================================
 // Arguments
 // ====================================================
 
+export interface GameQueryArgs {
+  date: string;
+
+  gameId: string;
+}
 export interface ScheduleQueryArgs {
   date: string;
 }
@@ -183,11 +364,24 @@ export type DirectiveResolverFn<TResult, TArgs = {}, TContext = {}> = (
 
 export namespace QueryResolvers {
   export interface Resolvers<TContext = IContext, TypeParent = {}> {
+    game?: GameResolver<Game, TypeParent, TContext>;
+
     schedule?: ScheduleResolver<Schedule[], TypeParent, TContext>;
 
     players?: PlayersResolver<Player[], TypeParent, TContext>;
 
     teams?: TeamsResolver<Team[], TypeParent, TContext>;
+  }
+
+  export type GameResolver<
+    R = Game,
+    Parent = {},
+    TContext = IContext
+  > = Resolver<R, Parent, TContext, GameArgs>;
+  export interface GameArgs {
+    date: string;
+
+    gameId: string;
   }
 
   export type ScheduleResolver<
@@ -218,84 +412,138 @@ export namespace QueryResolvers {
   }
 }
 
-export namespace ScheduleResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = Schedule> {
+export namespace GameResolvers {
+  export interface Resolvers<TContext = IContext, TypeParent = Game> {
     gameId?: GameIdResolver<string, TypeParent, TContext>;
 
-    clock?: ClockResolver<string, TypeParent, TContext>;
-
-    hTeam?: HTeamResolver<ScheduleTeam, TypeParent, TContext>;
+    arena?: ArenaResolver<string, TypeParent, TContext>;
 
     isGameActivated?: IsGameActivatedResolver<boolean, TypeParent, TContext>;
 
-    nugget?: NuggetResolver<string, TypeParent, TContext>;
+    statusNum?: StatusNumResolver<number, TypeParent, TContext>;
 
-    period?: PeriodResolver<Period, TypeParent, TContext>;
-
-    seasonYear?: SeasonYearResolver<string, TypeParent, TContext>;
+    startTimeEastern?: StartTimeEasternResolver<string, TypeParent, TContext>;
 
     startTimeUTC?: StartTimeUtcResolver<string, TypeParent, TContext>;
 
     startDateEastern?: StartDateEasternResolver<string, TypeParent, TContext>;
 
-    statusNum?: StatusNumResolver<number, TypeParent, TContext>;
+    clock?: ClockResolver<string, TypeParent, TContext>;
+
+    nugget?: NuggetResolver<string, TypeParent, TContext>;
+
+    period?: PeriodResolver<Maybe<Period>, TypeParent, TContext>;
 
     vTeam?: VTeamResolver<ScheduleTeam, TypeParent, TContext>;
+
+    hTeam?: HTeamResolver<ScheduleTeam, TypeParent, TContext>;
+
+    stats?: StatsResolver<GameStats, TypeParent, TContext>;
   }
 
   export type GameIdResolver<
     R = string,
-    Parent = Schedule,
+    Parent = Game,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
-  export type ClockResolver<
+  export type ArenaResolver<
     R = string,
-    Parent = Schedule,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type HTeamResolver<
-    R = ScheduleTeam,
-    Parent = Schedule,
+    Parent = Game,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type IsGameActivatedResolver<
     R = boolean,
-    Parent = Schedule,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type NuggetResolver<
-    R = string,
-    Parent = Schedule,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type PeriodResolver<
-    R = Period,
-    Parent = Schedule,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type SeasonYearResolver<
-    R = string,
-    Parent = Schedule,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type StartTimeUtcResolver<
-    R = string,
-    Parent = Schedule,
-    TContext = IContext
-  > = Resolver<R, Parent, TContext>;
-  export type StartDateEasternResolver<
-    R = string,
-    Parent = Schedule,
+    Parent = Game,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type StatusNumResolver<
     R = number,
-    Parent = Schedule,
+    Parent = Game,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type StartTimeEasternResolver<
+    R = string,
+    Parent = Game,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type StartTimeUtcResolver<
+    R = string,
+    Parent = Game,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type StartDateEasternResolver<
+    R = string,
+    Parent = Game,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type ClockResolver<
+    R = string,
+    Parent = Game,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type NuggetResolver<
+    R = string,
+    Parent = Game,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type PeriodResolver<
+    R = Maybe<Period>,
+    Parent = Game,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
   export type VTeamResolver<
     R = ScheduleTeam,
-    Parent = Schedule,
+    Parent = Game,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type HTeamResolver<
+    R = ScheduleTeam,
+    Parent = Game,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type StatsResolver<
+    R = GameStats,
+    Parent = Game,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+}
+
+export namespace PeriodResolvers {
+  export interface Resolvers<TContext = IContext, TypeParent = Period> {
+    current?: CurrentResolver<number, TypeParent, TContext>;
+
+    isEndOfPeriod?: IsEndOfPeriodResolver<boolean, TypeParent, TContext>;
+
+    isHalftime?: IsHalftimeResolver<boolean, TypeParent, TContext>;
+
+    maxRegular?: MaxRegularResolver<number, TypeParent, TContext>;
+
+    type?: TypeResolver<number, TypeParent, TContext>;
+  }
+
+  export type CurrentResolver<
+    R = number,
+    Parent = Period,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type IsEndOfPeriodResolver<
+    R = boolean,
+    Parent = Period,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type IsHalftimeResolver<
+    R = boolean,
+    Parent = Period,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type MaxRegularResolver<
+    R = number,
+    Parent = Period,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type TypeResolver<
+    R = number,
+    Parent = Period,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
 }
@@ -382,42 +630,539 @@ export namespace ScheduleTeamResolvers {
   > = Resolver<R, Parent, TContext>;
 }
 
-export namespace PeriodResolvers {
-  export interface Resolvers<TContext = IContext, TypeParent = Period> {
-    current?: CurrentResolver<number, TypeParent, TContext>;
+export namespace GameStatsResolvers {
+  export interface Resolvers<TContext = IContext, TypeParent = GameStats> {
+    timesTied?: TimesTiedResolver<number, TypeParent, TContext>;
 
-    isEndOfPeriod?: IsEndOfPeriodResolver<boolean, TypeParent, TContext>;
+    leadChanges?: LeadChangesResolver<number, TypeParent, TContext>;
 
-    isHalftime?: IsHalftimeResolver<boolean, TypeParent, TContext>;
+    vTeam?: VTeamResolver<GameTeamStats, TypeParent, TContext>;
 
-    maxRegular?: MaxRegularResolver<number, TypeParent, TContext>;
+    hTeam?: HTeamResolver<GameTeamStats, TypeParent, TContext>;
 
-    type?: TypeResolver<number, TypeParent, TContext>;
+    activePlayers?: ActivePlayersResolver<
+      GamePlayerStats[],
+      TypeParent,
+      TContext
+    >;
   }
 
-  export type CurrentResolver<
+  export type TimesTiedResolver<
     R = number,
-    Parent = Period,
+    Parent = GameStats,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
-  export type IsEndOfPeriodResolver<
+  export type LeadChangesResolver<
+    R = number,
+    Parent = GameStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type VTeamResolver<
+    R = GameTeamStats,
+    Parent = GameStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type HTeamResolver<
+    R = GameTeamStats,
+    Parent = GameStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type ActivePlayersResolver<
+    R = GamePlayerStats[],
+    Parent = GameStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+}
+
+export namespace GameTeamStatsResolvers {
+  export interface Resolvers<TContext = IContext, TypeParent = GameTeamStats> {
+    fastBreakPoints?: FastBreakPointsResolver<number, TypeParent, TContext>;
+
+    pointsInPaint?: PointsInPaintResolver<number, TypeParent, TContext>;
+
+    biggestLead?: BiggestLeadResolver<number, TypeParent, TContext>;
+
+    secondChancePoints?: SecondChancePointsResolver<
+      number,
+      TypeParent,
+      TContext
+    >;
+
+    pointsOffTurnovers?: PointsOffTurnoversResolver<
+      number,
+      TypeParent,
+      TContext
+    >;
+
+    longestRun?: LongestRunResolver<number, TypeParent, TContext>;
+
+    totals?: TotalsResolver<GameTotals, TypeParent, TContext>;
+  }
+
+  export type FastBreakPointsResolver<
+    R = number,
+    Parent = GameTeamStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type PointsInPaintResolver<
+    R = number,
+    Parent = GameTeamStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type BiggestLeadResolver<
+    R = number,
+    Parent = GameTeamStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type SecondChancePointsResolver<
+    R = number,
+    Parent = GameTeamStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type PointsOffTurnoversResolver<
+    R = number,
+    Parent = GameTeamStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type LongestRunResolver<
+    R = number,
+    Parent = GameTeamStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type TotalsResolver<
+    R = GameTotals,
+    Parent = GameTeamStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+}
+
+export namespace GameTotalsResolvers {
+  export interface Resolvers<TContext = IContext, TypeParent = GameTotals> {
+    points?: PointsResolver<number, TypeParent, TContext>;
+
+    fgm?: FgmResolver<number, TypeParent, TContext>;
+
+    fga?: FgaResolver<number, TypeParent, TContext>;
+
+    fgp?: FgpResolver<number, TypeParent, TContext>;
+
+    ftm?: FtmResolver<number, TypeParent, TContext>;
+
+    fta?: FtaResolver<number, TypeParent, TContext>;
+
+    ftp?: FtpResolver<number, TypeParent, TContext>;
+
+    tpm?: TpmResolver<number, TypeParent, TContext>;
+
+    tpa?: TpaResolver<number, TypeParent, TContext>;
+
+    tpp?: TppResolver<number, TypeParent, TContext>;
+
+    offReb?: OffRebResolver<number, TypeParent, TContext>;
+
+    defReb?: DefRebResolver<number, TypeParent, TContext>;
+
+    totReb?: TotRebResolver<number, TypeParent, TContext>;
+
+    assists?: AssistsResolver<number, TypeParent, TContext>;
+
+    pFouls?: PFoulsResolver<number, TypeParent, TContext>;
+
+    steals?: StealsResolver<number, TypeParent, TContext>;
+
+    turnovers?: TurnoversResolver<number, TypeParent, TContext>;
+
+    blocks?: BlocksResolver<number, TypeParent, TContext>;
+
+    plusMinus?: PlusMinusResolver<number, TypeParent, TContext>;
+
+    min?: MinResolver<string, TypeParent, TContext>;
+  }
+
+  export type PointsResolver<
+    R = number,
+    Parent = GameTotals,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type FgmResolver<
+    R = number,
+    Parent = GameTotals,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type FgaResolver<
+    R = number,
+    Parent = GameTotals,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type FgpResolver<
+    R = number,
+    Parent = GameTotals,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type FtmResolver<
+    R = number,
+    Parent = GameTotals,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type FtaResolver<
+    R = number,
+    Parent = GameTotals,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type FtpResolver<
+    R = number,
+    Parent = GameTotals,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type TpmResolver<
+    R = number,
+    Parent = GameTotals,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type TpaResolver<
+    R = number,
+    Parent = GameTotals,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type TppResolver<
+    R = number,
+    Parent = GameTotals,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type OffRebResolver<
+    R = number,
+    Parent = GameTotals,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type DefRebResolver<
+    R = number,
+    Parent = GameTotals,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type TotRebResolver<
+    R = number,
+    Parent = GameTotals,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type AssistsResolver<
+    R = number,
+    Parent = GameTotals,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type PFoulsResolver<
+    R = number,
+    Parent = GameTotals,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type StealsResolver<
+    R = number,
+    Parent = GameTotals,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type TurnoversResolver<
+    R = number,
+    Parent = GameTotals,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type BlocksResolver<
+    R = number,
+    Parent = GameTotals,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type PlusMinusResolver<
+    R = number,
+    Parent = GameTotals,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type MinResolver<
+    R = string,
+    Parent = GameTotals,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+}
+
+export namespace GamePlayerStatsResolvers {
+  export interface Resolvers<
+    TContext = IContext,
+    TypeParent = GamePlayerStats
+  > {
+    personId?: PersonIdResolver<string, TypeParent, TContext>;
+
+    firstName?: FirstNameResolver<string, TypeParent, TContext>;
+
+    lastName?: LastNameResolver<string, TypeParent, TContext>;
+
+    teamId?: TeamIdResolver<string, TypeParent, TContext>;
+
+    jersey?: JerseyResolver<number, TypeParent, TContext>;
+
+    isOnCourt?: IsOnCourtResolver<boolean, TypeParent, TContext>;
+
+    points?: PointsResolver<number, TypeParent, TContext>;
+
+    pos?: PosResolver<string, TypeParent, TContext>;
+
+    min?: MinResolver<string, TypeParent, TContext>;
+
+    fgm?: FgmResolver<number, TypeParent, TContext>;
+
+    fga?: FgaResolver<number, TypeParent, TContext>;
+
+    fgp?: FgpResolver<number, TypeParent, TContext>;
+
+    ftm?: FtmResolver<number, TypeParent, TContext>;
+
+    fta?: FtaResolver<number, TypeParent, TContext>;
+
+    ftp?: FtpResolver<number, TypeParent, TContext>;
+
+    tpm?: TpmResolver<number, TypeParent, TContext>;
+
+    tpa?: TpaResolver<number, TypeParent, TContext>;
+
+    tpp?: TppResolver<number, TypeParent, TContext>;
+
+    offReb?: OffRebResolver<number, TypeParent, TContext>;
+
+    defReb?: DefRebResolver<number, TypeParent, TContext>;
+
+    totReb?: TotRebResolver<number, TypeParent, TContext>;
+
+    assists?: AssistsResolver<number, TypeParent, TContext>;
+
+    pFouls?: PFoulsResolver<number, TypeParent, TContext>;
+
+    steals?: StealsResolver<number, TypeParent, TContext>;
+
+    turnovers?: TurnoversResolver<number, TypeParent, TContext>;
+
+    blocks?: BlocksResolver<number, TypeParent, TContext>;
+
+    plusMinus?: PlusMinusResolver<number, TypeParent, TContext>;
+
+    dnp?: DnpResolver<string, TypeParent, TContext>;
+  }
+
+  export type PersonIdResolver<
+    R = string,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type FirstNameResolver<
+    R = string,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type LastNameResolver<
+    R = string,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type TeamIdResolver<
+    R = string,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type JerseyResolver<
+    R = number,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type IsOnCourtResolver<
     R = boolean,
-    Parent = Period,
+    Parent = GamePlayerStats,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
-  export type IsHalftimeResolver<
+  export type PointsResolver<
+    R = number,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type PosResolver<
+    R = string,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type MinResolver<
+    R = string,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type FgmResolver<
+    R = number,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type FgaResolver<
+    R = number,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type FgpResolver<
+    R = number,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type FtmResolver<
+    R = number,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type FtaResolver<
+    R = number,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type FtpResolver<
+    R = number,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type TpmResolver<
+    R = number,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type TpaResolver<
+    R = number,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type TppResolver<
+    R = number,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type OffRebResolver<
+    R = number,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type DefRebResolver<
+    R = number,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type TotRebResolver<
+    R = number,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type AssistsResolver<
+    R = number,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type PFoulsResolver<
+    R = number,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type StealsResolver<
+    R = number,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type TurnoversResolver<
+    R = number,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type BlocksResolver<
+    R = number,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type PlusMinusResolver<
+    R = number,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type DnpResolver<
+    R = string,
+    Parent = GamePlayerStats,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+}
+
+export namespace ScheduleResolvers {
+  export interface Resolvers<TContext = IContext, TypeParent = Schedule> {
+    gameId?: GameIdResolver<string, TypeParent, TContext>;
+
+    clock?: ClockResolver<string, TypeParent, TContext>;
+
+    hTeam?: HTeamResolver<ScheduleTeam, TypeParent, TContext>;
+
+    isGameActivated?: IsGameActivatedResolver<boolean, TypeParent, TContext>;
+
+    nugget?: NuggetResolver<string, TypeParent, TContext>;
+
+    period?: PeriodResolver<Period, TypeParent, TContext>;
+
+    seasonYear?: SeasonYearResolver<string, TypeParent, TContext>;
+
+    startTimeUTC?: StartTimeUtcResolver<string, TypeParent, TContext>;
+
+    startDateEastern?: StartDateEasternResolver<string, TypeParent, TContext>;
+
+    statusNum?: StatusNumResolver<number, TypeParent, TContext>;
+
+    vTeam?: VTeamResolver<ScheduleTeam, TypeParent, TContext>;
+  }
+
+  export type GameIdResolver<
+    R = string,
+    Parent = Schedule,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type ClockResolver<
+    R = string,
+    Parent = Schedule,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type HTeamResolver<
+    R = ScheduleTeam,
+    Parent = Schedule,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type IsGameActivatedResolver<
     R = boolean,
-    Parent = Period,
+    Parent = Schedule,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
-  export type MaxRegularResolver<
-    R = number,
-    Parent = Period,
+  export type NuggetResolver<
+    R = string,
+    Parent = Schedule,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
-  export type TypeResolver<
+  export type PeriodResolver<
+    R = Period,
+    Parent = Schedule,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type SeasonYearResolver<
+    R = string,
+    Parent = Schedule,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type StartTimeUtcResolver<
+    R = string,
+    Parent = Schedule,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type StartDateEasternResolver<
+    R = string,
+    Parent = Schedule,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type StatusNumResolver<
     R = number,
-    Parent = Period,
+    Parent = Schedule,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type VTeamResolver<
+    R = ScheduleTeam,
+    Parent = Schedule,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
 }
@@ -565,6 +1310,77 @@ export namespace TeamResolvers {
   > = Resolver<R, Parent, TContext>;
 }
 
+export namespace GameStatLeadersResolvers {
+  export interface Resolvers<
+    TContext = IContext,
+    TypeParent = GameStatLeaders
+  > {
+    points?: PointsResolver<Maybe<GameStatLeaderValues>, TypeParent, TContext>;
+
+    rebounds?: ReboundsResolver<
+      Maybe<GameStatLeaderValues>,
+      TypeParent,
+      TContext
+    >;
+
+    assists?: AssistsResolver<
+      Maybe<GameStatLeaderValues>,
+      TypeParent,
+      TContext
+    >;
+  }
+
+  export type PointsResolver<
+    R = Maybe<GameStatLeaderValues>,
+    Parent = GameStatLeaders,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type ReboundsResolver<
+    R = Maybe<GameStatLeaderValues>,
+    Parent = GameStatLeaders,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type AssistsResolver<
+    R = Maybe<GameStatLeaderValues>,
+    Parent = GameStatLeaders,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+}
+
+export namespace GameStatLeaderValuesResolvers {
+  export interface Resolvers<
+    TContext = IContext,
+    TypeParent = GameStatLeaderValues
+  > {
+    value?: ValueResolver<number, TypeParent, TContext>;
+
+    players?: PlayersResolver<PlayerPersonId[], TypeParent, TContext>;
+  }
+
+  export type ValueResolver<
+    R = number,
+    Parent = GameStatLeaderValues,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type PlayersResolver<
+    R = PlayerPersonId[],
+    Parent = GameStatLeaderValues,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+}
+
+export namespace PlayerPersonIdResolvers {
+  export interface Resolvers<TContext = IContext, TypeParent = PlayerPersonId> {
+    personId?: PersonIdResolver<string, TypeParent, TContext>;
+  }
+
+  export type PersonIdResolver<
+    R = string,
+    Parent = PlayerPersonId,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+}
+
 /** Directs the executor to skip this field or fragment when the `if` argument is true. */
 export type SkipDirectiveResolver<Result> = DirectiveResolverFn<
   Result,
@@ -600,11 +1416,19 @@ export interface DeprecatedDirectiveArgs {
 
 export interface IResolvers<TContext = IContext> {
   Query?: QueryResolvers.Resolvers<TContext>;
-  Schedule?: ScheduleResolvers.Resolvers<TContext>;
-  ScheduleTeam?: ScheduleTeamResolvers.Resolvers<TContext>;
+  Game?: GameResolvers.Resolvers<TContext>;
   Period?: PeriodResolvers.Resolvers<TContext>;
+  ScheduleTeam?: ScheduleTeamResolvers.Resolvers<TContext>;
+  GameStats?: GameStatsResolvers.Resolvers<TContext>;
+  GameTeamStats?: GameTeamStatsResolvers.Resolvers<TContext>;
+  GameTotals?: GameTotalsResolvers.Resolvers<TContext>;
+  GamePlayerStats?: GamePlayerStatsResolvers.Resolvers<TContext>;
+  Schedule?: ScheduleResolvers.Resolvers<TContext>;
   Player?: PlayerResolvers.Resolvers<TContext>;
   Team?: TeamResolvers.Resolvers<TContext>;
+  GameStatLeaders?: GameStatLeadersResolvers.Resolvers<TContext>;
+  GameStatLeaderValues?: GameStatLeaderValuesResolvers.Resolvers<TContext>;
+  PlayerPersonId?: PlayerPersonIdResolvers.Resolvers<TContext>;
 }
 
 export interface IDirectiveResolvers<Result> {
