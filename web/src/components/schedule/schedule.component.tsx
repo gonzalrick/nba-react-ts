@@ -3,23 +3,22 @@ import { inject, observer } from 'mobx-react';
 import { Container, Row } from 'reactstrap';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
-import { ScheduleStore } from '../../store';
+import { GeneralStore } from '../../store';
 import { ScheduleItem } from '../scheduleItem/scheduleItem.component';
 import { humaniseDate, convertDateToUTC } from '../../utils';
 import './schedule.component.scss';
 import { GetScheduleComponent } from '../../generated/graphqlComponents';
 import { Loading } from '..';
 
-@inject('scheduleStore')
+@inject('generalStore')
 @observer
 export class Schedule extends Component<any> {
-  store: ScheduleStore = this.props.scheduleStore;
+  store: GeneralStore = this.props.generalStore;
   public render() {
     return (
       <GetScheduleComponent variables={{ date: convertDateToUTC(this.store.date) }}>
         {({ data, error, loading }) => {
-          if (loading) return <Loading />;
-          console.log(data);
+          if (loading || !data) return <Loading />;
           return (
             <div className="schedule">
               <Container>
@@ -28,7 +27,7 @@ export class Schedule extends Component<any> {
                   onClick={() => this.store.prevDay()}
                 />
                 <span className="gameDate">
-                  {this.store.numberOfGames} Games for {humaniseDate(this.store.date)}
+                  {data ? data.schedule.length : 'No'} Games for {humaniseDate(this.store.date)}
                 </span>
                 <IoIosArrowForward
                   className="pageDate"

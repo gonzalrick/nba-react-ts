@@ -1,9 +1,9 @@
-import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import cors, { CorsOptions } from 'cors';
 import express from 'express';
+import morgan from 'morgan';
 
-const whiteList = ['http://localhost:3000', 'http://localhost:3002'];
+const whiteList = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'http://localhost:4000'];
 
 const corsOptions: CorsOptions = {
   origin: (origin, callback) => {

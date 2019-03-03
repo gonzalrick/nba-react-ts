@@ -71,7 +71,7 @@ export function reduceGame(data: any): Game {
     startTimeUTC: data.basicGameData.startTimeUTC,
     startDateEastern: data.basicGameData.startDateEastern,
     clock: data.basicGameData.clock,
-    nugget: data.basicGameData.nugget.text || null,
+    nugget: data.basicGameData.nugget.text || "",
     period: data.basicGameData.period,
     vTeam: reduceScheduleTeam(data.basicGameData.vTeam),
     hTeam: reduceScheduleTeam(data.basicGameData.hTeam),

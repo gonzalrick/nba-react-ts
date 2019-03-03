@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import path from 'path';
-import { ApolloServer, ServerInfo } from 'apollo-server';
+import { ApolloServer } from 'apollo-server-express';
 
 import config from './config/config';
 import middleware from './middleware/middleware';
@@ -12,15 +12,6 @@ import { schema } from './schema/index';
 const app: express.Application = express();
 middleware(app);
 
-app.use(express.static(path.join(__dirname, '..', '..', 'web', 'build')));
-app.use('/api', router);
-app.use('*', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '..', '..', 'web', 'build', 'index.html'));
-});
-app.listen(config.port, () => {
-  console.log(`REST API Listening at port:${config.port}`);
-});
-
 const server = new ApolloServer({
   schema,
   dataSources: () => (DataSource),
@@ -29,6 +20,13 @@ const server = new ApolloServer({
   },
 });
 
-server.listen().then(({ url }: ServerInfo) => {
-  console.log(`🚀 GRAPHQL ready at ${url}`);
+server.applyMiddleware({ app });
+app.use('/api', router);
+app.use(express.static(path.join(__dirname, '..', '..', 'web', 'build')));
+app.use('*', (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '..', '..', 'web', 'build', 'index.html'));
+});
+
+app.listen({ port: config.port }, () => {
+  console.log(`🚀 Server ready at http://localhost:${config.port}${server.graphqlPath}`)
 });

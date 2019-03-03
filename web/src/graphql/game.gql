@@ -1,0 +1,96 @@
+query getGame($date: String!, $gameId: String!) {
+  game(date: $date, gameId: $gameId) {
+    gameId
+    startDateEastern
+    period {
+      current
+      isEndOfPeriod
+      isHalftime
+      maxRegular
+      type
+    }
+    hTeam {
+      teamId
+      triCode
+      fullName
+      score
+      linescore
+      logo
+    }
+    vTeam {
+      teamId
+      triCode
+      fullName
+      score
+      linescore
+      logo
+    }
+    arena
+    nugget
+    stats {
+      hTeam {
+        totals {
+          points
+          fgm
+          fga
+          fgp
+          ftm
+          fta
+          ftp
+          tpm
+          tpa
+          tpp
+          offReb
+          defReb
+          totReb
+          assists
+          pFouls
+          steals
+          turnovers
+          blocks
+        }
+      }
+      vTeam {
+        totals {
+          points
+          fgm
+          fga
+          fgp
+          ftm
+          fta
+          ftp
+          tpm
+          tpa
+          tpp
+          offReb
+          defReb
+          totReb
+          assists
+          pFouls
+          steals
+          turnovers
+          blocks
+        }
+      }
+      timesTied
+      activePlayers {
+        teamId
+        firstName
+        lastName
+        jersey
+        pos
+        points
+        totReb
+        assists
+        steals
+        turnovers
+        fgm
+        fga
+        tpm
+        tpa
+        min
+        dnp
+      }
+    }
+  }
+}

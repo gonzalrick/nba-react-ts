@@ -1,5 +1,5 @@
 import { makeExecutableSchema } from 'graphql-tools';
-import { gql } from 'apollo-server';
+import { gql } from 'apollo-server-express';
 
 import { GameTypeDefs, GameResolvers } from './game';
 import { ScheduleTypeDefs, ScheduleResolvers } from './schedule';

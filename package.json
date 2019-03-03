@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "concurrently \"npm run api\" \"npm run web\"",
+    "start": "npm run api",
     "api": "cd server && yarn start",
     "web": "cd web && yarn start",
     "generate": "gql-gen --config codegen.yml",
@@ -12,7 +12,6 @@
   },
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^4.1.0",
     "graphql-tag": "^2.10.1",
     "react": "^16.8.3",
     "react-apollo": "^2.4.1"
@@ -30,5 +29,8 @@
   "workspaces": [
     "server",
     "web"
-  ]
+  ],
+  "resolutions": {
+    "@types/react": "^16.8.7"
+  }
 }

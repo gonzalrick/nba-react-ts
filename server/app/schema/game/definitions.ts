@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server';
+import { gql } from 'apollo-server-express';
 
 const definitions = gql`
   extend type Query {
@@ -15,10 +15,10 @@ const definitions = gql`
     startDateEastern: String!
     clock: String!
     nugget: String!
-    period: Period
+    period: Period!
     vTeam: ScheduleTeam!
     hTeam: ScheduleTeam!
-    stats: GameStats!
+    stats: GameStats
   }
 
   type GameStats {
@@ -44,29 +44,29 @@ const definitions = gql`
     firstName: String!
     lastName: String!
     teamId: String!
-    jersey: Int!
+    jersey: String!
     isOnCourt: Boolean!
-    points: Int!
+    points: String!
     pos: String!
     min: String!
-    fgm: Int!
-    fga: Int!
-    fgp: Float!
-    ftm: Int!
-    fta: Int!
-    ftp: Float!
-    tpm: Int!
-    tpa: Int!
-    tpp: Float!
-    offReb: Int!
-    defReb: Int!
-    totReb: Int!
-    assists: Int!
-    pFouls: Int!
-    steals: Int!
-    turnovers: Int!
-    blocks: Int!
-    plusMinus: Int!
+    fgm: String!
+    fga: String!
+    fgp: String!
+    ftm: String!
+    fta: String!
+    ftp: String!
+    tpm: String!
+    tpa: String!
+    tpp: String!
+    offReb: String!
+    defReb: String!
+    totReb: String!
+    assists: String!
+    pFouls: String!
+    steals: String!
+    turnovers: String!
+    blocks: String!
+    plusMinus: String!
     dnp: String!
   }
 

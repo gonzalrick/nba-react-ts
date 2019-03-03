@@ -7,12 +7,7 @@ import TeamItem from '../teamItem/teamItem.component';
 import { getPeriod } from '../../utils';
 
 import './scheduleItem.component.scss';
-import { GameStore } from '../../store';
-
-@inject('gameStore')
-@observer
 export class ScheduleItem extends Component<any> {
-  public store: GameStore = this.props.gameStore;
 
   render() {
     const game: any = this.props.game;
