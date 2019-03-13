@@ -11,7 +11,7 @@ export interface IContext {
   loaders: ReturnType<typeof createLoaders>,
 }
 
-interface IDataSource extends DataSource {
+export interface IDataSource extends DataSource {
   nbaAPI: NbaAPI,
 }
 

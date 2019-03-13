@@ -9,7 +9,6 @@ import './App.scss';
 import { Game, Navigation, Schedule } from './components';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
-debugger;
 const client = new ApolloClient({
   link: new HttpLink({
     uri: `${API_URL}/graphql`,

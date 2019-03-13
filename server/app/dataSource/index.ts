@@ -1,5 +1,1 @@
-import { NbaAPI } from './nba';
-
-export default {
-  nbaAPI: new NbaAPI(),
-};
+export * from './nba';

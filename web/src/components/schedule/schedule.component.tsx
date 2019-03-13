@@ -16,7 +16,7 @@ export class Schedule extends Component<any> {
   store: GeneralStore = this.props.generalStore;
   public render() {
     return (
-      <GetScheduleComponent variables={{ date: convertDateToUTC(this.store.date) }}>
+      <GetScheduleComponent fetchPolicy={'network-only'} pollInterval={30000} variables={{ date: convertDateToUTC(this.store.date) }}>
         {({ data, error, loading }) => {
           if (loading || !data) return <Loading />;
           return (

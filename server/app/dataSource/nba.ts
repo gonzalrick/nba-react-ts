@@ -1,4 +1,5 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
+import fetch from 'node-fetch';
 
 import { Schedule, Team, Player } from '../generated';
 import { has, get, put } from '../utils/storage';
@@ -11,7 +12,8 @@ export class NbaAPI extends RESTDataSource {
   }
 
   async getSchedule(date: string): Promise<Schedule[]> {
-    const { games } = await this.get(`v2/${date}/scoreboard.json`);
+    const { games } = await this.get(`v2/${date}/scoreboard.json`)
+      .catch(err => console.log(err));
     return games.map((game: any) => reduceSchedule(game));
   }
 
@@ -26,8 +28,14 @@ export class NbaAPI extends RESTDataSource {
       return get(key);
     }
 
-    const { league } = await this.get(`v1/${date}/teams.json`);
-    const teams = league.standard.map((team: any) => reduceTeam(team));
+    let data = await this.get(`v1/${date}/teams.json`)
+      .catch(err => console.log(err));
+    if (!data) {
+      data = await fetch(`${this.baseURL}v1/${date}/teams.json`)
+        .then(res => res.json())
+        .catch(err => console.log(err));
+    }
+    const teams = data.league.standard.map((team: any) => reduceTeam(team));
     put(key, teams, 86400);
     return teams;
   }
@@ -38,8 +46,14 @@ export class NbaAPI extends RESTDataSource {
       return get(key);
     }
 
-    const { league } = await this.get(`v1/${date}/players.json`);
-    const players = league.standard.map((team: any) => reducePlayer(team));
+    let data = await this.get(`v1/${date}/players.json`)
+      .catch(err => console.log(err));
+    if (!data) {
+      data = await fetch(`${this.baseURL}v1/${date}/players.json`)
+        .then(res => res.json())
+        .catch(err => console.log(err));
+    }
+    const players = data.league.standard.map((team: any) => reducePlayer(team));
     put(key, players, 86400);
     return players;
   }

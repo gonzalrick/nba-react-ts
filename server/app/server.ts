@@ -6,7 +6,7 @@ import config from './config/config';
 import middleware from './middleware/middleware';
 import router from './routes/routes';
 import { createLoaders } from './dataLoaders';
-import DataSource from './dataSource';
+import { NbaAPI } from './dataSource';
 import { schema } from './schema/index';
 
 const app: express.Application = express();
@@ -14,7 +14,9 @@ middleware(app);
 
 const server = new ApolloServer({
   schema,
-  dataSources: () => (DataSource),
+  dataSources: () => ({
+    nbaAPI: new NbaAPI(),
+  }),
   context: {
     loaders: createLoaders(),
   },
