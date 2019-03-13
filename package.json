@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "heroku-postbuild": "cd web && yarn && yarn build"
   },
-  "license": "ISC",
+  "license": "GPL-3.0",
   "dependencies": {
     "graphql-tag": "^2.10.1",
     "react": "^16.8.3",
