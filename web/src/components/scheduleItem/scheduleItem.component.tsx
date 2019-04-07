@@ -7,12 +7,7 @@ import TeamItem from '../teamItem/teamItem.component';
 import { getPeriod } from '../../utils';
 
 import './scheduleItem.component.scss';
-import { GameStore } from '../../store';
-
-@inject('gameStore')
-@observer
 export class ScheduleItem extends Component<any> {
-  public store: GameStore = this.props.gameStore;
 
   render() {
     const game: any = this.props.game;
@@ -41,7 +36,7 @@ export class ScheduleItem extends Component<any> {
               <Row className="nugget">
                 <Col xs="12">
                   <span>
-                    <em>{game.nugget ? game.nugget.text : ''}</em>
+                    <em>{game.nugget || ''}</em>
                   </span>
                 </Col>
               </Row>

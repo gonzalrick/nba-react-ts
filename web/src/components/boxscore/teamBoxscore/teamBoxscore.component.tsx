@@ -1,14 +1,18 @@
 import React from 'react';
-import { getTeamIconUrl } from '../../../utils';
+import { GetGameHTeam } from '../../../generated/graphqlComponents';
 
-export default ({ team }: any) => (
+interface Props {
+  team: GetGameHTeam
+}
+
+export default ({ team }: Props) => (
   <tr>
     <th scope="row">
-      <img className="teamIcon" src={getTeamIconUrl(team.name)} />
+      <img className="teamIcon" alt={team.fullName || ''} src={team.logo || ''} />
     </th>
     {
       team.linescore.length > 0
-        ? team.linescore.map((score: any) => <th className="value">{score.score}</th>)
+        ? team.linescore.map((score, index) => <th key={index} className="value">{score}</th>)
         : <>
           <th key="h1">0</th>
           <th key="h2">0</th>

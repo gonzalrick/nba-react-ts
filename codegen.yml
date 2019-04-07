@@ -1,0 +1,18 @@
+overwrite: true
+schema: http://localhost:3001/graphql
+documents: ./web/src/graphql/*.gql
+generates:
+  ./web/src/generated/graphqlComponents.tsx:
+    config:
+      noNamespaces: true
+    plugins:
+      - typescript-common
+      - typescript-client
+      - typescript-react-apollo
+  ./server/app/generated/index.ts:
+    plugins:
+      - "typescript-common"
+      - "typescript-server"
+      - "typescript-resolvers"
+    config:
+      contextType: ../interface#IContext

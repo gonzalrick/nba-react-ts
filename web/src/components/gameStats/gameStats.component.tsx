@@ -1,5 +1,4 @@
 import React from 'react';
-import { inject, observer } from 'mobx-react';
 import {
   Table,
   TabContent,
@@ -15,23 +14,20 @@ import {
 
 import './gameStats.component.scss';
 import { Article } from '../article/article.component';
-import { GameStore, PlayerStore, TeamsStore } from '../../store';
 import { TeamStats } from '../teamStats/teamStats.component';
+import { GetGameGame } from '../../generated/graphqlComponents';
 
-interface IState {
+interface State {
   activeTab: string;
 }
 
-@inject('gameStore')
-@inject('playerStore')
-@inject('teamStore')
-@observer
-export class GameStats extends React.Component<any> {
-  public gameStore: GameStore = this.props.gameStore;
-  public playerStore: PlayerStore = this.props.playerStore;
-  public teamStore: TeamsStore = this.props.teamStore;
+interface Props {
+  gameData: GetGameGame,
+}
 
-  state: IState;
+export class GameStats extends React.Component<Props, State> {
+
+  state: State;
   statKeys: string[] = [
     'points',
     'fgm',
@@ -69,10 +65,9 @@ export class GameStats extends React.Component<any> {
     }
   }
   render() {
-    const stats = this.gameStore.gameStats;
-    const game = this.gameStore.gameData;
-    const hTeam = this.teamStore.getTeam(game.hTeam.triCode);
-    const vTeam = this.teamStore.getTeam(game.vTeam.triCode);
+    const stats = this.props.gameData.stats;
+    const hTeam = this.props.gameData.hTeam;
+    const vTeam = this.props.gameData.vTeam;
     return (
       <div className="gameStats">
         <Nav tabs>
@@ -86,24 +81,30 @@ export class GameStats extends React.Component<any> {
               Game Stats
             </NavLink>
           </NavItem>
-          <NavItem className="item">
-            <NavLink
-              className={this.state.activeTab === '2' ? 'active' : ''}
-              onClick={() => { this.toggle('2'); }}
-            >
-              {hTeam.fullName}
-            </NavLink>
-          </NavItem>
-          <NavItem className="item">
-            <NavLink
-              className={this.state.activeTab === '3' ? 'active' : ''}
-              onClick={() => {
-                this.toggle('3');
-              }}
-            >
-              {vTeam.fullName}
-            </NavLink>
-          </NavItem>
+          {
+            stats ?
+              <>
+                <NavItem className="item">
+                  <NavLink
+                    className={this.state.activeTab === '2' ? 'active' : ''}
+                    onClick={() => { this.toggle('2'); }}
+                  >
+                    {hTeam.fullName}
+                  </NavLink>
+                </NavItem>
+                <NavItem className="item">
+                  <NavLink
+                    className={this.state.activeTab === '3' ? 'active' : ''}
+                    onClick={() => {
+                      this.toggle('3');
+                    }}
+                  >
+                    {vTeam.fullName}
+                  </NavLink>
+                </NavItem>
+              </>
+              : null
+          }
           <NavItem className="item">
             <NavLink
               className={this.state.activeTab === '4' ? 'active' : ''}
@@ -122,18 +123,20 @@ export class GameStats extends React.Component<any> {
                     <Table>
                       <thead>
                         <tr>
-                          <th>{game.hTeam.triCode}</th>
+                          <th>{hTeam.triCode}</th>
                           <th />
-                          <th>{game.vTeam.triCode}</th>
+                          <th>{vTeam.triCode}</th>
                         </tr>
                       </thead>
                       <tbody>
                         {
                           this.statKeys.map((key) => {
+                            const hTotals: any = stats ? stats.hTeam.totals : [];
+                            const vTotals: any = stats ? stats.vTeam.totals : [];
                             return <tr key={key}>
-                              <th className="value">{stats ? stats.hTeam.totals[key] : '-'}</th>
+                              <th className="value">{hTotals[key] || '-'}</th>
                               <th className="key">{key.toUpperCase()}</th>
-                              <th className="value">{stats ? stats.vTeam.totals[key] : '-'}</th>
+                              <th className="value">{vTotals[key] || '-'}</th>
                             </tr>
                           })
                         }
@@ -142,14 +145,20 @@ export class GameStats extends React.Component<any> {
                   </Col>
                 </Row>
               </TabPane>
-              <TabPane tabId="2">
-                <TeamStats stats={stats} team={hTeam} />
-              </TabPane>
-              <TabPane tabId="3">
-                <TeamStats stats={stats} team={vTeam} />
-              </TabPane>
+              {
+                stats ?
+                  <>
+                    <TabPane tabId="2">
+                      <TeamStats players={stats.activePlayers.filter(player => player.teamId === hTeam.teamId)} />
+                    </TabPane>
+                    <TabPane tabId="3">
+                      <TeamStats players={stats.activePlayers.filter(player => player.teamId === vTeam.teamId)} />
+                    </TabPane>
+                  </>
+                  : null
+              }
               <TabPane tabId="4">
-                <Article />
+                <Article date={this.props.gameData.startDateEastern} gameId={this.props.gameData.gameId} />
               </TabPane>
             </TabContent>
           </CardBody>

@@ -1,0 +1,10 @@
+query getTeams($date: String!) {
+  teams(date: $date) {
+    teamId
+    city
+    fullName
+    triCode
+    confName
+    divName
+  }
+}

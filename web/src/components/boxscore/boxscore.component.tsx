@@ -4,8 +4,15 @@ import { Card, CardBody, Table } from 'reactstrap';
 import './boxscore.component.scss';
 import TeamBoxScore from './teamBoxscore/teamBoxscore.component';
 import { getOvertime, } from '../../utils';
+import { GetGamePeriod, GetGameHTeam, GetGameVTeam } from '../../generated/graphqlComponents';
 
-export const Boxscore = ({ period, hTeam, vTeam }: any) => (
+interface Props {
+  period: GetGamePeriod,
+  hTeam: GetGameHTeam,
+  vTeam: GetGameVTeam,
+}
+
+export const Boxscore = ({ period, hTeam, vTeam }: Props) => (
   <Card>
     <CardBody>
       <Table>
