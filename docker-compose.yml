@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  server:
+    build: ./server
+    expose:
+      - 3001
+    environment:
+      - APP_LINK=http://localhost:3001
+      - APP_PORT=3001
+    ports:
+      - 3001:3001
+    volumes:
+      - ./server/app:/src/app/nba-server/src
+    command: npm run start
+  client:
+    build: ./web
+    expose:
+      -3000
+    ports:
+      -3000:3000
+    volumes:
+      - ./web/src:/src/app/nba-client/src
+      - ./web/public:/src/app/nba-client/public
+    liinks:
+      - server
+    command: npm run start
