@@ -32,6 +32,8 @@ export type GetGameGame = {
 
   nugget: string;
 
+  playoffs: Maybe<GetGamePlayoffs>;
+
   stats: Maybe<GetGameStats>;
 };
 
@@ -79,6 +81,12 @@ export type GetGameVTeam = {
   linescore: (Maybe<number>)[];
 
   logo: Maybe<string>;
+};
+
+export type GetGamePlayoffs = {
+  __typename?: 'Playoffs';
+
+  summary: string;
 };
 
 export type GetGameStats = {
@@ -373,6 +381,9 @@ export const GetGameDocument = gql`
       }
       arena
       nugget
+      playoffs {
+        summary
+      }
       stats {
         hTeam {
           totals {

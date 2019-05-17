@@ -1,6 +1,5 @@
 import { observable, computed, action, autorun } from 'mobx';
 
-import { getArticle } from '../services';
 import { GeneralStore } from './general.store';
 
 export class ArticleStore {
@@ -12,7 +11,7 @@ export class ArticleStore {
     autorun(async () => {
       if (this.gameId > 0) {
         generalStore.setLoading(true);
-        this.article = await getArticle(this.date,this.gameId);
+        // this.article = await getArticle(this.date,this.gameId);
         generalStore.setLoading(false);
       }
     });

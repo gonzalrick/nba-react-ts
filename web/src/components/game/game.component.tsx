@@ -34,7 +34,7 @@ export class Game extends Component<RouteComponentProps<Props>> {
                 </Button>
                 <Row>
                   <Col xs="12" sm="12" md="12" lg="12" className="gameItem">
-                    <Boxscore period={data.game.period} hTeam={data.game.hTeam} vTeam={data.game.vTeam} />
+                    <Boxscore period={data.game.period} hTeam={data.game.hTeam} vTeam={data.game.vTeam} playoffs={data.game.playoffs}/>
                     <GameStats gameData={data.game}/>
                   </Col>
                 </Row>

@@ -40,6 +40,8 @@ export interface Game {
   hTeam: ScheduleTeam;
 
   stats?: Maybe<GameStats>;
+
+  playoffs?: Maybe<Playoffs>;
 }
 
 export interface Period {
@@ -204,6 +206,10 @@ export interface GamePlayerStats {
   plusMinus: string;
 
   dnp: string;
+}
+
+export interface Playoffs {
+  summary: string;
 }
 
 export interface Schedule {
@@ -439,6 +445,8 @@ export namespace GameResolvers {
     hTeam?: HTeamResolver<ScheduleTeam, TypeParent, TContext>;
 
     stats?: StatsResolver<Maybe<GameStats>, TypeParent, TContext>;
+
+    playoffs?: PlayoffsResolver<Maybe<Playoffs>, TypeParent, TContext>;
   }
 
   export type GameIdResolver<
@@ -503,6 +511,11 @@ export namespace GameResolvers {
   > = Resolver<R, Parent, TContext>;
   export type StatsResolver<
     R = Maybe<GameStats>,
+    Parent = Game,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+  export type PlayoffsResolver<
+    R = Maybe<Playoffs>,
     Parent = Game,
     TContext = IContext
   > = Resolver<R, Parent, TContext>;
@@ -1085,6 +1098,18 @@ export namespace GamePlayerStatsResolvers {
   > = Resolver<R, Parent, TContext>;
 }
 
+export namespace PlayoffsResolvers {
+  export interface Resolvers<TContext = IContext, TypeParent = Playoffs> {
+    summary?: SummaryResolver<string, TypeParent, TContext>;
+  }
+
+  export type SummaryResolver<
+    R = string,
+    Parent = Playoffs,
+    TContext = IContext
+  > = Resolver<R, Parent, TContext>;
+}
+
 export namespace ScheduleResolvers {
   export interface Resolvers<TContext = IContext, TypeParent = Schedule> {
     gameId?: GameIdResolver<string, TypeParent, TContext>;
@@ -1423,6 +1448,7 @@ export interface IResolvers<TContext = IContext> {
   GameTeamStats?: GameTeamStatsResolvers.Resolvers<TContext>;
   GameTotals?: GameTotalsResolvers.Resolvers<TContext>;
   GamePlayerStats?: GamePlayerStatsResolvers.Resolvers<TContext>;
+  Playoffs?: PlayoffsResolvers.Resolvers<TContext>;
   Schedule?: ScheduleResolvers.Resolvers<TContext>;
   Player?: PlayerResolvers.Resolvers<TContext>;
   Team?: TeamResolvers.Resolvers<TContext>;

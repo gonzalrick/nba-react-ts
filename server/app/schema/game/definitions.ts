@@ -19,6 +19,7 @@ const definitions = gql`
     vTeam: ScheduleTeam!
     hTeam: ScheduleTeam!
     stats: GameStats
+    playoffs: Playoffs
   }
 
   type GameStats {
@@ -106,6 +107,10 @@ const definitions = gql`
 
   type PlayerPersonId {
     personId: String!
+  }
+
+  type Playoffs {
+    summary: String!
   }
 `;
 

@@ -27,6 +27,9 @@ query getGame($date: String!, $gameId: String!) {
     }
     arena
     nugget
+    playoffs {
+      summary
+    }
     stats {
       hTeam {
         totals {
