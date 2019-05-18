@@ -49,7 +49,7 @@ export class Game extends Component<RouteComponentProps<Props>, State> {
 
   public render() {
     return (
-      <GetGameComponent variables={{ date: this.props.date!, gameId: this.props.gameId! }}>
+      <GetGameComponent fetchPolicy={'network-only'} pollInterval={30000} variables={{ date: this.props.date!, gameId: this.props.gameId! }}>
         {({ data, error, loading }) => {
           if (loading || !data) return <Loading />
           return (
