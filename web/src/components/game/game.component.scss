@@ -5,3 +5,45 @@
 .gameItem {
   margin-top: 20px;
 }
+
+.backIcon {
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.card-body {
+  padding: 0 0.5em;
+}
+
+.titleRow {
+  font-size: 2em;
+  :first-child {
+    line-height: 2em;
+  }
+
+  .title {
+    text-align: center;
+    margin: 0.5em auto;
+  }
+}
+
+.sectionLink {
+  text-align: center;
+  cursor: pointer;
+  color: #969696;
+}
+
+.sectionLink.active {
+  color: #000;
+
+  :after {
+    content: '';
+    position:absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    background:rgb(66, 103, 178);
+    height:2px;
+    border-radius:10px;
+  }
+}
