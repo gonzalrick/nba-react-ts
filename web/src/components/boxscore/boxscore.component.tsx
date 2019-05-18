@@ -4,21 +4,22 @@ import { Card, CardBody, Table } from 'reactstrap';
 import './boxscore.component.scss';
 import TeamBoxScore from './teamBoxscore/teamBoxscore.component';
 import { getOvertime, } from '../../utils';
-import { GetGamePeriod, GetGameHTeam, GetGameVTeam } from '../../generated/graphqlComponents';
+import { GetGamePeriod, GetGameHTeam, GetGameVTeam, GetGamePlayoffs } from '../../generated/graphqlComponents';
 
 interface Props {
   period: GetGamePeriod,
   hTeam: GetGameHTeam,
   vTeam: GetGameVTeam,
+  playoffs?: GetGamePlayoffs | null,
 }
 
-export const Boxscore = ({ period, hTeam, vTeam }: Props) => (
+export const Boxscore = ({ period, hTeam, vTeam, playoffs }: Props) => (
   <Card>
     <CardBody>
       <Table>
         <thead>
           <tr>
-            <th />
+            <th>{playoffs ? playoffs.summary : null}</th>
             <th>1Q</th>
             <th>2Q</th>
             <th>3Q</th>
