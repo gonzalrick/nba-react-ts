@@ -22,11 +22,10 @@ interface State {
 }
 
 interface Props {
-  gameData: GetGameGame,
+  gameData: GetGameGame;
 }
 
 export class GameStats extends React.Component<Props, State> {
-
   state: State;
   statKeys: string[] = [
     'points',
@@ -81,34 +80,36 @@ export class GameStats extends React.Component<Props, State> {
               Game Stats
             </NavLink>
           </NavItem>
-          {
-            stats ?
-              <>
-                <NavItem className="item">
-                  <NavLink
-                    className={this.state.activeTab === '2' ? 'active' : ''}
-                    onClick={() => { this.toggle('2'); }}
-                  >
-                    {hTeam.fullName}
-                  </NavLink>
-                </NavItem>
-                <NavItem className="item">
-                  <NavLink
-                    className={this.state.activeTab === '3' ? 'active' : ''}
-                    onClick={() => {
-                      this.toggle('3');
-                    }}
-                  >
-                    {vTeam.fullName}
-                  </NavLink>
-                </NavItem>
-              </>
-              : null
-          }
+          {stats ? (
+            <>
+              <NavItem className="item">
+                <NavLink
+                  className={this.state.activeTab === '2' ? 'active' : ''}
+                  onClick={() => {
+                    this.toggle('2');
+                  }}
+                >
+                  {hTeam.triCode}
+                </NavLink>
+              </NavItem>
+              <NavItem className="item">
+                <NavLink
+                  className={this.state.activeTab === '3' ? 'active' : ''}
+                  onClick={() => {
+                    this.toggle('3');
+                  }}
+                >
+                  {vTeam.triCode}
+                </NavLink>
+              </NavItem>
+            </>
+          ) : null}
           <NavItem className="item">
             <NavLink
               className={this.state.activeTab === '4' ? 'active' : ''}
-              onClick={() => { this.toggle('4'); }}
+              onClick={() => {
+                this.toggle('4');
+              }}
             >
               Article
             </NavLink>
@@ -129,36 +130,45 @@ export class GameStats extends React.Component<Props, State> {
                         </tr>
                       </thead>
                       <tbody>
-                        {
-                          this.statKeys.map((key) => {
-                            const hTotals: any = stats ? stats.hTeam.totals : [];
-                            const vTotals: any = stats ? stats.vTeam.totals : [];
-                            return <tr key={key}>
+                        {this.statKeys.map(key => {
+                          const hTotals: any = stats ? stats.hTeam.totals : [];
+                          const vTotals: any = stats ? stats.vTeam.totals : [];
+                          return (
+                            <tr key={key}>
                               <th className="value">{hTotals[key] || '-'}</th>
                               <th className="key">{key.toUpperCase()}</th>
                               <th className="value">{vTotals[key] || '-'}</th>
                             </tr>
-                          })
-                        }
+                          );
+                        })}
                       </tbody>
                     </Table>
                   </Col>
                 </Row>
               </TabPane>
-              {
-                stats ?
-                  <>
-                    <TabPane tabId="2">
-                      <TeamStats players={stats.activePlayers.filter(player => player.teamId === hTeam.teamId)} />
-                    </TabPane>
-                    <TabPane tabId="3">
-                      <TeamStats players={stats.activePlayers.filter(player => player.teamId === vTeam.teamId)} />
-                    </TabPane>
-                  </>
-                  : null
-              }
+              {stats ? (
+                <>
+                  <TabPane tabId="2">
+                    <TeamStats
+                      players={stats.activePlayers.filter(
+                        player => player.teamId === hTeam.teamId,
+                      )}
+                    />
+                  </TabPane>
+                  <TabPane tabId="3">
+                    <TeamStats
+                      players={stats.activePlayers.filter(
+                        player => player.teamId === vTeam.teamId,
+                      )}
+                    />
+                  </TabPane>
+                </>
+              ) : null}
               <TabPane tabId="4">
-                <Article date={this.props.gameData.startDateEastern} gameId={this.props.gameData.gameId} />
+                <Article
+                  date={this.props.gameData.startDateEastern}
+                  gameId={this.props.gameData.gameId}
+                />
               </TabPane>
             </TabContent>
           </CardBody>
