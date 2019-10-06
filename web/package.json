@@ -4,6 +4,11 @@
   "private": true,
   "dependencies": {
     "@reach/router": "^1.2.1",
+    "@types/reach__router": "^1.2.2",
+    "@types/react": "^16.7.22",
+    "@types/react-dom": "^16.0.11",
+    "@types/react-icons": "^2.2.6",
+    "@types/reactstrap": "^6.4.3",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-client": "^2.5.1",
     "apollo-link-http": "^1.5.12",
@@ -13,16 +18,12 @@
     "mobx-react": "^5.4.3",
     "node-sass": "^4.11.0",
     "react": "^16.6.3",
+    "react-content-loader": "^4.3.0",
     "react-dom": "^16.6.3",
     "react-icons": "^3.2.2",
     "react-scripts": "2.1.1",
     "reactstrap": "^6.5.0",
-    "typescript": "3.2.2",
-    "@types/react": "^16.7.22",
-    "@types/react-dom": "^16.0.11",
-    "@types/react-icons": "^2.2.6",
-    "@types/reactstrap": "^6.4.3",
-    "@types/reach__router": "^1.2.2"
+    "typescript": "3.2.2"
   },
   "scripts": {
     "start": "react-scripts start",

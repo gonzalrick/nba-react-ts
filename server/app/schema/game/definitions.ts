@@ -110,7 +110,7 @@ const definitions = gql`
   }
 
   type Playoffs {
-    summary: String!
+    summary: String
   }
 `;
 

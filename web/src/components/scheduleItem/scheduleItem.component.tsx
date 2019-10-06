@@ -8,11 +8,10 @@ import { getPeriod } from '../../utils';
 
 import './scheduleItem.component.scss';
 export class ScheduleItem extends Component<any> {
-
   render() {
     const game: any = this.props.game;
     return (
-      <Col md="12" lg="6" className="scheduleItem" key={game.gameId}>
+      <Col className="scheduleItem" key={game.gameId}>
         <Link to={`/game/${game.startDateEastern}/${game.gameId}`}>
           <Card className="gameCard">
             <CardBody>

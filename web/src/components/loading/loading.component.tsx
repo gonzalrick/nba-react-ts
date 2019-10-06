@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import './loading.component.scss';
+import { Facebook } from 'react-content-loader';
 
 export class Loading extends Component {
   render() {
-    return <div className="loading" />;
+    return <Facebook speed={1} primaryColor={'#333'} secondaryColor={'#999'} />;
   }
 }

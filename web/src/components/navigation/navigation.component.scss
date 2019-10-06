@@ -1,6 +1,6 @@
 .navigation {
-  background-color: #4267b2;
-  border-bottom: 1px solid #29487d;
+  background-color: #242424;
+  border-bottom: 1px solid #000;
 
   .navbar-dark .navbar-nav .nav-link,
   .nav-link:hover,
@@ -12,7 +12,6 @@
   .navbar-nav a:hover {
     color: #fff;
     border-radius: 5px;
-    background-color: #29487d;
     text-decoration: none;
   }
 }

@@ -1,8 +1,11 @@
 .scheduleItem {
+  flex: 1;
   margin: 10px 0;
 
   .card {
     height: 100%;
+    background-color: transparent;
+    border: none;
   }
 
   a,
@@ -10,17 +13,6 @@
     color: inherit;
     text-decoration: none;
   }
-}
-
-.gameCard {
-  -webkit-transition: 0.2s;
-}
-
-.gameCard:hover {
-  box-shadow: 0px 6px 15px #9c9c9c;
-  transform: translateY(-5px);
-  transition: 0.2s;
-  cursor: pointer;
 }
 
 .icon {
