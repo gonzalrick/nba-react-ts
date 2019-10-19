@@ -1,6 +1,23 @@
 .teamItem {
+  margin-bottom: 1rem;
+
   div {
     text-align: center;
+  }
+
+  .teamLogo {
+    flex: 1;
+  }
+
+  .teamName {
+    flex: 2;
+    text-align: left;
+    line-height: 3rem;
+  }
+
+  .teamScore {
+    flex: 1;
+    line-height: 3rem;
   }
 
   .score {

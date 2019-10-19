@@ -7,15 +7,11 @@ import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import { GeneralStore, ArticleStore } from './store/';
+import { GeneralStore } from './store/';
 const generalStore = new GeneralStore();
-const articleStore = new ArticleStore(generalStore);
 
 ReactDOM.render(
-  <Provider
-    generalStore={generalStore}
-    articleStore={articleStore}
-  >
+  <Provider generalStore={generalStore}>
     <App />
   </Provider>,
   document.getElementById('root'),

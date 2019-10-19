@@ -1,6 +1,23 @@
 .scheduleItem {
   flex: 1;
   margin: 10px 0;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #242424;
+
+  .gameCard {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+
+    .teamRow {
+      flex: 4;
+    }
+    .periodRow {
+      padding: 3rem 0;
+      flex: 1;
+      text-align: center;
+    }
+  }
 
   .card {
     height: 100%;
@@ -30,9 +47,9 @@
   font-size: 0.9em;
   padding-bottom: 10px;
 
-  @media screen and (max-width: 420px) {
-    font-size: 3.5vw;
-  }
+  // @media screen and (max-width: 420px) {
+  //   font-size: 3.5vw;
+  // }
 }
 
 .teamScore div {
@@ -41,13 +58,4 @@
 
 .teamContainer {
   padding-bottom: 10px;
-}
-
-.nugget {
-  border-top: 1px solid #dedede;
-  padding-top: 10px;
-
-  @media screen and (max-width: 420px) {
-    font-size: 3.5vw;
-  }
 }

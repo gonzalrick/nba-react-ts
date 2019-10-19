@@ -27,6 +27,7 @@ export class Schedule extends Component<any> {
               <div className="schedule">
                 <Container>
                   <Loading />
+                  <Loading />
                 </Container>
               </div>
             );
@@ -38,7 +39,7 @@ export class Schedule extends Component<any> {
                   onClick={() => this.store.prevDay()}
                 />
                 <span className="gameDate">
-                  {data ? data.schedule.length : 'No'} Games for{' '}
+                  {data ? data!.schedule.length : 'No'} Games for{' '}
                   {humaniseDate(this.store.date)}
                 </span>
                 <IoIosArrowForward

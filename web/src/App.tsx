@@ -1,4 +1,3 @@
-
 import { Router } from '@reach/router';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';

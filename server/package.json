@@ -9,6 +9,7 @@
     "@types/morgan": "^1.7.35",
     "@types/node-fetch": "^2.1.4",
     "apollo-datasource-rest": "^0.3.1",
+    "apollo-server-express": "^2.9.6",
     "cors": "^2.8.5",
     "dataloader": "^1.4.0",
     "date-fns": "^1.30.1",
