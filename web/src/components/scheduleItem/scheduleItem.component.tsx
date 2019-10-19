@@ -13,7 +13,7 @@ export class ScheduleItem extends Component<any> {
       <Col className="scheduleItem" key={game.gameId}>
         <Link to={`/game/${game.startDateEastern}/${game.gameId}`}>
           <div className="gameCard">
-            <div className="teamRow">
+            <div>
               <TeamItem team={game.hTeam} home={true} />
               <TeamItem team={game.vTeam} home={true} />
             </div>

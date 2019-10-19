@@ -4,13 +4,17 @@
 }
 
 .scheduleContainer {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-auto-rows: 1fr;
   margin-top: 10px;
 }
 
 .gameDate {
   padding: 0 10px;
+
+  @media screen and (max-width: 420px) {
+    font-size: 0.7rem;
+  }
 }
 
 .pageDate {

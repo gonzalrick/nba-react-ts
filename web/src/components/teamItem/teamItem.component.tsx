@@ -8,7 +8,7 @@ class TeamItem extends Component<any> {
     const team = this.props.team;
     return (
       <Row className="teamItem">
-        <div className="teamLogo">
+        <div>
           <img className="icon" alt="team-logo" src={team.logo} />
         </div>
         <div className="teamName">

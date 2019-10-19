@@ -1,21 +1,19 @@
 .scheduleItem {
-  flex: 1;
   margin: 10px 0;
   margin-bottom: 1rem;
   border-bottom: 1px solid #242424;
 
   .gameCard {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 5fr 1fr;
 
-    .teamRow {
-      flex: 4;
-    }
     .periodRow {
       padding: 3rem 0;
-      flex: 1;
       text-align: center;
+    }
+
+    @media screen and (max-width: 420px) {
+      font-size: 0.7rem;
     }
   }
 
@@ -33,7 +31,7 @@
 }
 
 .icon {
-  height: 55px;
+  max-height: 55px;
   max-width: 110px;
   margin: 0 10px;
 

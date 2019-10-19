@@ -5,9 +5,9 @@ export const Loading = () => (
   <ContentLoader
     height={117}
     width={500}
-    speed={2}
+    speed={1}
     primaryColor="#d8d8d8"
-    secondaryColor="#808080"
+    secondaryColor="#535353"
   >
     <circle cx="75" cy="22" r="15" />
     <circle cx="75" cy="72" r="15" />
