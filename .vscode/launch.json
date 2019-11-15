@@ -5,14 +5,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "node",
-      "request": "launch",
-      "name": "Launch Program",
-      "program": "${workspaceFolder}/server/app/server.ts",
-      "preLaunchTask": "npm: build - server",
-      "cwd": "${workspaceFolder}",
-      "protocol": "inspector",
-      "outFiles": ["${workspaceFolder}/server/build/**/*.js"]
+      // "type": "node",
+      // "request": "launch",
+      // "name": "Launch Program",
+      // "program": "${workspaceFolder}/server/app/server.ts",
+      // "preLaunchTask": "npm: build - server",
+      // "cwd": "${workspaceFolder}",
+      // "protocol": "inspector",
+      // "outFiles": ["${workspaceFolder}/server/build/**/*.js"]
     }
   ]
 }
