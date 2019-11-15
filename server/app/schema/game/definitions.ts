@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server-express';
+import gql from 'graphql-tag';
 
 const definitions = gql`
   extend type Query {
@@ -110,7 +110,7 @@ const definitions = gql`
   }
 
   type Playoffs {
-    summary: String!
+    summary: String
   }
 `;
 

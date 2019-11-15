@@ -1,8 +1,26 @@
 .scheduleItem {
   margin: 10px 0;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #242424;
+
+  .gameCard {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+
+    .periodRow {
+      padding: 3rem 0;
+      text-align: center;
+    }
+
+    @media screen and (max-width: 420px) {
+      font-size: 0.7rem;
+    }
+  }
 
   .card {
     height: 100%;
+    background-color: transparent;
+    border: none;
   }
 
   a,
@@ -12,19 +30,8 @@
   }
 }
 
-.gameCard {
-  -webkit-transition: 0.2s;
-}
-
-.gameCard:hover {
-  box-shadow: 0px 6px 15px #9c9c9c;
-  transform: translateY(-5px);
-  transition: 0.2s;
-  cursor: pointer;
-}
-
 .icon {
-  height: 55px;
+  max-height: 55px;
   max-width: 110px;
   margin: 0 10px;
 
@@ -38,9 +45,9 @@
   font-size: 0.9em;
   padding-bottom: 10px;
 
-  @media screen and (max-width: 420px) {
-    font-size: 3.5vw;
-  }
+  // @media screen and (max-width: 420px) {
+  //   font-size: 3.5vw;
+  // }
 }
 
 .teamScore div {
@@ -49,13 +56,4 @@
 
 .teamContainer {
   padding-bottom: 10px;
-}
-
-.nugget {
-  border-top: 1px solid #dedede;
-  padding-top: 10px;
-
-  @media screen and (max-width: 420px) {
-    font-size: 3.5vw;
-  }
 }

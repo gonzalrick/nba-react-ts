@@ -16,9 +16,21 @@ export class Schedule extends Component<any> {
   store: GeneralStore = this.props.generalStore;
   public render() {
     return (
-      <GetScheduleComponent fetchPolicy={'network-only'} pollInterval={30000} variables={{ date: convertDateToUTC(this.store.date) }}>
+      <GetScheduleComponent
+        fetchPolicy={'network-only'}
+        pollInterval={30000}
+        variables={{ date: convertDateToUTC(this.store.date) }}
+      >
         {({ data, error, loading }) => {
-          if (loading || !data) return <Loading />;
+          if (loading || !data)
+            return (
+              <div className="schedule">
+                <Container>
+                  <Loading />
+                  <Loading />
+                </Container>
+              </div>
+            );
           return (
             <div className="schedule">
               <Container>
@@ -27,7 +39,8 @@ export class Schedule extends Component<any> {
                   onClick={() => this.store.prevDay()}
                 />
                 <span className="gameDate">
-                  {data ? data.schedule.length : 'No'} Games for {humaniseDate(this.store.date)}
+                  {data ? data!.schedule.length : 'No'} Games for{' '}
+                  {humaniseDate(this.store.date)}
                 </span>
                 <IoIosArrowForward
                   className="pageDate"

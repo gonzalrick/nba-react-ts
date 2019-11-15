@@ -1,5 +1,5 @@
 import { makeExecutableSchema } from 'graphql-tools';
-import { gql } from 'apollo-server-express';
+import gql from 'graphql-tag';
 
 import { GameTypeDefs, GameResolvers } from './game';
 import { ScheduleTypeDefs, ScheduleResolvers } from './schedule';
@@ -18,10 +18,5 @@ export const schema = makeExecutableSchema({
     PlayerTypeDefs,
     TeamTypeDefs,
   ],
-  resolvers: [
-    GameResolvers,
-    ScheduleResolvers,
-    PlayerResolvers,
-    TeamResolvers,
-  ],
+  resolvers: [GameResolvers, ScheduleResolvers, PlayerResolvers, TeamResolvers],
 });
