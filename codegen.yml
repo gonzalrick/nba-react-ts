@@ -1,5 +1,5 @@
 overwrite: true
-schema: http://localhost:3001/graphql
+schema: http://localhost:4000/graphql
 documents: ./web/src/graphql/*.gql
 generates:
   ./web/src/generated/graphqlComponents.tsx:
@@ -9,10 +9,3 @@ generates:
       - typescript-common
       - typescript-client
       - typescript-react-apollo
-  ./server/app/generated/index.ts:
-    plugins:
-      - "typescript-common"
-      - "typescript-server"
-      - "typescript-resolvers"
-    config:
-      contextType: ../interface#IContext

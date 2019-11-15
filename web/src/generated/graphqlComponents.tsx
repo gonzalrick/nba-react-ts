@@ -86,7 +86,7 @@ export type GetGameVTeam = {
 export type GetGamePlayoffs = {
   __typename?: 'Playoffs';
 
-  summary: string;
+  summary: Maybe<string>;
 };
 
 export type GetGameStats = {
