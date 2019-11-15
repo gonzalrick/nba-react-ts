@@ -11,18 +11,18 @@ export class ScheduleItem extends Component<any> {
     const game: any = this.props.game;
     return (
       <Col className="scheduleItem" key={game.gameId}>
-        <Link to={`/game/${game.startDateEastern}/${game.gameId}`}>
-          <div className="gameCard">
-            <div>
-              <TeamItem team={game.hTeam} home={true} />
-              <TeamItem team={game.vTeam} home={true} />
+        {/* <Link to={`/game/${game.startDateEastern}/${game.gameId}`}> */}
+        <div className="gameCard">
+          <div>
+            <TeamItem team={game.hTeam} home={true} />
+            <TeamItem team={game.vTeam} home={true} />
+            <div className="nugget">
+              <em>{game.nugget || ''}</em>
             </div>
-            <div className="periodRow">{getPeriod(game)}</div>
           </div>
-          {/* <div className="nugget">
-            <em>{game.nugget || ''}</em>
-          </div> */}
-        </Link>
+          <div className="periodRow">{getPeriod(game)}</div>
+        </div>
+        {/* </Link> */}
       </Col>
     );
   }
