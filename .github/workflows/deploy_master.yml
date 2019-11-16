@@ -30,9 +30,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      env:
-        AWS_S3_BUCKET: ${{ AWS_S3_BUCKET }}
-        AWS_ACCESS_KEY_ID: ${{ AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ AWS_SECRET_ACCESS_KEY }}
-      run: |
-        echo $AWS_S3_BUCKET $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
+        env:
+          AWS_S3_BUCKET: ${{ AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ AWS_SECRET_ACCESS_KEY }}
+        run: |
+          echo $AWS_S3_BUCKET $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
