@@ -1,9 +1,6 @@
 name: Build and Deploy Master
 
-on:
-  push:
-    branches:
-      - master
+on: [push]
 
 jobs:
   build:
@@ -31,8 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
         env:
-          AWS_S3_BUCKET: ${{ AWS_S3_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ AWS_SECRET_ACCESS_KEY }}
-        run: |
-          echo $AWS_S3_BUCKET $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - run: echo $AWS_S3_BUCKET $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
