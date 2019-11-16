@@ -14,9 +14,9 @@ jobs:
         node_version: [10, 12]
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@master
       - name: Use Node.js ${{ matrix.node_version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@master
         with:
           version: ${{ matrix.node_version }}
 
@@ -24,3 +24,15 @@ jobs:
         run: |
           yarn install
           cd web && yarn build
+  deploy:
+    name: Deploy to development
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      env:
+        AWS_S3_BUCKET: ${{ AWS_S3_BUCKET }}
+        AWS_ACCESS_KEY_ID: ${{ AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ AWS_SECRET_ACCESS_KEY }}
+      run: |
+        echo $AWS_S3_BUCKET $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
