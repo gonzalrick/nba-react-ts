@@ -8,7 +8,7 @@ import { ScheduleItem } from '../scheduleItem/scheduleItem.component';
 import { humaniseDate, convertDateToUTC } from '../../utils';
 import './schedule.component.scss';
 import { GetScheduleComponent } from '../../generated/graphqlComponents';
-import { Loading } from '..';
+import { Loading } from '../../components';
 
 @inject('generalStore')
 @observer

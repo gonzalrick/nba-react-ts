@@ -7,7 +7,7 @@ import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import { GeneralStore } from './store/';
+import { GeneralStore } from './store';
 const generalStore = new GeneralStore();
 
 ReactDOM.render(
