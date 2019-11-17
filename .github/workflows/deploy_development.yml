@@ -22,7 +22,7 @@ jobs:
 
       - name: Build
         run: |
-          npm run install
+          npm install
           PUBLIC_URL=https://development.rickyg.io REACT_APP_API_URL=https://nba.rickyg.io/dev npm run build
       - name: Deploy
         env:
