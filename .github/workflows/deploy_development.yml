@@ -21,9 +21,12 @@ jobs:
           node-version: ${{ matrix.node_version }}
 
       - name: Build
+        env:
+          PUBLIC_URL: https://development.rickyg.io
+          REACT_APP_API_URL: https://nba.rickyg.io/dev
         run: |
           npm install
-          PUBLIC_URL=https://development.rickyg.io REACT_APP_API_URL=https://nba.rickyg.io/dev npm run build
+          npm run build
       - name: Deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
