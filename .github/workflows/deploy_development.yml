@@ -21,11 +21,14 @@ jobs:
           node-version: ${{ matrix.node_version }}
 
       - name: Build
+        env:
+          PUBLIC_URL: https://development.rickyg.io
+          REACT_APP_API_URL: https://nba.rickyg.io/dev
         run: |
-          yarn install
-          cd web && PUBLIC_URL=https://development.rickyg.io REACT_APP_API_URL=https://nba.rickyg.io/dev yarn build
+          npm install
+          npm run build
       - name: Deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: aws s3 sync --acl public-read --delete ./web/build s3://nba-dev-frontend
+        run: aws s3 sync --acl public-read --delete ./build s3://nba-dev-frontend
