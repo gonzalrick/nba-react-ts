@@ -20,10 +20,8 @@ const App: FC = () => {
     <div>
       <ApolloProvider client={client}>
         <Navbar />
-        {/* <Router> */}
         <Schedule />
         <Footer />
-        {/* </Router> */}
       </ApolloProvider>
     </div>
   );
