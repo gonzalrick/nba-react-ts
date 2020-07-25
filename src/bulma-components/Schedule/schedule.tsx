@@ -1,16 +1,15 @@
 import React, { FC } from 'react';
-import { DateSelector } from './date-selector';
-import { Games } from './games';
+
 import { GetScheduleComponent } from '../../generated/graphqlComponents';
 import { convertDateToUTC } from '../../utils';
-
-import data from './games.json';
 import { Loading } from '../Loading/loading';
+import { DateSelector } from './date-selector';
+import { Games } from './games';
 
 export const Schedule: FC = () => {
   return (
     <section className="section">
-      <div className="container">
+      <div className="container px-0">
         <DateSelector />
 
         <GetScheduleComponent
