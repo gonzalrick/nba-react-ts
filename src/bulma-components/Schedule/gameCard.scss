@@ -1,0 +1,22 @@
+.card {
+  box-shadow: none;
+}
+
+.card:hover {
+  cursor: pointer;
+  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
+    0 0px 0 1px rgba(10, 10, 10, 0.02);
+}
+
+.period {
+  .container {
+    padding: 0.5rem 0;
+    background-color: #818181;
+    color: #fff;
+
+    &.active {
+      background-color: #d91414;
+      font-weight: bold;
+    }
+  }
+}

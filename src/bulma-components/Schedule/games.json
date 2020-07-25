@@ -1,0 +1,122 @@
+[
+  {
+    "gameId": "0011900109",
+    "clock": "",
+    "isGameActivated": false,
+    "startDateEastern": "20200724",
+    "startTimeUTC": "2020-07-24T19:30:00.000Z",
+    "nugget": "Scrimmage: Simmons nears triple-double in win",
+    "period": {
+      "current": 4,
+      "isEndOfPeriod": false,
+      "isHalftime": false,
+      "maxRegular": 4,
+      "__typename": "Period"
+    },
+    "hTeam": {
+      "triCode": "PHI",
+      "score": 90,
+      "win": 1,
+      "loss": 0,
+      "city": "Philadelphia",
+      "fullName": "Philadelphia 76ers",
+      "confName": "East",
+      "divName": "Atlantic",
+      "logo": "https://i.logocdn.com/nba/current/philadelphia-76ers.svg",
+      "__typename": "ScheduleTeam"
+    },
+    "vTeam": {
+      "triCode": "MEM",
+      "score": 83,
+      "win": 0,
+      "loss": 1,
+      "city": "Memphis",
+      "fullName": "Memphis Grizzlies",
+      "confName": "West",
+      "divName": "Southwest",
+      "logo": "https://i.logocdn.com/nba/current/memphis-grizzlies.svg",
+      "__typename": "ScheduleTeam"
+    },
+    "__typename": "Schedule"
+  },
+  {
+    "gameId": "0011900110",
+    "clock": "",
+    "isGameActivated": false,
+    "startDateEastern": "20200724",
+    "startTimeUTC": "2020-07-24T21:00:00.000Z",
+    "nugget": "Scrimmage: Adams, Gilgeous-Alexander score 17 apiece",
+    "period": {
+      "current": 4,
+      "isEndOfPeriod": false,
+      "isHalftime": false,
+      "maxRegular": 4,
+      "__typename": "Period"
+    },
+    "hTeam": {
+      "triCode": "BOS",
+      "score": 84,
+      "win": 0,
+      "loss": 1,
+      "city": "Boston",
+      "fullName": "Boston Celtics",
+      "confName": "East",
+      "divName": "Atlantic",
+      "logo": "https://i.logocdn.com/nba/current/boston-celtics.svg",
+      "__typename": "ScheduleTeam"
+    },
+    "vTeam": {
+      "triCode": "OKC",
+      "score": 98,
+      "win": 1,
+      "loss": 0,
+      "city": "Oklahoma City",
+      "fullName": "Oklahoma City Thunder",
+      "confName": "West",
+      "divName": "Northwest",
+      "logo": "https://i.logocdn.com/nba/current/oklahoma-city-thunder.svg",
+      "__typename": "ScheduleTeam"
+    },
+    "__typename": "Schedule"
+  },
+  {
+    "gameId": "0011900111",
+    "clock": "",
+    "isGameActivated": false,
+    "startDateEastern": "20200724",
+    "startTimeUTC": "2020-07-24T23:30:00.000Z",
+    "nugget": "Scrimmage: Ibaka (18 points) leads all-around effort",
+    "period": {
+      "current": 4,
+      "isEndOfPeriod": false,
+      "isHalftime": false,
+      "maxRegular": 4,
+      "__typename": "Period"
+    },
+    "hTeam": {
+      "triCode": "TOR",
+      "score": 94,
+      "win": 1,
+      "loss": 0,
+      "city": "Toronto",
+      "fullName": "Toronto Raptors",
+      "confName": "East",
+      "divName": "Atlantic",
+      "logo": "https://i.logocdn.com/nba/current/toronto-raptors.svg",
+      "__typename": "ScheduleTeam"
+    },
+    "vTeam": {
+      "triCode": "HOU",
+      "score": 83,
+      "win": 0,
+      "loss": 1,
+      "city": "Houston",
+      "fullName": "Houston Rockets",
+      "confName": "West",
+      "divName": "Southwest",
+      "logo": "https://i.logocdn.com/nba/current/houston-rockets.svg",
+      "__typename": "ScheduleTeam"
+    },
+    "__typename": "Schedule"
+  }
+]

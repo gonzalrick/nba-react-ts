@@ -15,7 +15,12 @@
     "jsx": "preserve",
     "experimentalDecorators": true,
     "outDir": "./build",
-    "lib": ["dom", "esnext"]
+    "lib": [
+      "dom",
+      "esnext"
+    ]
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }
