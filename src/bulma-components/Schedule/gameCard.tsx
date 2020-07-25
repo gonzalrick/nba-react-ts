@@ -12,7 +12,7 @@ export const GameCard: FC<Props> = ({ game }) => {
   const isActive = game.isGameActivated && game.clock;
   console.log(game);
   return (
-    <div className="card my-5 py-2">
+    <div className="card my-5 py-3">
       <div className="card-content py-0">
         <div className="columns is-mobile is-vcentered">
           <div className="column">
@@ -21,8 +21,8 @@ export const GameCard: FC<Props> = ({ game }) => {
             </figure>
           </div>
           <div className="column py-0">
-            <div className="column py-1 is-three-fifths is-offset-one-fifth">
-              <div className={`container period ${isActive ? 'active' : ''}`}>
+            <div className="period column py-1 is-three-fifths is-offset-one-fifth">
+              <div className={`container ${isActive ? 'active' : ''}`}>
                 <h1 className="has-text-centered has-text-weight-bold is-size-5">
                   {getPeriod(game)}
                 </h1>

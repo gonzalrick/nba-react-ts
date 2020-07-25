@@ -2,10 +2,10 @@ import React, { FC } from 'react';
 
 export const Footer: FC = () => {
   return (
-    <footer className="footer">
-      <div className="content has-text-centered">
+    <footer className="footer py-1">
+      <div className="content has-text-centered is-size-7">
         <div>
-          Icons made by{' '}
+          Logo made by{' '}
           <a href="https://www.flaticon.com/authors/surang" title="surang">
             surang
           </a>{' '}

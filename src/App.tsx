@@ -5,7 +5,7 @@ import { HttpLink } from 'apollo-link-http';
 import React, { FC } from 'react';
 import { ApolloProvider } from 'react-apollo';
 import './App.scss';
-import { Navbar, Schedule } from './bulma-components';
+import { Navbar, Schedule, Footer } from './bulma-components';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
 const client = new ApolloClient({
@@ -22,6 +22,7 @@ const App: FC = () => {
         <Navbar />
         {/* <Router> */}
         <Schedule />
+        <Footer />
         {/* </Router> */}
       </ApolloProvider>
     </div>
