@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
 import ContentLoader from 'react-content-loader';
 
-export const Loading = () => (
+export const Loading: FC = () => (
   <ContentLoader
     height={117}
     width={500}

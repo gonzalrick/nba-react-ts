@@ -1,0 +1,12 @@
+.tabs.is-toggle li.is-active a {
+  background-color: #f2f2f2;
+  border-color: #b5b5b5;
+  color: #000;
+}
+.tabs.is-toggle li :not(.is-active) {
+  color: #000;
+}
+
+.tabs.is-toggle li:hover :not(.is-active) {
+  color: #000;
+}
